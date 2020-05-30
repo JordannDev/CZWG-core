@@ -20,6 +20,9 @@
         </div>
         <hr>
         @if(!$article->visible)
+        @if(!Auth::user()->permissions >= 4)
+            <?php abort(403, "Hidden");?>
+        @endif
         <div class="alert bg-czqo-blue-light">
             This article is not visible to the public.
         </div>

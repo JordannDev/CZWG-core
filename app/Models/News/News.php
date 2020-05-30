@@ -43,7 +43,7 @@ class News extends Model
     {
         if (!$this->show_author)
         {
-            return 'Gander Oceanic Staff';
+            return 'Winnipeg FIR Staff';
         }
 
         return $this->user->fullName('FLC');

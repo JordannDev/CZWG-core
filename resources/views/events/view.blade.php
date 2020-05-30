@@ -73,6 +73,15 @@
                         <input type="datetime" name="availability_start" class="form-control flatpickr" id="availability_start">
                         <label class="mt-2" for="">Availability end time (zulu)</label>
                         <input type="datetime" name="availability_end" class="form-control flatpickr" id="availability_end">
+                        <label class="mt-2" for="">Position Requested</label>
+                        <select name="position" class="form-control" id="position">
+                          <option value="1">Delivery</option>
+                          <option value="2">Ground</option>
+                          <option value="3">Tower</option>
+                          <option value="4">Departure</option>
+                          <option value="5">Approach</option>
+                          <option value="5">Center</option>
+                        </select>
                         <label for="" class="mt-2">Comments</label>
                         <textarea name="comments" id="comments" rows="2" class="md-textarea form-control"></textarea>
                         <input type="submit" id="app-form-submit" class="btn btn-outline-submit mt-3" value="Submit">

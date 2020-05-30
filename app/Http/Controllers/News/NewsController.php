@@ -191,7 +191,7 @@ class NewsController extends Controller
 
           //Options
           //Publicly visible
-          if ($request->get('articleVisible') == 'on') {
+          if ($request->get('articleVisible')) {
               $article->visible = true;
           } else {
               $article->visible = false;

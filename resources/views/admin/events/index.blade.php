@@ -5,7 +5,7 @@
     <hr>
     <div class="row">
         <div class="col-md-6">
-            <a href="#" class="mb-3 btn btn-block btn-md waves-effect btn-primary">Create Event</a>
+          <a href="{{route('events.admin.create')}}" class="mb-3 btn btn-block btn-md waves-effect btn-primary">Create Event</a>
             <table class="table dt table-hover table-bordered">
                 <thead>
                     <th>Title</th>
@@ -16,7 +16,7 @@
                     <td>
                         <a href="{{route('events.admin.view', $e->slug)}}" class="blue-text">{{$e->name}}</a>
                     </td>
-                    <td>
+                    <td data-order="{{$e->start_timestamp}}">
                         {{$e->start_timestamp_pretty()}}
                     </td>
                     @endforeach
@@ -24,7 +24,7 @@
             </table>
             <script>
                 $(document).ready(function() {
-                    $('.table.dt').DataTable();
+                   $('.table.dt').DataTable({ "order": [[ 1, "desc" ]]});
                 } );
             </script>
         </div>

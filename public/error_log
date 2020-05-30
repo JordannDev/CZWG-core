@@ -98,3 +98,131 @@
 [30-May-2020 16:15:51 UTC] Grabbing VATCAN news from API
 [30-May-2020 16:26:38 UTC] Grabbing VATCAN news from API
 [30-May-2020 16:28:01 UTC] Grabbing VATCAN news from API
+[30-May-2020 16:51:40 UTC] Grabbing VATCAN news from API
+[30-May-2020 16:52:00 UTC] Grabbing VATCAN news from API
+[30-May-2020 17:01:18 UTC] Grabbing VATCAN news from API
+[30-May-2020 17:09:31 UTC] Grabbing VATCAN news from API
+[30-May-2020 17:21:36 UTC] Grabbing VATCAN news from API
+[30-May-2020 17:33:09 UTC] Grabbing VATCAN news from API
+[30-May-2020 17:35:46 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF), expecting ';' or '{' in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 48
+[30-May-2020 17:35:46 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[30-May-2020 17:36:10 UTC] PHP Parse error:  syntax error, unexpected end of file, expecting function (T_FUNCTION) or const (T_CONST) in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 57
+[30-May-2020 17:36:10 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[30-May-2020 17:38:03 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 53
+[30-May-2020 17:38:03 UTC] PHP Fatal error:  Exception thrown without a stack frame in Unknown on line 0
+[30-May-2020 18:02:00 UTC] Grabbing VATCAN news from API
+[30-May-2020 18:03:52 UTC] Grabbing VATCAN news from API
+[30-May-2020 18:06:57 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: code in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:48
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(48): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 48, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 48
+[30-May-2020 18:07:13 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: code in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:48
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(48): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 48, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 48
+[30-May-2020 18:07:25 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: code in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:48
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(48): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 48, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 48
+[30-May-2020 18:07:28 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: code in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:48
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(48): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 48, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 48
+[30-May-2020 18:08:29 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: code in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:48
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(48): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 48, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 48
+[30-May-2020 18:08:32 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: code in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:48
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(48): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 48, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 48
+[30-May-2020 18:10:57 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: e in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:48
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(48): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 48, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 48
+[30-May-2020 18:11:05 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: e in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:48
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(48): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 48, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 48
+[30-May-2020 18:12:45 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: e in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:49
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(49): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 49, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 49
+[30-May-2020 18:13:04 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: e in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:49
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(49): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 49, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 49
+[30-May-2020 18:13:37 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: e in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:49
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(49): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 49, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 49
+[30-May-2020 18:13:40 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: e in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:49
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(49): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 49, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 49
+[30-May-2020 18:14:15 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable: e in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php:50
+Stack trace:
+#0 /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php(50): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8, 'Undefined varia...', '/home/czwgfir/n...', 50, Array)
+#1 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): App\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(ErrorException))
+#2 /home/czwgfir/new.winnipegfir.ca/website/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#4 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 50
+[30-May-2020 18:15:26 UTC] Grabbing VATCAN news from API
+[30-May-2020 18:19:03 UTC] PHP Fatal error:  Declaration of App\Exceptions\Handler::render($request, App\Exceptions\Throwable $exception) must be compatible with Illuminate\Foundation\Exceptions\Handler::render($request, Exception $e) in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 8
+[30-May-2020 18:19:23 UTC] PHP Fatal error:  Declaration of App\Exceptions\Handler::render($request, App\Exceptions\Throwable $exception) must be compatible with Illuminate\Foundation\Exceptions\Handler::render($request, Exception $e) in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 8
+[30-May-2020 18:19:32 UTC] PHP Fatal error:  Declaration of App\Exceptions\Handler::render($request, App\Exceptions\Throwable $exception) must be compatible with Illuminate\Foundation\Exceptions\Handler::render($request, Exception $e) in /home/czwgfir/new.winnipegfir.ca/website/app/Exceptions/Handler.php on line 8
+[30-May-2020 18:27:36 UTC] Grabbing VATCAN news from API
+[30-May-2020 18:44:45 UTC] Grabbing VATCAN news from API
+[30-May-2020 19:15:58 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Events\Controller' not found in /home/czwgfir/new.winnipegfir.ca/website/app/Http/Controllers/Events/EventController.php on line 16
+[30-May-2020 19:20:31 UTC] Grabbing VATCAN news from API
+[30-May-2020 19:44:11 UTC] Grabbing info from API
+[30-May-2020 19:44:12 UTC] Grabbing info from API

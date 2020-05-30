@@ -11,7 +11,7 @@ class ControllerApplication extends Model
     protected $table = "event_controller_applications";
 
     protected $fillable = [
-        'id', 'event_id', 'user_id', 'start_availability_timestamp', 'end_availability_timestamp', 'comments', 'submission_timestamp'
+        'id', 'event_id', 'user_id', 'start_availability_timestamp', 'end_availability_timestamp', 'position', 'comments', 'submission_timestamp'
     ];
 
     public function user()

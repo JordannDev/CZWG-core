@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('title', 'Error 404 - ')
+@section('title', 'Error 403')
 
 @section('content')
     <div class="container py-5">
-        <h1 class="font-weight-bold blue-text">Oops... that page is missing</h1>
+        <h1 class="font-weight-bold blue-text">You can't access this page</h1>
         <h4 class="font-weight-bold">ERROR 404</h4>
         <div class="mt-4">
             <p style="font-size: 1.2em;">
