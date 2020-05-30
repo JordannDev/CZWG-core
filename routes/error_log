@@ -1,0 +1,4 @@
+[12-May-2020 19:41:25 UTC] PHP Fatal error:  Uncaught Error: Class 'Route' not found in /home/czwgfir/new.winnipegfir.ca/website/routes/web.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/czwgfir/new.winnipegfir.ca/website/routes/web.php on line 18
