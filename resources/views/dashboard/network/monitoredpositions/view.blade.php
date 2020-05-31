@@ -12,16 +12,11 @@
                     <label for="">Callsign</label>
                     <input type="text" name="" id="" value="{{$position->identifier}}" class="form-control disabled">
                 </div>
-                <div class="form-group">
-                    <label for="Staff Only">Staff Only</label>
-                    <select name="" id="" class="form-control disabled" value={{$position->staff_only}}>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
+
                     <div class="pl-0 mt-2 d-flex flex-row justify-content-left">
                         <a href="javascript:editEnable()" class="btn btn-success btn-sm"><i class="fas fa-edit"></i> Edit</a>
                         <a href="#" class="ml-2 btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</a>
-                    </div>
+                    
                 </div>
             </form>
         </div>
