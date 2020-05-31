@@ -43,7 +43,6 @@ class NetworkController extends Controller
 
         $position = new MonitoredPosition();
         $position->identifier = $request->get('identifier');
-        $position->staffOnly = $request->get('staffOnly') == 'yes' ? true : false;
         $position->save();
 
         return redirect()->route('network.monitoredpositions.view', strtolower($position->identifier));
