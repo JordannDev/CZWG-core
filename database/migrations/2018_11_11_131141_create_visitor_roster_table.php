@@ -13,7 +13,7 @@ class CreateRosterTable extends Migration
      */
     public function up()
     {
-        Schema::create('roster', function (Blueprint $table) {
+        Schema::create('visitroster', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('cid');
             $table->unsignedInteger('user_id');
@@ -32,6 +32,7 @@ class CreateRosterTable extends Migration
             $table->integer('app');
             $table->integer('ctr');
             $table->text('remarks');
+            $table->text('homefir');
         });
     }
 
