@@ -16,7 +16,6 @@ class CreateMonitoredPositionsTable extends Migration
         Schema::create('monitored_positions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('identifier');
-            $table->boolean('staff_only');
             $table->timestamps();
         });
     }
