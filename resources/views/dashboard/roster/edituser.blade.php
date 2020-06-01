@@ -61,10 +61,10 @@
   <div align="center">
   <label class="control-label" for="del">Delivery</label>
     <select name="del" class="form-control">
-      <option value="1">Not Certified</option>
-      <option value="2">Training</option>
-      <option value="3">Solo</option>
-      <option value="4">Certified</option>
+      <option value="1"{{ $roster->del == "1" ? "selected=selected" : ""}}>Not Certified</option>
+      <option value="2"{{ $roster->del == "2" ? "selected=selected" : ""}}>Training</option>
+      <option value="3"{{ $roster->del == "3" ? "selected=selected" : ""}}>Solo</option>
+      <option value="4"{{ $roster->del == "4" ? "selected=selected" : ""}}>Certified</option>
     </select>
 </div>
 </div>
@@ -75,10 +75,10 @@
   <label class="control-label" for="gnd">Ground</label>
 
     <select name="gnd" class="form-control">
-      <option value="1">Not Certified</option>
-      <option value="2">Training</option>
-      <option value="3">Solo</option>
-      <option value="4">Certified</option>
+      <option value="1"{{ $roster->gnd == "1" ? "selected=selected" : ""}}>Not Certified</option>
+      <option value="2"{{ $roster->gnd == "2" ? "selected=selected" : ""}}>Training</option>
+      <option value="3"{{ $roster->gnd == "3" ? "selected=selected" : ""}}>Solo</option>
+      <option value="4"{{ $roster->gnd == "4" ? "selected=selected" : ""}}>Certified</option>
     </select>
 </div>
 
@@ -88,10 +88,10 @@
 <div class="form-group col-md-2">
   <label class="control-label" for="twr">Tower</label>
     <select name="twr" class="form-control">
-      <option value="1">Not Certified</option>
-      <option value="2">Training</option>
-      <option value="3">Solo</option>
-      <option value="4">Certified</option>
+      <option value="1"{{ $roster->twr == "1" ? "selected=selected" : ""}}>Not Certified</option>
+      <option value="2"{{ $roster->twr == "2" ? "selected=selected" : ""}}>Training</option>
+      <option value="3"{{ $roster->twr == "3" ? "selected=selected" : ""}}>Solo</option>
+      <option value="4"{{ $roster->twr == "4" ? "selected=selected" : ""}}>Certified</option>
     </select>
 
 </div>
@@ -106,10 +106,10 @@
 <div class="form-group col-md-2">
   <label class="control-label" for="dep">Departure</label>
     <select name="dep" class="form-control">
-      <option value="1">Not Certified</option>
-      <option value="2">Training</option>
-      <option value="3">Solo</option>
-      <option value="4">Certified</option>
+      <option value="1"{{ $roster->dep == "1" ? "selected=selected" : ""}}>Not Certified</option>
+      <option value="2"{{ $roster->dep == "2" ? "selected=selected" : ""}}>Training</option>
+      <option value="3"{{ $roster->dep == "3" ? "selected=selected" : ""}}>Solo</option>
+      <option value="4"{{ $roster->dep == "4" ? "selected=selected" : ""}}>Certified</option>
     </select>
   </div>
 
@@ -118,10 +118,10 @@
 <div class="form-group col-md-2">
   <label class="control-label" for="app">Approach</label>
     <select name="app" class="form-control">
-      <option value="1">Not Certified</option>
-      <option value="2">Training</option>
-      <option value="3">Solo</option>
-      <option value="4">Certified</option>
+      <option value="1"{{ $roster->app == "1" ? "selected=selected" : ""}}>Not Certified</option>
+      <option value="2"{{ $roster->app == "2" ? "selected=selected" : ""}}>Training</option>
+      <option value="3"{{ $roster->app == "3" ? "selected=selected" : ""}}>Solo</option>
+      <option value="4"{{ $roster->app == "4" ? "selected=selected" : ""}}>Certified</option>
     </select>
   </div>
 
@@ -130,10 +130,10 @@
 <div class="form-group col-md-2">
   <label class="control-label" for="ctr">Center</label>
     <select name="ctr" class="form-control">
-      <option value="1">Not Certified</option>
-      <option value="2">Training</option>
-      <option value="3">Solo</option>
-      <option value="4">Certified</option>
+      <option value="1"{{ $roster->ctr == "1" ? "selected=selected" : ""}}>Not Certified</option>
+      <option value="2"{{ $roster->ctr == "2" ? "selected=selected" : ""}}>Training</option>
+      <option value="3"{{ $roster->ctr == "3" ? "selected=selected" : ""}}>Solo</option>
+      <option value="4"{{ $roster->ctr == "4" ? "selected=selected" : ""}}>Certified</option>
 
     </select>
   </div>
@@ -152,8 +152,8 @@
     <label class="control-label" for"active">Active</label><br>
     <div class="col-md-2">
       <select name="active" class="form-control">
-        <option value="1">Active</option>
-        <option value="0">Not Active</option>
+        <option value="1"{{ $roster->active == "1" ? "selected=selected" : ""}}>Active</option>
+        <option value="0"{{ $roster->active == "0" ? "selected=selected" : ""}}>Not Active</option>
       </select>
     </div>
   </div>
