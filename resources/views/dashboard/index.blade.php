@@ -38,15 +38,6 @@
 </div>
 <div class="container py-4">
     <h1 data-step="1" data-intro="Welcome to the CZWG Dashboard! This is your central hub for all things Winnipeg. Here you can interact with our FIR, and manage your account." class="blue-text font-weight-bold">Dashboard</h1>
-    {{--@if (Auth::user()->rating_id >= 5)
-    <blockquote class="blockquote bq-primary">
-        <p class="bq-title">Cross the Pond Eastbound 2019</p>
-        <p>Are you available to control for CTP Eastbound 2019? Fill out the CZWG sign-up form to control either Gander or Shanwick Oceanic for the event!
-            <br/>
-            <a href="#" role="button" class="btn btn-primary" data-toggle="modal" data-target="#ctpSignUpModal">Sign Up</a>
-        </p>
-    </blockquote>
-    @endif--}}
     <br class="my-2">
     <div class="row">
         <div class="col">
@@ -80,11 +71,6 @@
                             <h6 class="card-subtitle mb-2 text-muted">
                                 {{Auth::user()->rating_GRP}} ({{Auth::user()->rating_short}})
                             </h6>
-                            Region: {{ Auth::user()->region_name }}<br/>
-                            Division: {{ Auth::user()->division_name }}<br/>
-                            @if (Auth::user()->subdivision_name)
-                            vACC/ARTCC: {{ Auth::user()->subdivision_name }}<br/>
-                            @endif
                             Role: {{Auth::user()->permissions()}}<br/>
                             @if(Auth::user()->staffProfile)
                             Staff Role: {{Auth::user()->staffProfile->position}}
@@ -96,7 +82,7 @@
                             <p class="mt-1">You don't have a linked Discord account.</p>
                             <a href="#" data-toggle="modal" data-target="#discordModal" class="mt-1">Link a Discord account</a>
                             @else
-                            <p class="mt-1"><img style="border-radius:50%; height: 30px;" class="img-fluid" src="{{Auth::user()->getDiscordAvatar()}}" alt="">&nbsp;&nbsp;{{Auth::user()->getDiscordUser()->username}}<span style="color: #d1d1d1;">#{{Auth::user()->getDiscordUser()->discriminator}}</span></p>
+                            <p class="mt-1"><img style="border-radius:50%; height: 30px;" class="img-fluid" src="{{Auth::user()->getDiscordAvatar()}}" alt="">&nbsp;&nbsp;{{Auth::user()->getDiscordUser()->username}}<span style="color: #d1d1d1;">#{{Auth::user()->getUser()->discriminator}}</span></p>
                             @if(!Auth::user()->memberOfCZWGGuild())
                             <a href="#" data-toggle="modal" data-target="#joinDiscordServerModal" class="mt-1">Join The CZWG Discord</a><br/>
                             @endif
@@ -272,6 +258,7 @@ Show events a controller is scheduled to work here
                         @endif
 <!--Winnipeg Cntrlr Hrs-->
                         @if (Auth::user()->rosterProfile->status == "home")
+                        @if (!Auth::user()->rosterProfile->currency == 0)
                           @if (Auth::user()->rosterProfile->currency < 2.0)
                           <h3><span class="badge rounded shadow-none blue">
                             {{Auth::user()->rosterProfile->currency}} hours recorded
@@ -281,12 +268,14 @@ Show events a controller is scheduled to work here
                             {{Auth::user()->rosterProfile->currency}} hours recorded
                           </span></h3>
                           @endif
+                          @endif
                               <p>You require <b>2 hours</b> of activity every month!</p>
                         @endif
 <!--End Winnipeg Cntrlr Hours-->
 
 <!--Winnipeg Vstr Cntrlr Hrs-->
                         @if (Auth::user()->rosterProfile->status == "visit")
+                        @if (!Auth::user()->rosterProfile->currency == 0)
                         @if (Auth::user()->rosterProfile->currency < 1.0)
                           <h3><span class="badge rounded shadow-none blue">
                               {{Auth::user()->rosterProfile->currency}} hours recorded
@@ -296,22 +285,25 @@ Show events a controller is scheduled to work here
                               {{Auth::user()->rosterProfile->currency}} hours recorded
                           </span></h3>
                         @endif
-                          <p>You require <b>1 hour</b> of activity every month!</p>
+                        @endif
+                        <p>You require <b>1 hour</b> of activity every month!</p>
                         @endif
 
 <!--End Winnipeg Cntrlr Hours-->
 
 <!--Winnipeg Cntrlr Hrs-->
                         @if (Auth::user()->rosterProfile->status == "instructor")
-                        @if (Auth::user()->rosterProfile->currency < 5.0)
-                          <h3><span class="badge rounded shadow-none blue">
-                              {{Auth::user()->rosterProfile->currency}} hours recorded
+                        @if (!Auth::user()->rosterProfile->currency == 0)
+                            @if (Auth::user()->rosterProfile->currency < 5.0)
+                                <h3><span class="badge rounded shadow-none blue">
+                                {{Auth::user()->rosterProfile->currency}} hours recorded
                             </span></h3>
-                        @elseif (Auth::user()->rosterProfile->currency >= 5.0)
-                            <h3><span class="badge rounded shadow-none green">
-                              {{Auth::user()->rosterProfile->currency}} hours recorded
-                            </span></h3>
-                        @endif
+                            @elseif (Auth::user()->rosterProfile->currency >= 5.0)
+                                <h3><span class="badge rounded shadow-none green">
+                                {{Auth::user()->rosterProfile->currency}} hours recorded
+                                </span></h3>
+                            @endif
+                            @endif
                             <p>You require <b>5 hours</b> of activity every 2 months!</p>
                         @endif
 <!--End Winnipeg Instrctr Hours-->
@@ -333,25 +325,51 @@ Show events a controller is scheduled to work here
             <div data-step="10" data-intro="If you have any enquires or issues for the staff, feel free to make a ticket via the ticketing system." class="card">
                 <div class="card-body">
                     <h3 class="font-weight-bold blue-text pb-2">Support</h3>
+                    <h5 class="font-weight-bold blue-text pb-2">Tickets</h5>
                     @if (count($openTickets) < 1)
                         You have no open support tickets
+                        <br>
                     @else
-                        <div class="alert bg-CZWG-blue-light">
-                            <h5 class="black-text">
-                                @if (count($openTickets) == 1)
-                                    1 open ticket
+                        <h5 class="black-text" style="font-weight: bold">
+                            @if (count($openTickets) == 1)
+                                1 open ticket
+                            @else
+                                {{count($openTickets)}} open tickets
+                            @endif
+                        </h5>
+                        <div class="list-group">
+                            @foreach ($openTickets as $ticket)
+                                <a href="{{url('/dashboard/tickets/'.$ticket->ticket_id)}}" class="list-group-item list-group-item-action black-text rounded-0 " style="background-color:#d9d9d9">{{$ticket->title}}<br/>
+                                    <small title="{{$ticket->updated_at}} (GMT+0, Zulu)">Last updated {{$ticket->updated_at_pretty()}}</small>
+                                </a>
+                            @endforeach
+                        </div>
+                        <br>
+                    @endif
+                    @if(Auth::user()->permissions >= 4)
+                        <br>
+                        <h5 class="font-weight-bold blue-text pb-2">Staff Tickets</h5>
+                        <p>Doesn't work yet (cc. James)</p>
+                        @if (count($staffTickets) < 1)
+                            You have no open <b>staff</b> tickets
+                            <br>
+                        @else
+                            <h5 class="black-text" style="font-weight: bold">
+                                @if (count($staffTickets) == 1)
+                                    1 open staff ticket
                                 @else
-                                    {{count($openTickets)}} open tickets
+                                    {{count($staffTickets)}} open staff tickets
                                 @endif
                             </h5>
                             <div class="list-group">
-                                @foreach ($openTickets as $ticket)
-                                    <a href="{{url('/dashboard/tickets/'.$ticket->ticket_id)}}" class="list-group-item list-group-item-action bg-CZWG-blue-light black-text rounded-0 ">{{$ticket->title}}<br/>
-                                        <small title="{{$ticket->updated_at}} (GMT+0, Zulu)">Last updated {{$ticket->updated_at_pretty()}}</small>
+                                @foreach ($staffTickets as $sticket)
+                                    <a href="{{url('/dashboard/tickets/'.$ticket->ticket_id)}}" class="list-group-item list-group-item-action black-text rounded-0 " style="background-color:#d9d9d9">{{$ticket->title}}<br/>
+                                        <small title="{{$ticket->updated_at}} (GMT+0, Zulu)">Last updated {{$sticket->updated_at_pretty()}}</small>
                                     </a>
-                                @endforeach
-                            </div>
-                        </div>
+                              @endforeach
+                           </div>
+                        @endif
+                        <br>
                     @endif
                     <ul class="list-unstyled mt-2 mb-0">
                         <li class="mb-2">
@@ -363,14 +381,14 @@ Show events a controller is scheduled to work here
                         <li class="mb-2">
                             <a href="{{route('tickets.index')}}" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">View previous support tickets</span></a>
                         </li>
-                        @if(Auth::user()->permissions >= 3)
+                        @if(Auth::user()->permissions >= 4)
                         <li class="mb-2">
                             <a href="{{route('tickets.staff')}}" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">View staff ticket inbox</span></a>
                         </li>
                         @endif
-                        <li class="mb-2">
+                        <!--<li class="mb-2">
                             <a href="https://kb.ganderoceanic.com" target="_blank" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">CZWG Knowledge Base</span></a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
@@ -381,16 +399,13 @@ Show events a controller is scheduled to work here
                     <h3 class="font-weight-bold blue-text pb-2">Staff</h3>
                     <ul class="list-unstyled mt-2 mb-0">
                         <li class="mb-2">
-                            <a href="" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">Controller Training</span></a>
+                            <a href="{{route('training.index')}}" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">Controller Training</span></a>
                         </li>
                         <li class="mb-2">
                             <a href="{{route('roster.index')}}" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">Controller Roster</span></a>
                         </li>
                         <li class="mb-2">
                             <a href="{{route('events.admin.index')}}" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">Events</span></a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="{{route('events.admin.create')}}" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">Event Create</span></a>
                         </li>
                         <li class="mb-2">
                             <a href="{{route('news.index')}}" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">News</span></a>
@@ -405,11 +420,13 @@ Show events a controller is scheduled to work here
                                         View users
                                     </span>
                                 </a>
-                        </li>
+                            </li>
                     </ul>
                 </div>
             </div>
             <br/>
+            @endif
+            @if (Auth::user()->permissions >= 5)
             <div class="card">
                 <div class="card-body">
                     <h3 class="font-weight-bold blue-text pb-2">Site Admin</h3>

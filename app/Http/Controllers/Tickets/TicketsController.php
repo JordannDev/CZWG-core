@@ -40,6 +40,7 @@ class TicketsController extends Controller
         $openTickets = Ticket::where('status', 0)->get()->sortByDesc('id');
         $closedTickets = Ticket::where('status', 1)->get()->sortByDesc('id');
         $onHoldTickets = Ticket::where('status', 2)->get()->sortByDesc('id');
+      //  $staffTickets = Ticket::where('staff_member_id', StaffMember::where('id', Auth::user()->id))->where('status', 0)->get()->sortByDesc('id');
 
         return view('dashboard.tickets.staff', compact('openTickets', 'closedTickets', 'onHoldTickets'));
     }
@@ -74,7 +75,7 @@ class TicketsController extends Controller
         ], $messages);
 
         if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('error-modal', $validator->errors()->all());
+            return redirect()->back()->withInput()->withErrors($validator->errors()->all());
         }
 
         $ticket = new Ticket([
@@ -84,6 +85,7 @@ class TicketsController extends Controller
             'title' => $request->get('title'),
             'message' => $request->get('message'),
             'status' => 0,
+            'staff_member_cid' => StaffMember::where('shortform', $request->get('staff_member'))->first()->user_id,
             'submission_time' => date('Y-m-d H:i:s'),
         ]);
 
@@ -92,6 +94,57 @@ class TicketsController extends Controller
         $ticket->staff_member->user->notify(new NewTicket($ticket->staff_member, $ticket));
 
         return redirect()->route('tickets.index')->with('success', 'Ticket '.$ticket->ticket_id.' created! A staff member will respond soon.');
+    }
+
+    public function openTicket($id)
+    {
+        if (Auth::user()->permissions < 2) {
+            $ticket = Ticket::where('ticket_id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
+        } else {
+            $ticket = Ticket::where('ticket_id', $id)->firstOrFail();
+        }
+
+        if ($ticket->status != 0) {
+            $ticketReply = new TicketReply([
+                'user_id' => Auth::user()->id,
+                'ticket_id' => $ticket->ticket_id,
+                'message' => 'Ticket has been reopened by '.Auth::user()->fullName('FLC').' at '.Carbon::now()->toDayDateTimeString().' Zulu.',
+                'submission_time' => date('Y-m-d H:i:s'),
+            ]);
+            $ticketReply->save();
+            $ticket->status = 0;
+            $ticket->updated_at = date('Y-m-d H:i:s');
+            $ticket->save();
+
+            return redirect()->route('tickets.viewticket', $ticket->ticket_id)->with('success', 'Ticket has been reopened!');
+        } else {
+            return redirect()->route('tickets.viewticket', $ticket->ticket_id)->with('error-modal', 'Ticket #'.$ticket->ticket_id.' is already open.');
+        }
+    }
+    public function onholdTicket($id)
+    {
+        if (Auth::user()->permissions < 2) {
+            $ticket = Ticket::where('ticket_id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
+        } else {
+            $ticket = Ticket::where('ticket_id', $id)->firstOrFail();
+        }
+
+        if ($ticket->status != 2) {
+            $ticketReply = new TicketReply([
+                'user_id' => Auth::user()->id,
+                'ticket_id' => $ticket->ticket_id,
+                'message' => 'Ticket has been placed on hold by '.Auth::user()->fullName('FLC').' at '.Carbon::now()->toDayDateTimeString().' Zulu. If you require further assistance immediately, please open a new ticket.',
+                'submission_time' => date('Y-m-d H:i:s'),
+            ]);
+            $ticketReply->save();
+            $ticket->status = 2;
+            $ticket->updated_at = date('Y-m-d H:i:s');
+            $ticket->save();
+
+            return redirect()->route('tickets.viewticket', $ticket->ticket_id)->with('success', 'Ticket has been placed on hold!');
+        } else {
+            return redirect()->route('tickets.viewticket', $ticket->ticket_id)->with('error-modal', 'Ticket #'.$ticket->ticket_id.' is already placed on hold.');
+        }
     }
 
     public function closeTicket($id)
@@ -104,7 +157,7 @@ class TicketsController extends Controller
 
         if ($ticket->status != 1) {
             $ticketReply = new TicketReply([
-                'user_id' => 1,
+                'user_id' => Auth::user()->id,
                 'ticket_id' => $ticket->ticket_id,
                 'message' => 'Ticket closed by '.Auth::user()->fullName('FLC').' at '.Carbon::now()->toDayDateTimeString().' Zulu. If you require further assistance please open a new ticket.',
                 'submission_time' => date('Y-m-d H:i:s'),
@@ -116,7 +169,7 @@ class TicketsController extends Controller
 
             return redirect()->route('tickets.viewticket', $ticket->ticket_id)->with('success', 'Ticket closed!');
         } else {
-            return redirect()->route('tickets.viewticket', $ticket->ticket_id)->with('error-modal', 'Ticket '.$ticket->id.' is already closed.');
+            return redirect()->route('tickets.viewticket', $ticket->ticket_id)->with('error-modal', 'Ticket #'.$ticket->ticket_id.' is already closed.');
         }
     }
 

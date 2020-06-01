@@ -8,6 +8,7 @@ use App\Models\AtcTraining\RosterMember;
 use App\Models\Publications\AtcResource;
 use App\Models\Settings\RotationImage;
 use App\Models\Tickets\Ticket;
+use App\Models\Users\StaffMember;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -28,16 +29,17 @@ class DashboardController extends Controller
             $active = $potentialRosterMember->active;
         }
         $openTickets = Ticket::where('user_id', $user->id)->where('status', 0)->get();
+        $staffTickets = Ticket::where('staff_member_cid', $user->id)->where('status', 0)->get();
+
 
         $atcResources = AtcResource::all()->sortBy('title');
 
         $bannerImg = 'RotationImage::all()->random();';
-    
 
         if ($user->preferences->enable_beta_features) {
-            return view('dashboard.indexnew', compact('openTickets', 'certification', 'active', 'atcResources', 'bannerImg'));
+            return view('dashboard.indexnew', compact('openTickets', 'staffTickets', 'certification', 'active', 'atcResources', 'bannerImg'));
         } else {
-            return view('dashboard.index', compact('openTickets', 'certification', 'active', 'atcResources', 'bannerImg'));
+            return view('dashboard.index', compact('openTickets', 'staffTickets', 'certification', 'active', 'atcResources', 'bannerImg'));
         }
     }
 

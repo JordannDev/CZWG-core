@@ -12,7 +12,7 @@ use App\Models\Users\User;
 class Ticket extends Model
 {
     protected $fillable = [
-        'user_id', 'ticket_id', 'staff_member_id', 'title', 'message', 'status', 'submission_time',
+        'user_id', 'ticket_id', 'staff_member_id', 'staff_member_cid', 'title', 'message', 'status', 'submission_time',
     ];
 
     public function replies()

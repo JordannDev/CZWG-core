@@ -23,6 +23,7 @@ class CreateTicketsTable extends Migration
             $table->text('message');
             /*0 - open 1 - closed 2 - on hold*/
             $table->integer('status')->default(0);
+            $table->text('staff_member_cid');
             $table->dateTime('submission_time');
             $table->timestamps();
         });
