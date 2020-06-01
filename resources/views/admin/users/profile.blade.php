@@ -26,22 +26,182 @@
                     <h5>Identity</h5>
                     <ul class="list-unstyled">
                         <li>CID: {{$user->id}}</li>
-                        @if (Auth::user()->permissions == 4)
+                        @if (Auth::user()->permissions == 5)
                         <li>CERT First Name: {{$user->fname}}</li>
                         <li>CERT Last Name: {{$user->lname}}</li>
                         @endif
                         <li>Display Name: {{$user->fullName('FLC')}}</li>
-                    </ul>
-                    <h5>Rating & Division</h5>
-                    <ul class="list-unstyled">
-                        <li>Subdivision: {{$user->subdivision_code ? $user->subdivision_name.'('.$user->subdivision_code.')' : 'None'}}</li>
-                        <li>Division: {{$user->division_name}} ({{$user->division_code}})</li>
-                        <li>Region: {{$user->region_name}} ({{$user->region_code}})</li>
                         <li>Rating: {{$user->rating_GRP}} ({{$user->rating_short}})</li>
+
                     </ul>
                     <h5>Email</h5>
                     <a href="mailto:{{$user->email}}">{{$user->email}}</a>
-                </div>
+                    <br>
+                    <h5 class="card-title">Status</h5>
+                    <div class="card-text">
+                        <div class="d-flex flex-row justify-content-left">
+                        @if ($certification == "certified")
+                            <h3>
+                            <span class="badge  badge-success rounded shadow-none">
+                                <i class="fa fa-check"></i>&nbsp;
+                                CZWG Certified
+                            </span>
+                            </h3>
+                        @elseif ($certification == "not_certified")
+                            <h3>
+                            <span class="badge badge-danger rounded shadow-none">
+                                <i class="fa fa-times"></i>&nbsp;
+                                Not Certified to Control
+                            </span>
+                            </h3>
+                        @elseif ($certification == "training")
+                            <h3>
+                            <span class="badge badge-warning rounded shadow-none">
+                                <i class="fa fa-book-open"></i>&nbsp;
+                                In Training
+                            </span>
+                            </h3>
+                        @elseif ($certification == "home")
+                            <h3>
+                            <span class="badge rounded shadow-none" style="background-color:#013162">
+                                <i class="fa fa-user-check"></i>&nbsp;
+                                CZWG Controller
+                            </span>
+                            </h3>
+                        @elseif ($certification == "visit")
+                            <h3>
+                            <span class="badge badge-info rounded shadow-none">
+                                <i class="fa fa-plane"></i>&nbsp;
+                                    CZWG Visiting Controller
+                            </span>
+                            </h3>
+                        @elseif ($certification == "instructor")
+                            <h3>
+                            <span class="badge badge-info rounded shadow-none">
+                                <i class="fa fa-chalkboard-teacher"></i>&nbsp;
+                                        CZWG Instructor
+                            </span>
+                            </h3>
+                        @else
+                            <h3>
+                            <span class="badge badge-danger rounded shadow-none">
+                                <i class="fa fa-question"></i>&nbsp;
+                                Unknown
+                            </span>
+                            </h3>
+                        @endif
+                        @if ($active == 0)
+                            <h3>
+                            <span class="badge ml-2 badge-danger rounded shadow-none">
+                                <i class="fa fa-times"></i>&nbsp;
+                                Inactive
+                            </span>
+                            </h3>
+                        @elseif ($active == 1)
+                            <h3>
+                            <span class="badge ml-2 badge-success rounded shadow-none">
+                                <i class="fa fa-check"></i>&nbsp;
+                                Active
+                            </span>
+                            </h3>
+                        @endif
+                        </div>
+                          <span class="text-danger">
+                    </div>
+                    <!--All users, no hours-->
+                    @if ($user->rosterProfile)
+                    <h5 class="card-title mt-2">Activity</h5>
+                        @if ($user->rosterProfile->currency < 0.1)
+                        <h3><span class="badge rounded shadow-none red">
+                            No hours recorded
+                        </span></h3>
+                        @endif
+<!--Winnipeg Cntrlr Hrs-->
+                        @if ($user->rosterProfile->status == "home")
+                        @if (!$user->rosterProfile->currency == 0)
+                          @if ($user->rosterProfile->currency < 2.0)
+                          <h3><span class="badge rounded shadow-none blue">
+                            {{$user->rosterProfile->currency}} hours recorded
+                          </span></h3>
+                          @elseif ($user->rosterProfile->currency >= 2.0)
+                          <h3><span class="badge rounded shadow-none green">
+                            {{$user->rosterProfile->currency}} hours recorded
+                          </span></h3>
+                          @endif
+                          @endif
+                              <p>They require <b>2 hours</b> of activity every month.</p>
+                        @endif
+<!--End Winnipeg Cntrlr Hours-->
+
+<!--Winnipeg Vstr Cntrlr Hrs-->
+                        @if ($user->rosterProfile->status == "visit")
+                        @if (!$user->rosterProfile->currency == 0)
+                        @if ($user->rosterProfile->currency < 1.0)
+                          <h3><span class="badge rounded shadow-none blue">
+                              {{Auth::user()->rosterProfile->currency}} hours recorded
+                          </span></h3>
+                        @elseif ($user->rosterProfile->currency >= 1.0)
+                          <h3><span class="badge rounded shadow-none green">
+                              {{$user->rosterProfile->currency}} hours recorded
+                          </span></h3>
+                        @endif
+                        @endif
+                        <p>They require <b>1 hour</b> of activity every month.</p>
+                        @endif
+
+<!--End Winnipeg Cntrlr Hours-->
+
+<!--Winnipeg Cntrlr Hrs-->
+                        @if ($user->rosterProfile->status == "instructor")
+                        @if (!$user->rosterProfile->currency == 0)
+                            @if ($user->rosterProfile->currency < 5.0)
+                                <h3><span class="badge rounded shadow-none blue">
+                                {{$user->rosterProfile->currency}} hours recorded
+                            </span></h3>
+                            @elseif ($user->rosterProfile->currency >= 5.0)
+                                <h3><span class="badge rounded shadow-none green">
+                                {{$user->rosterProfile->currency}} hours recorded
+                                </span></h3>
+                            @endif
+                            @endif
+                            <p>They require <b>5 hours</b> of activity every 2 months.</p>
+                        @endif
+<!--End Winnipeg Instrctr Hours-->
+
+                    @endif
+                </div><br>
+                <h4>Permissions</h4>
+                <div class="card p-3">
+                  <div class="d-flex flex-row align-items-center">
+
+                      <ul class="list-unstyled">
+
+                    <li><h5>Current Permissions Level: {{$user->permissions()}} </h5></li>
+                    @if ($user->permissions == 5 && Auth::user()->permissions == 5 || $user->permissions < 5)
+
+
+                    <li><h5>Change Permissions Level:</h5>
+
+                      <form method="post" action="{{route('edit.userpermissions', [$user->id])}}">
+                        <select name="permissions" id="permissions">
+                          <option name="guest" value="0" id="0"{{ $user->permissions == "0" ? "selected=selected" : ""}}>Guest</option>
+                          <option name="controller" value="1" id="1"{{ $user->permissions == "1" ? "selected=selected" : ""}}>Controller</option>
+                          <option name="mentor" value="2" id="2"{{ $user->permissions == "2" ? "selected=selected" : ""}}>Mentor</option>
+                          <option name="instructor" value="3" id="3"{{ $user->permissions == "3" ? "selected=selected" : ""}}>Instructor</option>
+
+                            @if (Auth::user()->permissions == 5)
+                          <option name="staff" value="4" id="4"{{ $user->permissions == "4" ? "selected=selected" : ""}}>Staff Member</option>
+                          <option name="admin" value="5" id="5"{{ $user->permissions == "5" ? "selected=selected" : ""}}>Administrator</option>
+                          @endif
+                        </select><br>
+                        @csrf
+                        <button type="submit">Update Permissions</button>
+                      </form>
+
+                      @endif
+                    </li>
+                  </ul>
+                </div></div>
             </div>
             <div class="col-md-6">
                 <h4>Avatar</h4>
@@ -74,7 +234,7 @@
                     @if($user->hasDiscord())
                     <h5><img style="border-radius:50%; height: 30px;" class="img-fluid" src="{{$user->getDiscordAvatar()}}" alt="">&nbsp;&nbsp;{{$user->getDiscordUser()->username}}#{{$user->getDiscordUser()->discriminator}}</h5>
                     <ul class="list-unstyled">
-                        <li class="d-flex align-items-center">Member of the CZQO Discord: <i style="margin-left: 5px;font-size: 20px;" class="{{$user->memberOfCzqoGuild() ? 'fas fa-check-circle green-text' : 'fas fa-times-circle red-text'}}"></i></li>
+                        <li class="d-flex align-items-center">Member of the Winnipeg Discord: <i style="margin-left: 5px;font-size: 20px;" class="{{$user->memberOfCzqoGuild() ? 'fas fa-check-circle green-text' : 'fas fa-times-circle red-text'}}"></i></li>
                     </ul>
                     <hr>
                     <h5>
@@ -106,6 +266,11 @@
                     This user does not have a linked Discord account.
                     @endif
                 </div>
+                <h4 class="mt-3">Training Notes</h4>
+                <div class="card p-3">
+                <a href="#" data-toggle="modal" data-target="#addNoteModal" class="btn btn-sm bg-czqo-blue-light">Add Note</a>
+                <a href="#" data-toggle="modal" data-target="#viewNotesModal" class="btn btn-sm bg-primary text-light">View Notes</a>
+                </div>
             </div>
         </div>
     </div>
@@ -113,13 +278,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New note</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">New Training Note</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    {!! Form::open(['route' => ['users.createnote', $user->id]]) !!}
+                    <form action="{{route('users.createnote', $user->id)}}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Position</label>
+                        {!! Form::text('position', null, ['class' => 'form-control']) !!}
+                    </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Content</label>
                         {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
@@ -131,8 +301,39 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
+                    <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
                     {!! Form::close() !!}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--View Notes modal-->
+    <div class="modal fade" id="viewNotesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">View Training Notes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @foreach($userNotes as $note)
+                    <div class="list-group-item pr-0">
+                        <div class="d-flex flex-row justify-content-between">
+                        <ul class="list-unstyled">
+                            <li><p>Instructor: {{$note->author_name}}</p></li>
+                            <li><p>Position: {{$note->position}}</p></li>
+                            <li><p>Date/Time: {{$note->timestamp}}</p></li>
+                            <li><p>Notes: {{$note->html()}}</p></li>
+                        </ul>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
