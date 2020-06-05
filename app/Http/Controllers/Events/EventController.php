@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Events\ControllerApplication;
 use App\Models\Users\User;
 use App\Models\Events\Event;
+use App\Models\Events\EventConfirm;
 use App\Models\Events\EventUpdate;
+use App\Models\AtcTraining\RosterMember;
+use App\Models\AtcTraining\VisitRosterMember;
 use App\Models\Publications\UploadedImage;
 use App\Models\Settings\AuditLogEntry;
 use Illuminate\Http\Request;
@@ -31,17 +34,55 @@ class EventController extends Controller
         })->sortByDesc('start_timestamp');
         return view('events.index', compact('events', 'pastEvents'));
     }
+
+    public function test($icao)
+    {
+        function getBetween($string, $start = "", $end = ""){
+            if (strpos($string, $start)) { // required if $start not exist in $string
+                $startCharCount = strpos($string, $start) + strlen($start);
+                $firstSubStr = substr($string, $startCharCount, strlen($string));
+                $endCharCount = strpos($firstSubStr, $end);
+                if ($endCharCount == 0) {
+                    $endCharCount = strlen($firstSubStr);
+                }
+                return substr($firstSubStr, 0, $endCharCount);
+            } else {
+                return '';
+            }
+        }
+            $url = 'https://www.airport-data.com/api/ap_info.json?icao='.$icao;
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $json = curl_exec($ch);
+            $contains = Str::contains(json_decode($json)->name, ['(', ')']);
+            if ($contains == true) {
+                $code = getBetween(json_decode($json)->name, '(', ')');
+            } else {
+            $code = json_decode($json)->name;
+            }
+        curl_close($ch);
+        return view('events.test', compact('code'));
+    }
+
     public function viewEvent($slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
+        $eventconfirm = EventConfirm::where('event_id', $event->id);
         $updates = $event->updates;
-        if (Auth::check() && ControllerApplication::where('user_id', Auth::id())->where('event_id', $event->id))
+        if (Auth::check() && ControllerApplication::where('user_id', Auth::id())->where('event_id', $event->id) && EventConfirm::where('user_cid', Auth::id())->where('event_id', $event->id))
         {
             $app = ControllerApplication::where('user_id', Auth::id())->where('event_id', $event->id)->first();
-            return view('events.view', compact('event', 'updates', 'app'));
+            $capp = EventConfirm::where('user_cid', Auth::id())->where('event_id', $event->id)->first();
+
+        return view('events.view', compact('event', 'eventconfirm', 'updates', 'app', 'capp'));
         }
+
         return view('events.view', compact('event', 'updates'));
     }
+
+
     public function controllerApplicationAjaxSubmit(Request $request)
     {
         $this->validate($request, [
@@ -56,6 +97,8 @@ class EventController extends Controller
             'position' => $request->get('position'),
             'comments' => $request->get('comments'),
             'submission_timestamp' => date('Y-m-d H:i:s'),
+            'event_name' => $request->get('event_name'),
+            'event_date' => $request->get('event_date')
         ]);
         $application->save();
         $webhook = $application->discord_webhook();
@@ -64,6 +107,63 @@ class EventController extends Controller
         }
         return redirect()->back()->with('success', 'Submitted!');
     }
+
+    public function viewApplications($id)
+    {
+
+      $event = Event::where('id', $id)->firstOrFail();
+      $applications = $event->controllerApplications;
+
+      return view('admin.events.applications', compact('applications', 'event'));
+    }
+
+    public function confirmController(Request $request, $id)
+    {
+      $this->validate($request, [
+          'availability_start' => 'required',
+          'availability_end' => 'required',
+          'position' => 'required'
+      ]);
+      $event = Event::where('id', $id)->firstorFail();
+      $controllerconfirm = EventConfirm::create([
+          'event_id' => $request->input('event_id'),
+          'event_name' => $request->input('event_name'),
+          'event_date' => $request->input('event_date'),
+          'user_cid' => $request->input('user_cid'),
+          'user_name' => $request->input('user_name'),
+          'start_timestamp' => $request->input('start_timestamp'),
+          'end_timestamp' => $request->input('end_timestamp'),
+          'position' => $request->input('position'),
+      ]);
+      $applications = ControllerApplication::where('user_id', $request->input('user_cid'))->firstorFail();
+      $applications->delete();
+
+      return redirect()->route('events.admin.view', $event->slug)->with('success', 'Controller Confirmed for Event!');
+    }
+
+    public function addController(Request $request, $id)
+    {
+      $this->validate($request, [
+          'availability_start' => 'required',
+          'availability_end' => 'required',
+          'position' => 'required'
+      ]);
+      $event = Event::where('id', $id)->firstorFail();
+      $user = User::where('id', $request->input('newcontroller'))->first();
+      $controllerconfirm = EventConfirm::create([
+          'event_id' => $request->input('event_id'),
+          'event_name' => $request->input('event_name'),
+          'event_date' => $request->input('event_date'),
+          'user_cid' => $request->input('newcontroller'),
+          'user_name' => $user->fullName('FL'),
+          'start_timestamp' => $request->input('start_timestamp'),
+          'end_timestamp' => $request->input('end_timestamp'),
+          'position' => $request->input('position'),
+      ]);
+
+      return redirect()->route('events.admin.view', $event->slug)->with('success', 'Controller Confirmed for Event!');
+    }
+
     public function adminIndex()
     {
         $events = Event::all()->sortByDesc('created_at');
@@ -74,7 +174,9 @@ class EventController extends Controller
         $event = Event::where('slug', $slug)->firstOrFail();
         $applications = $event->controllerApplications;
         $updates = $event->updates;
-        return view('admin.events.view', compact('event','applications', 'updates'));
+        $eventroster = EventConfirm::all()->where('event_id', $event->id);
+        $users = User::all();
+        return view('admin.events.view', compact('event', 'applications', 'updates', 'eventroster', 'users'));
     }
     public function adminCreateEvent()
     {
@@ -96,6 +198,7 @@ class EventController extends Controller
             'description' => 'required',
             'start' => 'required',
             'end' => 'required'
+
         ], $messages);
         //Redirect if fails
         if ($validator->fails()) {
@@ -137,6 +240,8 @@ class EventController extends Controller
     public function adminDeleteEvent($slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
+        $updates = EventUpdate::where('event_id', $event->id);
+        $updates->delete();
         $event->delete();
         return redirect()->route('events.admin.index')->with('info', 'Event deleted.');
     }
