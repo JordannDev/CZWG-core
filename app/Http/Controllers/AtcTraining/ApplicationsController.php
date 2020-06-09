@@ -76,7 +76,8 @@ class ApplicationsController extends Controller
         $application->save();
 
         //Send new application email to staff
-        Mail::to(CoreSettings::where('id', 1)->firstOrFail()->emailfirchief)->cc(CoreSettings::where('id', 1)->firstOrFail()->emaildepfirchief)->send(new ApplicationStartedStaffEmail($application));
+        Mail::to(CoreSettings::where('id', 1)->firstOrFail()->emailfirchief)->cc(CoreSettings::where('id', 1)->emaildepfirchief, CoreSettings::where('id', 1)->emailcinstructor)->send(new ApplicationStartedStaffEmail($application));
+        Mail::to(Auth::user()->email)->send(new ApplicationStartedUserEmail($application));
 
         //Return user to the applications detail page
         return redirect()->route('application.view', $application->application_id)->with('success', 'Application submitted! It should be processed within 72 hours. If you do not get a response, please send a ticket to the FIR Chief. Thanks for applying to Winnipeg!');
@@ -101,7 +102,7 @@ class ApplicationsController extends Controller
         $application->save();
 
         //Notify staff
-        Mail::to(CoreSettings::where('id', 1)->firstOrFail()->emailfirchief)->cc(CoreSettings::where('id', 1)->firstOrFail()->emaildepfirchief)->send(new ApplicationWithdrawnEmail($application));
+        Mail::to(CoreSettings::where('id', 1)->firstOrFail()->emailfirchief)->cc(CoreSettings::where('id', 1)->firstOrFail()->emaildepfirchief)->cc(CoreSettings::where('id', 1)->firstOrFail()->emailcinstructor)->send(new ApplicationWithdrawnEmail($application));
 
         //Return user to applications details page
         return redirect()->route('application.view', $application->application_id)->with('info', 'Application withdrawn.');
@@ -128,5 +129,12 @@ class ApplicationsController extends Controller
 
         //Return user to applications details page
         return view('dashboard.application.list', compact('applications'));
+    }
+
+    public function viewAllApplications()
+    {
+      $applications = Application::all();
+
+      return view('dashboard.training.applications.viewall', compact('applications'));
     }
 }

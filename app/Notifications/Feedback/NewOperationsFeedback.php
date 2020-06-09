@@ -42,7 +42,7 @@ class NewOperationsFeedback extends Notification
     {
         return (new MailMessage)
                     ->greeting('Hello,')
-                    ->line('A user has submitted feedback on Gander operations.')
+                    ->line('A user has submitted feedback on Winnipeg operations.')
                     ->line('User: '.$this->feedback->user->fullName('FLC'))
                     ->line('Email: '.$this->feedback->user->email)
                     ->line('Subject: ' .$this->feedback->subject)

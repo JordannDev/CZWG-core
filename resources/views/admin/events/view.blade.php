@@ -14,9 +14,12 @@
               <li class="mb-2">
                   <a href="" data-toggle="modal" data-target="#createUpdate" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="text-body">Create update</span></a>
               </li>
-              {{-- <li class="mb-2">
-                  <a href="" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="text-body">Export controller applications</span></a>
-              </li> --}}
+              <li class="mb-2">
+                  <a href="" data-toggle="modal" data-target="#confirmController" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="text-body">Add Controller to Event Roster</span></a>
+              </li>
+               <li class="mb-2">
+                  <a href="{{route('event.viewapplications', [$event->id]) }}" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="text-body">View Controller Applications</span></a>
+              </li>
               <li class="mb-2">
                   <a href="" data-toggle="modal" data-target="#deleteEvent" style="text-decoration:none;"><span class="red-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="text-body">Delete event</span></a>
               </li>
@@ -24,6 +27,7 @@
                 {{-- <li class="mb-2">
                     <a href="" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="text-body">Export controller applications</span></a>
                 </li> --}}
+
             </ul>
         </div>
         <div class="col-md-9">
@@ -76,35 +80,35 @@
                     </div>
                 @endforeach
             @endif
-            <h4 class="font-weight-bold blue-text mt-3">Controller Applications</h4>
-            @if (count($applications) == 0)
-                None yet!
+            <h4 class="font-weight-bold blue-text mt-3">Event Roster</h4>
+            @if (count($eventroster) == 0)
+                Nobody is confirmed to control yet!
             @else
-                @foreach($applications as $a)
                     <div class="card p-3">
-                        <h5>{{$a->user->fullName('FLC')}} ({{$a->user->rating_GRP}}, {{$a->user->division_name}})</h5>
-                        <p>{{$a->start_availability_timestamp}} to {{$a->end_availability_timestamp}}</p>
-                        <h6>Comments</h6>
-                        <p>{{$a->comments}}</p>
-                        <h6>Position Requested</h6>
-                                    @if ($a->position == "1")
-                                      <p>Delivery</p>
-                                    @elseif ($a->position == "2")
-                                      <p>Ground</p>
-                                      @elseif ($a->position == "3")
-                                        <p>Tower</p>
-                                        @elseif ($a->position == "4")
-                                          <p>Departure</p>
-                                          @elseif ($a->position == "5")
-                                            <p>Approach</p>
-                                            @elseif ($a->position == "6")
-                                              <p>Center</p>
-                                      @endif
-                        <h6>Email</h6>
-                        <p>{{$a->user->email}}</p>
-                        <a href="{{route('events.admin.controllerapps.delete', [$event->slug, $a->user_id])}}" class="red-text">Delete</a>
-                    </div>
+                      @foreach($eventroster as $roster)
+
+                      @if($roster->position == "Delivery")
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      @elseif($roster->position == "Ground")
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      @elseif($roster->position == "Tower")
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      @elseif($roster->position == "Departure")
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      @elseif($roster->position == "Arrival")
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      @elseif($roster->position == "Centre")
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      @else
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z
+                      @endif
+                      <form method="POST" action="{{route('event.deletecontroller')}}">
+                      <input type="hidden" name="user_cid" value="{{$roster->cid}}"></input>
+                      <button type="submit" value="Delete"></button>
+                      @csrf
+                    </form>
                 @endforeach
+                  </div>
             @endif
         </div>
     </div>
@@ -318,5 +322,65 @@
 @endif
 
 <!--End app update modal-->
+<!--Add Confirmed controller modal-->
+<div class="modal fade" id="confirmController" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Controller to Event {{$event->name}}:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
+              <div align="center" class="modal-body">
+  <form id="app-form" method="POST" action="{{ route('event.addcontroller', [$event->id] )}}">
+                    <div class="form-group row">
+                        <label for="dropdown" class="col-sm-4 col-form-label text-md-right">Pick a controller.</label>
+
+                        <select class="custom-select" name="newcontroller">
+                          @foreach($users as $user)
+                          <option value="{{ $user->id}}">{{$user->id}} - {{$user->fname}} {{$user->lname}}</option>
+                          @endforeach
+                        </select>
+
+                        <div class="col-md-12">
+
+
+
+
+                            <td align="center">
+                              <input type="hidden" name="event_id" value="{{$event->id}}">
+                              <input type="hidden" name="event_name" value="{{$event->name}}">
+                              <input type="hidden" name="event_date" value="{{$event->start_timestamp}}">
+                              <label for="">Start Time (zulu)</label>
+                              <input type="datetime" name="start_timestamp" class="form-control flatpickr" value="" id="availability_start">
+                              <label class="mt-2" for="">End Time (zulu)</label>
+                              <input type="datetime" name="end_timestamp" class="form-control flatpickr" value="" id="availability_end">
+                              <label class="mt-2" for="">Position</label>
+                              <select name="position" class="form-control" id="position">
+                                <option value="Delivery">Delivery</option>
+                                <option value="Ground">Ground</option>
+                                <option value="Tower">Tower</option>
+                                <option value="Departure">Departure</option>
+                                <option value="Arrival">Arrival</option>
+                                <option value="Centre">Centre</option>
+                              </select>
+                                  @csrf
+                                  <button type="submit">Confirm Controller</button>
+
+                            </td>
+                             </form>
+                        </div>
+                    </div>
+
+            </div>
+
+            <div align="center" class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Dismiss</button></form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End confirmed controller modal-->
 @endsection

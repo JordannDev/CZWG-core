@@ -10,7 +10,7 @@ class StaffMember extends Model
     protected $table = 'staff_member';
 
     protected $fillable = [
-        'user_id', 'position', 'group', 'description', 'email',
+        'user_id', 'position', 'shortform', 'group', 'group_id', 'description', 'email',
     ];
 
     public function user()

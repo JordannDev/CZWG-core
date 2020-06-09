@@ -4,19 +4,25 @@
 
 
 @section('message-content')
-    CZQO Staff have changed your status on the controller roster to:<br/>
+    The Winnipeg FIR Staff have changed your status on the controller roster to:<br/>
     @switch ($controller->status)
         @case ('certified')
-            <b>Certification:</b>&nbsp;Certified
+            <b>Certification:</b>&nbsp;CZWG Certified
         @break
         @case ('not_certified')
-            <b>Certification:</b>&nbsp;Not Certified
+            <b>Certification:</b>&nbsp;Not Certified to Control
         @break
         @case ('training')
-            <b>Certification:</b>&nbsp;Training
+            <b>Certification:</b>&nbsp;In Training
+        @break
+        @case ('home')
+        <b>Certification:</b>&nbsp;CZWG Controller
+        @break
+        @case ('visit')
+        <b>Certification:</b>&nbsp;CZWG Visiting Controller
         @break
         @case ('instructor')
-            <b>Certification:</b>&nbsp;CZQO Instructor
+            <b>Certification:</b>&nbsp;CZWG Instructor
         @break
     @endswitch
     <br/>
@@ -34,5 +40,5 @@
 @section('footer-to-line', $user->fullName('FLC').' ('.$user->email.')')
 
 @section('footer-reason-line')
-as your status with Gander Oceanic has been changed
+your status with the Winnipeg FIR has been changed.
 @endsection

@@ -20,6 +20,15 @@ class CreateCoreInfoTable extends Migration
             $table->text('sys_build');
             $table->text('copyright_year');
             $table->timestamps();
+            $table->text('banner');
+            $table->text('bannerMode');
+            $table->text('bannerLink');
+            $table->text('emailfirchief');
+            $table->text('emaildepfirchief');
+            $table->text('emailcinstructor');
+            $table->text('emaileventc');
+            $table->text('emailfacilitye');
+            $table->text('emailwebmaster');
         });
     }
 

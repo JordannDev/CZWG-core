@@ -11,7 +11,7 @@ class ControllerApplication extends Model
     protected $table = "event_controller_applications";
 
     protected $fillable = [
-        'id', 'event_id', 'user_id', 'start_availability_timestamp', 'end_availability_timestamp', 'position', 'comments', 'submission_timestamp'
+        'id', 'event_id', 'event_name', 'event_date', 'user_id', 'start_availability_timestamp', 'end_availability_timestamp', 'position', 'comments', 'submission_timestamp'
     ];
 
     public function user()
@@ -34,7 +34,7 @@ class ControllerApplication extends Model
             /*
              * The username shown in the message
              */
-            "username" => "Gander Oceanic Core",
+            "username" => "Winnipeg FIR",
             /*
              * The image location for the senders image
              */
@@ -73,11 +73,11 @@ class ControllerApplication extends Model
                     "timestamp" => date('Y-m-d H:i:s'),
 
                     // The integer color to be used on the left side of the embed
-                    "color" => hexdec( "2196f3" ),
+                    "color" => hexdec( "013162" ),
 
                     // Footer object
                     "footer" => [
-                        "text" => "Gander Oceanic Core",
+                        "text" => "Winnipeg FIR",
                         "icon_url" => asset('img/iconwhitebg.png')
                     ],
 

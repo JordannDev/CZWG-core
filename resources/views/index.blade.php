@@ -23,14 +23,13 @@
         }
     </style>
     <div data-jarallax data-speed="0.2" class="jarallax" style="height: calc(100vh - 59px)">
-        <div class="mask flex-center flex-column" style="position:absolute; top:0; left:0; z-index: 1; height: 100%; width: 100%; background: linear-gradient(40deg,rgba(69,202,252,.7),rgba(48,63,159,.4))!important;">
+        <div class="mask flex-center flex-column" style="position:absolute; top:0; left:0; z-index: 1; height: 100%; width: 100%; background: linear-gradient(40deg,rgba(1,49,98,.7),rgba(00,00,0,.6))!important;">
             <div class="container">
                 <div class="py-5">
-                    <h1 class="h1 my-4 py-2" style="font-size: 3em; color: #fff;">Welcome to Central Canada! Stay for a while :)</h1>
-                    <h4><a href="#blueBannerMid" id="discoverMore" class="white-text" style="transition:fade 0.4s;">Find out more&nbsp;&nbsp;<i class="fas fa-arrow-down"></i></a></h4>
+                    <h1 class="h1 my-4 py-2" style="font-size: 3em; color: #fff;">We Are Winnipeg.</h1>
+                    <h4><a href="#blueBannerMid" id="discoverMore" class="white-text" style="transition:fade 0.4s;">Learn More&nbsp;&nbsp;<i class="fas fa-arrow-down"></i></a></h4>
                 </div>
-            </div>
-            <div class="container">
+                <div class="container">
                 <a href="https://twitter.com/CZWGFIR" class="nav-link ml-0 pl-0 waves-effect white-text waves-light">
                     <i class="fab fa-twitter fa-3x"></i>
                 </a>
@@ -40,6 +39,19 @@
                 <a class="nav-link waves-effect white-text waves-light" data-toggle="modal" data-target="#discordTopModal">
                     <i class="fab fa-discord fa-3x"></i>
                 </a>
+                </div>
+                <br>
+                <br>
+                @if($nextEvent)
+                <div class="container white-text">
+                    <p style="font-size: 1.4em;" class="font-weight-bold">
+                        <a href="{{route('events.view', $nextEvent->slug)}}" class="white-text">
+                            <i class="fa fa-calendar"></i>&nbsp;&nbsp;Next Event:&nbsp;{{$nextEvent->name}}
+                        </a>
+                    </p>
+                    <p style="font-size: 1.2em;">{{$nextEvent->start_timestamp_pretty()}}</p>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -54,7 +66,7 @@
             </h1>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="carousel slide carousel-fade" style="height: 300px;" id="news-carousel" data-ride="carousel">
+                    <div class="carousel slide" style="height: 300px;" id="news-carousel" data-ride="carousel">
                         <ol class="carousel-indicators">
                             @php
                             $carousel_iteration = 0;
@@ -129,20 +141,20 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>+
     <div class="jumbtron" style=" background-size:1400px 600px; background-repeat: no-repeat; background-image:url(https://i.imgur.com/wBaWhk8.png); background-position: right;">
         <div class="container py-5">
             <div class="row">
-                <div class="col-md-5">
-                    <h1 class="font-weight-bold blue-text">We are central Canada!</h1>
+                <div class="col-md-7">
+                    <h1 class="font-weight-bold blue-text">The Heart of Canada.</h1>
                     <p style="font-size: 1.2em;" class="mt-3">
-                        Winnipeg FIR is the dankest, baddest duud on the blook.
+                        We're here to provide the highest-quality ATC service and the best controllers.
                     </p>
                     <div class="d-flex flex-row">
                         @if(!Auth::check() || !Auth::user()->rosterProfile)
                         <a href="{{route('application.start')}}" class="btn bg-czqo-blue-light" role="button">Apply Now</a>
                         @endif
-                        <a href="/pilots" class="btn bg-czqo-blue-light" role="button">Pilot Resources</a>
+                        <a href="{{route('roster.public')}}" class="btn bg-czqo-blue-light" role="button">View our Controller Roster </a>
                     </div>
                 </div>
             </div>
@@ -199,7 +211,7 @@
     <script>
         jarallax(document.querySelectorAll('.jarallax'), {
             speed: 0.5,
-            videoSrc: 'mp4:https://winnipegfir.ca/wp-admin/ControllerOnline/memes.mp4',
+            videoSrc: 'mp4:https://site-dev.winnipegfir.ca/images/Kebab.mp4',
             videoLoop: true
         });
     </script>

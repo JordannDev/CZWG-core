@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\AtcTraining\Application;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,8 +17,11 @@ class ApplicationStartedUserEmail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $application;
+
+    public function __construct(Application $application)
     {
+        $this->application = $application;
     }
 
     /**
@@ -29,7 +33,7 @@ class ApplicationStartedUserEmail extends Mailable
     {
         return $this
             ->to(config('mail.from.address'))
-            ->subject('CZQO Application Started')
+            ->subject('Winnipeg Application Started')
             ->view('emails.applicationstarteduser');
     }
 }

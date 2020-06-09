@@ -13,5 +13,5 @@
 @section('footer-to-line', $user->fullName('FLC').' ('.$user->email.')')
 
 @section('footer-reason-line')
-as they are engaged in an open ticket and a reply was received.
+they are engaged in an open ticket and a reply was received.
 @endsection

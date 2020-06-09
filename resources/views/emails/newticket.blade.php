@@ -13,5 +13,5 @@
 @section('footer-to-line', $user->fullName('FLC').' ('.$user->email.')')
 
 @section('footer-reason-line')
-as they are a staff member of Gander Oceanic.
+they are a staff member of the Winnipeg FIR.
 @endsection

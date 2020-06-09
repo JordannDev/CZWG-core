@@ -19,10 +19,6 @@ Route::get('/', 'HomeController@view')->name('index');
 Route::get('/map', 'HomeController@map')->name('map');
 Route::get('/roster', 'AtcTraining\RosterController@showPublic')->name('roster.public');
 Route::get('/staff', 'Users\StaffListController@index')->name('staff');
-Route::view('/pilots', 'pilots.index');
-Route::view('/pilots/oceanic-clearance', 'pilots.oceanic-clearance');
-Route::view('/pilots/position-report', 'pilots.position-report');
-Route::view('/pilots/tracks', 'pilots.tracks');
 Route::view('/pilots/tutorial', 'pilots.tutorial');
 Route::get('/policies', 'Publications\PoliciesController@index')->name('policies');
 Route::get('/meetingminutes', 'News\NewsController@minutesIndex')->name('meetingminutes');
@@ -34,6 +30,9 @@ Route::get('/events', 'Events\EventController@index')->name('events.index');
 Route::get('/events/{slug}', 'Events\EventController@viewEvent')->name('events.view');
 Route::view('/about', 'about')->name('about');
 Route::view('/branding', 'branding')->name('branding');
+Route::get('/test/{icao}', 'Events\EventController@test')->name('events.test');
+
+
 
 
 
@@ -73,19 +72,15 @@ Route::group(['middleware' => 'auth'], function () {
         return false;
     });
 
-    //CTP
-    //Route::post('/dashboard/ctp/signup/post', 'DashboardController@ctpSignUp')->name('ctp.signup.post');
     //Notification
     Route::get('/notification/{id}', 'Users\NotificationRedirectController@notificationRedirect')->name('notification.redirect');
     Route::get('/notificationclear', 'Users\NotificationRedirectController@clearAll');
     //Tickets
     Route::get('/dashboard/tickets', 'Tickets\TicketsController@index')->name('tickets.index');
-    Route::get('/dashboard/tickets/staff', 'Tickets\TicketsController@staffIndex')->name('tickets.staff');
     Route::get('/dashboard/tickets/{id}', 'Tickets\TicketsController@viewTicket')->name('tickets.viewticket');
     Route::post('/dashboard/tickets', 'Tickets\TicketsController@startNewTicket')->name('tickets.startticket');
     Route::post('/dashboard/tickets/{id}', 'Tickets\TicketsController@addReplyToTicket')->name('tickets.reply');
-    Route::get('/dashboard/tickets/{id}/close', 'Tickets\TicketsController@closeTicket')->name('tickets.closeticket');
-
+    Route::get('/dashboard/staff/tickets', 'Tickets\TicketsController@staffIndex')->middleware('staff')->name('tickets.staff');
     //Feedback
     Route::get('/feedback', 'Feedback\FeedbackController@create')->name('feedback.create');
     Route::post('/feedback', 'Feedback\FeedbackController@createPost')->name('feedback.create.post');
@@ -101,7 +96,6 @@ Route::group(['middleware' => 'auth'], function () {
     //CONTROLLER only
     Route::group(['middleware' => 'atc'], function() {
     Route::get('/atcresources', 'Publications\AtcResourcesController@index')->name('atcresources.index');
-      Route::view('/eurosounds', 'eurosounds')->name('eurosounds');
     });
 
     //MENTOR only
@@ -155,13 +149,21 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/dashboard/roster/{id}/deletevisit/', 'AtcTraining\RosterController@deleteVisitController')->name('roster.deletevisitcontroller');
     });
     //Staff
-    Route::group(['middleware' => 'director'], function () {
+    Route::group(['middleware' => 'staff'], function () {
         Route::get('/dashboard/ctp/signups', function () {
             $signups = \App\CtpSignUp::all();
             foreach ($signups as $s) {
                 echo $s.'<br/>';
             }
         })->name('ctp.signup.list');
+    });
+    Route::group(['middleware' => 'staff'], function () {
+        Route::get('/admin/imageupload', 'Users\ImageUploadController@imageUpload')->middleware('staff')->name('dashboard.image');
+        Route::post('/admin/imageupload', 'Users\ImageUploadController@imageUploadPost')->middleware('staff')->name('dashboard.image.upload');
+        //Tickets
+        Route::get('/dashboard/tickets/{id}/close', 'Tickets\TicketsController@closeTicket')->name('tickets.closeticket');
+        Route::get('/dashboard/tickets/{id}/hold', 'Tickets\TicketsController@onholdTicket')->name('tickets.onholdticket');
+        Route::get('/dashboard/tickets/{id}/open', 'Tickets\TicketsController@openTicket')->name('tickets.onholdticket');
         //ATC Resources
         Route::post('/atcresources', 'Publications\AtcResourcesController@uploadResource')->name('atcresources.upload');
         Route::get('/atcresources/delete/{id}', 'Publications\AtcResourcesController@deleteResource')->name('atcresources.delete');
@@ -182,11 +184,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/events/{slug}/delete', 'Events\EventController@adminDeleteEvent')->name('events.admin.delete');
         Route::get('/admin/events/{slug}/controllerapps/{cid}/delete', 'Events\EventController@adminDeleteControllerApp')->name('events.admin.controllerapps.delete');
         Route::get('/admin/events/{slug}/updates/{id}/delete', 'Events\EventController@adminDeleteUpdate')->name('events.admin.update.delete');
+        Route::get('/admin/events/applications/{id}', 'Events\EventController@viewApplications')->name('event.viewapplications');
+        Route::post('/admin/events/applications/confirm/{id}', 'Events\EventController@confirmController')->name('event.confirmapplication');
+        Route::post('/admin/events/applications/manualconfirm/{id}', 'Events\EventController@addController')->name('event.addcontroller');
+        Route::post('/admin/events/applications/controller/delete/', 'Events\EventController@deleteController')->name('event.deletecontroller');
         //Users
-        Route::get('/admin/users/', 'Users\UserController@viewAllUsers')->middleware('director')->name('users.viewall');
+        Route::get('/admin/users/', 'Users\UserController@viewAllUsers')->middleware('mentor')->name('users.viewall');
         Route::post('/admin/users/search/ajax', 'Users\UserController@searchUsers')->name('users.search.ajax');
         Route::get('/admin/users/{id}', 'Users\UserController@viewUserProfile')->name('users.viewprofile');
         Route::post('/admin/users/{id}', 'Users\UserController@createUserNote')->name('users.createnote');
+        Route::post('/admin/users/edit/{id}', 'Users\UserController@editPermissions')->name('edit.userpermissions');
         Route::get('/admin/users/{user_id}/note/{note_id}/delete', 'Users\UserController@deleteUserNote')->name('users.deletenote');
         Route::group(['middleware' => 'executive'], function () {
             Route::post('/admin/users/func/avatarchange', 'Users\UserController@changeUsersAvatar')->name('users.changeusersavatar');
@@ -201,7 +208,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/users/{id}/email', 'Users\UserController@emailCreate')->name('users.email.create');
         Route::get('/admin/users/{id}/email', 'Users\UserController@emailStore')->name('users.email.store');
         //Controller Applications
-        Route::get('/dashboard/training/applications', 'AtcTraining\TrainingController@viewAllApplications')->name('training.applications');
+        Route::get('/dashboard/training/applications', 'AtcTraining\ApplicationsController@viewAllApplications')->name('training.applications');
         Route::get('/dashboard/training/applications/{id}', 'AtcTraining\TrainingController@viewApplication')->name('training.viewapplication');
         Route::group(['middleware' => 'executive'], function () {
             Route::get('/dashboard/training/applications/{id}/accept', 'AtcTraining\TrainingController@acceptApplication')->name('training.application.accept');
@@ -237,6 +244,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::post('/rotation-images/uploadimg', 'Settings\SettingsController@uploadRotationImage')->name('settings.rotationimages.uploadimg');
                 Route::get('/staff', 'Users\StaffListController@editIndex')->name('settings.staff');
                 Route::post('/staff/{id}', 'Users\StaffListController@editStaffMember')->name('settings.staff.editmember');
+                Route::post('/staff/{id}/delete', 'Users\StaffListController@deleteStaffMember')->name('settings.staff.deletemember');
+                Route::post('/staff/a/add', 'Users\StaffListController@addStaffMember')->name('settings.staff.addmember');
             });
         });
     });

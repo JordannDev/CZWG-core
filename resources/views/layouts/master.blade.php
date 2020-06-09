@@ -137,7 +137,6 @@
                                     <a class="dropdown-item {{ Request::is('dashboard/application') ? 'active white-text' : '' }}" href="{{url ('/dashboard/application/')}}">Visit in Winnipeg!</a>
                                 @endif
                                 <a class="dropdown-item {{ Request::is('atcresources') ? 'active white-text' : '' }}" href="{{route('atcresources.index')}}">ATC Resources</a>
-                                <a href="{{route('eurosounds')}}" class="dropdown-item {{ Request::is('eurosounds') ? 'active white-text' : '' }}">EuroSounds</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown {{ Request::is('pilots/vatsim-resources') || Request::is('pilots/tutorial') || Request::is('pilots/tracks') ? 'active' : '' }}">
@@ -186,17 +185,17 @@
                         </li>
                         @endauth
                         <li class="nav-item d-flex align-items-center">
-                            <a href="https://twitter.com/CZWGFIR" class="nav-link waves-effect waves-light">
+                            <a href="https://twitter.com/CZWGFIR" class="nav-link waves-effect waves-light" target="_BLANK" >
                                 <i style="font-size: 1.7em;" class="fab fa-twitter"></i>
                             </a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
-                            <a href="https://www.facebook.com/CZWGFIR" class="nav-link waves-effect waves-light">
+                            <a href="https://www.facebook.com/CZWGFIR" class="nav-link waves-effect waves-light" target="_BLANK" >
                                 <i style="font-size: 1.7em;" class="fab fa-facebook"></i>
                             </a>
                         </li>
                         <li class="nav-item d-flex align-items-center">
-                            <a class="nav-link waves-effect waves-light" data-toggle="modal" data-target="#discordTopModal">
+                            <a class="nav-link waves-effect waves-light" data-toggle="modal" data-target="#discordTopModal" target="_BLANK" >
                                 <i style="height: 22px; font-size: 1.7em;width: 28px;padding-left: 5px;padding-top: 2px;" class="fab fa-discord"></i>
                             </a>
                         </li>
@@ -258,7 +257,7 @@
                 &nbsp;
                 •
                 &nbsp;
-                <a href="https://github.com/gander-oceanic-fir-vatsim/czqo-core" class="white-text">GitHub</a>
+                <a href="https://github.com/winnipegfir/CZWG-core" class="white-text">GitHub</a>
                 &nbsp;
                 •
                 &nbsp;
@@ -266,15 +265,12 @@
                 &nbsp;
                 •
                 &nbsp;
-                <a href="#" data-toggle="modal" data-target="#contactUsModal" class="white-text">Contact Us</a>
+                <a href="https://www.vatcan.ca" class="white-text">VATCAN</a>
                 &nbsp;
                 •
-                &nbsp;
-                <a href="https://vatsim.net" class="white-text">VATSIM</a>
-                &nbsp;
-                •
-                &nbsp;
-                <a href="https://vatcan.ca" class="white-text">VATCAN</a>
+                <a href="https://www.vatsim.net" class="white-text">VATSIM</a>
+
+
             </div>
             <div class="mt-3">
                 <a href="{{route('about')}}"><small class="text-muted">{{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->sys_name}} {{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->release}} ({{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->sys_build}})</small></a> <small>- <a target="_blank" href="https://blog.ganderoceanic.com/gander-oceanic-core-update-log/" class="text-muted">Update Log</a></small>

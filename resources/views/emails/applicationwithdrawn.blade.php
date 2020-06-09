@@ -6,7 +6,7 @@
 @stop
 
 @section('message-content')
-    <p>A controller has withdrawn their application for Gander Oceanic.</p>
+    <p>A controller has withdrawn their visitor application for the Winnipeg FIR.</p>
     <b>Details</b>
     <ul>
         <li>Application ID: {{$application->application_id}}</li>

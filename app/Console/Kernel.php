@@ -226,6 +226,7 @@ class Kernel extends ConsoleKernel
                                 if (!$staffOnly) {
                                     // Add hours
                                     $roster_member->currency = $roster_member->currency + $difference;
+                                    $roster_member->monthly = $roster_member->monthly + $difference;
 
                                     // Save roster member
                                     $roster_member->save();

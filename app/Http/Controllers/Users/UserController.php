@@ -12,6 +12,8 @@ use App\Notifications\PermissionsChanged;
 use App\Models\Users\User;
 use App\Models\Users\UserNote;
 use App\Models\Users\UserNotification;
+use App\Models\AtcTraining\RosterMember;
+use App\Models\AtcTraining\VisitRosterMember;
 use App\Notifications\WelcomeNewUser;
 use Auth;
 use Exception;
@@ -66,12 +68,45 @@ class UserController extends Controller
     public function viewUserProfile($id)
     {
         $user = User::where('id', $id)->firstOrFail();
+        $certification = null;
+        $active = null;
+        $potentialRosterMember = RosterMember::where('user_id', $user->id)->first();
+        $potentialVisitRosterMember = VisitRosterMember::where('user_id', $user->id)->first();
+        if ($potentialRosterMember !== null) {
+          $certification = $potentialRosterMember->status;
+          $active = $potentialRosterMember->active;
+        } elseif ($potentialVisitRosterMember !== null) {
+          $certification = $potentialVisitRosterMember->status;
+          $active = $potentialVisitRosterMember->active;
+        }
+        
+
         $xml = [];
+        $userNotes = UserNote::where('user_id', $user->id)->orderBy('timestamp', 'desc')->get();
         //$xml['return'] = file_get_contents('https://cert.vatsim.net/cert/vatsimnet/idstatus.php?cid=' . $user->id);
         $xml['return'] = 'sausage';
         $auditLog = AuditLogEntry::where('affected_id', $id)->get();
 
-        return view('admin.users.profile', compact('user', 'xml', 'auditLog'));
+        return view('admin.users.profile', compact('user', 'xml', 'certification', 'active', 'auditLog', 'userNotes'));
+    }
+
+    public function editPermissions(Request $request,$id)
+{
+    $user = User::where('id', $id)->firstorFail();
+    $roster = RosterMember::where('cid', $id)->first();
+    $visitroster = VisitRosterMember::where('cid', $id)->first();
+    $user->permissions = $request->input('permissions');
+    $user->save();
+    if($roster != null) {
+    $roster->status = $request->input('certification');
+    $roster->save();
+  }
+    if($visitroster != null) {
+      $visitroster->status = $request->input('certification');
+      $visitroster->save();
+
+    }
+      return redirect()->back()->withSuccess('User Permissions Changed!');
     }
 
     public function deleteUser($id)
@@ -215,13 +250,18 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'content' => 'required',
+            'position' => 'required',
         ]);
 
         $user = User::where('id', $id)->firstOrFail();
+        $instructor = Auth::user();
+        $content = $request->get('content');
         $note = new UserNote([
             'user_id' => $user->id,
             'author' => Auth::user()->id,
-            'content' => $request->get('content'),
+            'author_name' => $instructor->fullName('FLC'),
+            'position' => $request->get('position'),
+            'content' => $content,
             'timestamp' => date('Y-m-d H:i:s'),
         ]);
 
@@ -231,8 +271,7 @@ class UserController extends Controller
 
         $note->save();
 
-        //return redirect()->route('users.viewprofile', $user->id)->with('success', 'User note saved!');
-        abort(404, 'Not implemented');
+        return redirect()->route('users.viewprofile', $user->id)->with('success', 'Training note saved!');
     }
 
     public function deleteUserNote($user_id, $note_id)
@@ -254,8 +293,7 @@ class UserController extends Controller
 
         $note->delete();
 
-        //return redirect()->route('users.viewprofile', $user->id)->with('success', 'User note deleted.');
-        abort(404, 'Not implemented');
+        return redirect()->route('users.viewprofile', $user->id)->with('success', 'Training note deleted.');
     }
 
     public function changeAvatar(Request $request)
@@ -453,14 +491,17 @@ class UserController extends Controller
             'guild.id' => 598023748741758976,
             'user.id' => intval($discordUser->id),
             'access_token' => $discordUser->token,
-             'nick' => Auth::user()->fullName('FLC')
+             'nick' => Auth::user()->fullName('FL')
         );
         if (Auth::user()->rosterProfile) {
             if (Auth::user()->rosterProfile->status == 'training') {
-                $args['roles'] = array(482824058141016075);
+                $args['roles'] = array(717155319981146182);
             }
-            elseif (Auth::user()->rosterProfile->status == 'certified') {
-                $args['roles'] = array(482819739996127259);
+            elseif (Auth::user()->rosterProfile->status == 'home') {
+                $args['roles'] = array(713914598750683157);
+            }
+            elseif (Auth::id() == '1427371') {
+                $args['roles'] = array(673725707259609093);
             }
         }
         else {
@@ -469,14 +510,14 @@ class UserController extends Controller
         $discord->guild->addGuildMember($args);
         Auth::user()->notify(new DiscordWelcome());
         $discord->channel->createMessage(['channel.id' => 695849973585149962, 'content' => '<@'.$discordUser->id.'> ('.Auth::id().') has joined.']);
-        return redirect()->route('dashboard.index')->with('success', 'You have joined the CZQO Discord server!');
+        return redirect()->route('dashboard.index')->with('success', 'You have joined the Winnipeg Discord server!');
     }
 
     public function unlinkDiscord()
     {
         $discord = new DiscordClient(['token' => config('services.discord.token')]);
         $user = Auth::user();
-        if ($user->memberOfCzqoGuild() && !$user->staffProfile) {
+        if ($user->memberOfCZWGGuild()) {
             try {
                 $discord->guild->removeGuildMember(['guild.id' => 598023748741758976, 'user.id' => $user->discord_user_id]);
                 $discord->channel->createMessage(['channel.id' => 695849973585149962, 'content' => '<@'.$user->discord_user_id.'> ('.Auth::id().') has unlinked their account and has been kicked.']);

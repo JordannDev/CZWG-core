@@ -32,7 +32,7 @@ class GDPRDataEmail extends Mailable
     {
         return $this
             ->to(config('mail.from.address'))
-            ->subject('CZQO Data GDPR Request')
+            ->subject('Winnipeg Data GDPR Request')
             ->view('emails.GDPRdata');
     }
 }

@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
+
     <div class="container" style="margin-top: 20px;">
-        <div class="container" style="margin-top: 20px;">
             <a href="{{route('tickets.index')}}" class="blue-text" style="font-size: 1.2em;"> <i class="fas fa-arrow-left"></i> Back</a>
         <h1 class="blue-text font-weight-bold mt-2">Ticket #{{ $ticket->ticket_id }}</h1>
         <hr>

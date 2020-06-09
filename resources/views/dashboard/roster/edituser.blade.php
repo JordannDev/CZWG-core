@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 
 @section('navbarprim')
@@ -7,13 +6,13 @@
 
 @stop
 
-@section('title', 'ATC Roster - ')
-@section('description', "Gander Oceanic's Oceanic Controller Roster")
+@section('title', 'Edit User')
+@section('description', "Winnipeg FIR's Controller Roster")
 
 @section('content')
 
 <div class="container" style="margin-top: 20px;">
-    <a href="{{route('roster.index')}}" class="blue-text" style="font-size: 1.2em;"> <i class="fas fa-arrow-left"></i>Roster</a>
+    <a href="{{route('roster.index')}}" class="blue-text" style="font-size: 1.2em;"> <i class="fas fa-arrow-left"></i> Roster</a>
 <br>
 <head>
 <style>
@@ -48,7 +47,7 @@
 
 <div class="form-group">
   <label>Controller CID:</label><br>
-  {{$cid}}<br><br>
+  {{$roster->full_name." ".$cid}}<br><br>
 
   <!--Delivery-->
 
@@ -116,7 +115,7 @@
 <br><br>
 <!-- Approach -->
 <div class="form-group col-md-2">
-  <label class="control-label" for="app">Approach</label>
+  <label class="control-label" for="app">Arrival</label>
     <select name="app" class="form-control">
       <option value="1"{{ $roster->app == "1" ? "selected=selected" : ""}}>Not Certified</option>
       <option value="2"{{ $roster->app == "2" ? "selected=selected" : ""}}>Training</option>
@@ -128,7 +127,7 @@
 <br><br>
 <!-- Center -->
 <div class="form-group col-md-2">
-  <label class="control-label" for="ctr">Center</label>
+  <label class="control-label" for="ctr">Centre</label>
     <select name="ctr" class="form-control">
       <option value="1"{{ $roster->ctr == "1" ? "selected=selected" : ""}}>Not Certified</option>
       <option value="2"{{ $roster->ctr == "2" ? "selected=selected" : ""}}>Training</option>
@@ -143,7 +142,7 @@
 <!--Remarks-->
 <div class="form-group">
   <label class="control-label" for="remarks">Remarks</label><br>
-  <textarea name="remarks" rows="4" cols="30" class="form-control">{{ $roster->remarks }}
+  <textarea name="remarks" rows="1" cols="5" class="form-control">{{ $roster->remarks }}
   </textarea></div>
 
 
@@ -157,6 +156,9 @@
       </select>
     </div>
   </div>
+  <div class="form-group">
+    <label>Home FIR - <i>Visitor Controllers ONLY!</i></label><br>
+    <input type="text" name="homefir" id="homefir" size="30" value="{{$roster->homefir}}"></input>
 @csrf
 <!-- Button -->
 <div class="form-group">
@@ -168,4 +170,5 @@
 </div>
 </fieldset>
 </form>
+
 @stop

@@ -105,6 +105,10 @@ body, html {
     text-transform: none !important;
 }
 
+.btn_form {
+    text-transform: none !important;
+}
+
 a {
     transition: 0.8s ease;
 }
@@ -208,4 +212,13 @@ div.d-flex.flex-row > i {
     font-size: 1.3em !important;
     color: #013162;
     font-weight: 600;
+}
+
+div.notes{
+    width:400px;
+    height:800px;
+    border-style: solid;
+    border-color: red;
+    margin:1px; padding:1px;
+    word-wrap:break-word;
 }

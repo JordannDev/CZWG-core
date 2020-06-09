@@ -84,7 +84,7 @@
                             </h3>
                         @else
                             <h3>
-                            <span class="badge badge-danger rounded shadow-none">
+                            <span class="badge badge-dark rounded shadow-none">
                                 <i class="fa fa-question"></i>&nbsp;
                                 Unknown
                             </span>
@@ -116,6 +116,23 @@
                             No hours recorded
                         </span></h3>
                         @endif
+<!--Winnipeg Training Hrs-->
+                        @if ($user->rosterProfile->status == "training")
+                        @if (!$user->rosterProfile->currency == 0)
+                          @if ($user->rosterProfile->currency < 2.0)
+                          <h3><span class="badge rounded shadow-none blue">
+                            {{$user->rosterProfile->currency}} hours recorded
+                          </span></h3>
+                          @elseif ($user->rosterProfile->currency >= 2.0)
+                          <h3><span class="badge rounded shadow-none green">
+                            {{$user->rosterProfile->currency}} hours recorded
+                          </span></h3>
+                          @endif
+                          @endif
+                              <p>They require <b>2 hours</b> of activity every month.</p>
+                        @endif
+<!--End Winnipeg Training Hours-->
+
 <!--Winnipeg Cntrlr Hrs-->
                         @if ($user->rosterProfile->status == "home")
                         @if (!$user->rosterProfile->currency == 0)
@@ -169,22 +186,22 @@
 <!--End Winnipeg Instrctr Hours-->
 
                     @endif
+
                 </div><br>
-                <h4>Permissions</h4>
+                <h4>Modify User</h4>
                 <div class="card p-3">
                   <div class="d-flex flex-row align-items-center">
 
-                      <ul class="list-unstyled">
+                      <ul class="list-unstyled" style="width:500px; height:80px">
 
                     <li><h5>Current Permissions Level: {{$user->permissions()}} </h5></li>
-                    @if ($user->permissions == 5 && Auth::user()->permissions == 5 || $user->permissions < 5)
-
-
-                    <li><h5>Change Permissions Level:</h5>
-
-                      <form method="post" action="{{route('edit.userpermissions', [$user->id])}}">
-                        <select name="permissions" id="permissions">
-                          <option name="guest" value="0" id="0"{{ $user->permissions == "0" ? "selected=selected" : ""}}>Guest</option>
+                    @if ($user->id == Auth::user()->id)
+                            <a role="button" data-toggle="modal" data-target="#confirmChange" class="btn btn-sm btn-info">Update Yourself</a>
+                    @elseif (Auth::user()->permissions == 5 || $user->permissions < 4 && Auth::user()->permissions > 3 || $user->permissions < 2 && Auth::user()->permissions > 2)
+                    <h5 display="inline-block">Change Permissions Level:</h5>
+                    <form method="post" action="{{route('edit.userpermissions', [$user->id])}}" style="position:absolute">
+                        <select name="permissions" id="permissions" class="form-control" style="position:relative; width:100px; left:210px; bottom:40px">
+                        <option name="guest" value="0" id="0"{{ $user->permissions == "0" ? "selected=selected" : ""}}>Guest</option>
                           <option name="controller" value="1" id="1"{{ $user->permissions == "1" ? "selected=selected" : ""}}>Controller</option>
                           <option name="mentor" value="2" id="2"{{ $user->permissions == "2" ? "selected=selected" : ""}}>Mentor</option>
                           <option name="instructor" value="3" id="3"{{ $user->permissions == "3" ? "selected=selected" : ""}}>Instructor</option>
@@ -193,13 +210,22 @@
                           <option name="staff" value="4" id="4"{{ $user->permissions == "4" ? "selected=selected" : ""}}>Staff Member</option>
                           <option name="admin" value="5" id="5"{{ $user->permissions == "5" ? "selected=selected" : ""}}>Administrator</option>
                           @endif
-                        </select><br>
+                        </select>
+                        <li><h5 display="inline-block" style="position:relative; bottom:35px">Change Certification:</h5></li>
+                        <select name="certification" id="certification" class="form-control" style="position:relative; width:100px; left:210px; bottom:75px">
+                        <option name="not_certified" value="not_certified" id="not_certified"{{ $certification == "not_certified" ? "selected=selected" : ""}}>Not Certified</option>
+                          <option name="training" value="training" id="training"{{ $certification == "training" ? "selected=selected" : ""}}>Training</option>
+                          <option name="home" value="home" id="home"{{ $certification == "home" ? "selected=selected" : ""}}>Home</option>
+                          <option name="visit" value="visit" id="visit"{{ $certification == "visit" ? "selected=selected" : ""}}>Visitor</option>
+                          @if (Auth::user()->permissions >= 4)
+                          <option name="instructor" value="instructor" id="instructor"{{ $certification == "instructor" ? "selected=selected" : ""}}>Instructor</option>
+                          @endif
+      
                         @csrf
-                        <button type="submit">Update Permissions</button>
+                        <button type="submit" class="btn btn-sm btn-success" style="position:relative; width:150px; left:335px; bottom:114px">Update User</button>
                       </form>
-
                       @endif
-                    </li>
+                      <br><br><br><br> <br><br><br><br>
                   </ul>
                 </div></div>
             </div>
@@ -234,13 +260,13 @@
                     @if($user->hasDiscord())
                     <h5><img style="border-radius:50%; height: 30px;" class="img-fluid" src="{{$user->getDiscordAvatar()}}" alt="">&nbsp;&nbsp;{{$user->getDiscordUser()->username}}#{{$user->getDiscordUser()->discriminator}}</h5>
                     <ul class="list-unstyled">
-                        <li class="d-flex align-items-center">Member of the Winnipeg Discord: <i style="margin-left: 5px;font-size: 20px;" class="{{$user->memberOfCzqoGuild() ? 'fas fa-check-circle green-text' : 'fas fa-times-circle red-text'}}"></i></li>
+                        <li class="d-flex align-items-center">Member of the Winnipeg Discord: <i style="margin-left: 5px;font-size: 20px;" class="{{$user->memberOfCZWGGuild() ? 'fas fa-check-circle green-text' : 'fas fa-times-circle red-text'}}"></i></li>
                     </ul>
                     <hr>
                     <h5>
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             Bans
-                            <a href="#" class="btn btn-sm bg-czqo-blue-light">Add Ban</a>
+                            {{--<a href="#" class="btn btn-sm bg-czqo-blue-light">Add Ban</a>--}}
                         </div>
                     </h5>
                     @if (count($user->discordBans) < 1)
@@ -327,6 +353,11 @@
                             <li><p>Position: {{$note->position}}</p></li>
                             <li><p>Date/Time: {{$note->timestamp}}</p></li>
                             <li><p>Notes: {{$note->html()}}</p></li>
+                            @if ($note->author == Auth::user()->id)
+                            <form action="{{route('users.deletenote', [$user->id, $note->id])}}" method="GET">
+                            <button class="btn btn-sm btn-danger" class="mt-1">Delete</button>
+                            </form>
+                            @endif
                         </ul>
                         </div>
                     </div>
@@ -369,6 +400,50 @@
         </div>
     </div>
     <!--End change avatar modal-->
+    <!--Confirm change own permissions modal-->
+<div class="modal fade" id="confirmChange" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Change</h5><br>
+            </div>
+            <div class="modal-body">
+            <center><h3>Are you sure?</h3>
+            <p style="font-weight:bold; color:red">**If you demote yourself lower than staff member, you will not be able to change it back**</p></center>
+            <form method="POST" action="{{route('edit.userpermissions', [$user->id])}}">
+                {{ csrf_field() }}
+                    <h5 display="inline-block">Change Permissions Level:</h5>
+                    <form method="post" action="{{route('edit.userpermissions', [$user->id])}}" style="position:absolute">
+                        <select name="permissions" id="permissions" class="form-control" style="position:relative; width:100px; left:210px; bottom:40px">
+                        <option name="guest" value="0" id="0"{{ $user->permissions == "0" ? "selected=selected" : ""}}>Guest</option>
+                        <option name="controller" value="1" id="1"{{ $user->permissions == "1" ? "selected=selected" : ""}}>Controller</option>
+                        <option name="mentor" value="2" id="2"{{ $user->permissions == "2" ? "selected=selected" : ""}}>Mentor</option>
+                        <option name="instructor" value="3" id="3"{{ $user->permissions == "3" ? "selected=selected" : ""}}>Instructor</option>
+                        <option name="staff" value="4" id="4"{{ $user->permissions == "4" ? "selected=selected" : ""}}>Staff Member</option>
+                        @if (Auth::user()->permissions == 5)
+                        <option name="admin" value="5" id="5"{{ $user->permissions == "5" ? "selected=selected" : ""}}>Administrator</option>
+                        @endif
+                        </select>
+                        <h5 display="inline-block" style="position:relative; bottom:35px">Change Certification:</h5>
+                        <select name="certification" id="certification" class="form-control" style="position:relative; width:100px; left:210px; bottom:75px">
+                        <option name="not_certified" value="not_certified" id="not_certified"{{ $certification == "not_certified" ? "selected=selected" : ""}}>Not Certified</option>
+                        <option name="training" value="training" id="training"{{ $certification == "training" ? "selected=selected" : ""}}>Training</option>
+                        <option name="home" value="home" id="home"{{ $certification == "home" ? "selected=selected" : ""}}>Home</option>
+                        <option name="visit" value="visit" id="visit"{{ $certification == "visit" ? "selected=selected" : ""}}>Visitor</option>
+                        @if (Auth::user()->permissions >= 4)
+                        <option name="instructor" value="instructor" id="instructor"{{ $certification == "instructor" ? "selected=selected" : ""}}>Instructor</option>
+                        @endif
+                        </select>
+            <div class="modal-footer">
+            <button class="btn btn-info" type="submit" href="#">Submit</button>
+            </form>
+            <button class="btn btn-light" data-dismiss="modal" style="width:300px">Dismiss</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Confirm change own permissions modal-->
     <script>
         function displayDeleteModal() {
             $('#deleteModal').modal('show')

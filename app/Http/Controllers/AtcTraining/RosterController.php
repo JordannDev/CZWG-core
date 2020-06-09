@@ -7,6 +7,7 @@ use App\Models\Settings\AuditLogEntry;
 use App\Models\AtcTraining\LegacyUser;
 use App\Mail\RosterStatusMail;
 use App\Models\AtcTraining\RosterMember;
+use App\Models\Network\SessionLog;
 use App\Models\AtcTraining\VisitRosterMember;
 use App\Models\Users\User;
 use App\Models\Users\UserNotification;
@@ -43,8 +44,9 @@ class RosterController extends Controller
     public function deleteController($id)
     {
       $roster = RosterMember::findorFail($id);
-
-      $roster->delete();
+      $session = SessionLog::where('roster_member_id', $id);
+        $session->delete();
+        $roster->delete();
 
   return redirect('/dashboard/roster')->withSuccess('Successfully deleted from roster!');
     }
@@ -68,7 +70,7 @@ class RosterController extends Controller
             'rating' => $users->rating_short,
         ]);
 
-      return redirect('/dashboard/roster')->withSuccess('Successfully added to roster!');
+      return redirect('/dashboard/roster')->withSuccess('Successfully added '.$users->fullName('FL').' CID: '.$users->id.' to roster!');
         }
 
         public function addVisitController(Request $request)
@@ -82,15 +84,18 @@ class RosterController extends Controller
                 'user_id' => $users->id,
                 'full_name' => $users->fullName('FL'),
                 'rating' => $users->rating_short,
+                'homefir' => $request->input('homefir'),
             ]);
 
-          return redirect('/dashboard/roster')->withSuccess('Successfully added to roster!');
+          return redirect('/dashboard/roster')->withSuccess('Successfully added '.$users->fullName('FL').' CID: '.$users->id.' to roster!');
             }
 
           public function editControllerForm($cid)
             {
               $roster = RosterMember::where('cid', $cid)->first();
-
+              if ($roster === null) {
+              $roster = VisitRosterMember::where('cid', $cid)->first();
+            }
 
 
               return view('dashboard.roster.edituser', compact('roster'))->with('cid',$cid);
@@ -110,6 +115,20 @@ class RosterController extends Controller
                     $roster->remarks = $request->input('remarks');
                     $roster->active = $request->input('active');
                     $roster->save();
+    }
+                    $visitroster = VisitRosterMember::where('cid', $cid)->first();
+                    if($visitroster != null) {
+                    $visitroster->del = $request->input('del');
+                    $visitroster->gnd = $request->input('gnd');
+                    $visitroster->twr = $request->input('twr');
+                    $visitroster->dep = $request->input('dep');
+                    $visitroster->app = $request->input('app');
+                    $visitroster->ctr = $request->input('ctr');
+                    $visitroster->remarks = $request->input('remarks');
+                    $visitroster->active = $request->input('active');
+                    $visitroster->homefir = $request->input('homefir');
+                    $visitroster->save();
+
                   }
 
 

@@ -144,7 +144,7 @@ class NewsController extends Controller
         }
         return view('publicarticle', compact('article'));
     }
-
+    
     public function editArticle(Request $request,$id)
 {
 

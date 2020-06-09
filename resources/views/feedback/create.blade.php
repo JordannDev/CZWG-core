@@ -4,7 +4,7 @@
     <div class="container py-4">
         <h1 class="font-weight-bold blue-text">Submit Feedback</h1>
         <p style="font-size: 1.2em;">
-            Here you can submit feedback on our controlling or operations at Gander Oceanic.
+            Have feedback for the Winnipeg FIR? This is the place to submit it!
         </p>
         <hr>
         @if($errors->createFeedbackErrors->any())
@@ -30,7 +30,6 @@
                         <select name="feedbackType" id="feedbackTypeSelect" class="form-control">
                             <option hidden>Please select one...</option>
                             <option value="controller">Controller Feedback</option>
-                            <option value="operational">Operations Feedback</option>
                             <option value="website">Website Feedback</option>
                         </select>
                     </div>
@@ -41,19 +40,19 @@
                         <span class="label">Your message</span>
                     </a>
                     <div id="typeNotSelected" class="step-content w-75 grey lighten-3">
-                        Please select a feedback type before continuing.
+                        Please select a feedback type first!
                     </div>
                     <div id="typeSelected" class="step-content w-75 grey lighten-3" style="display:none">
                         <div class="md-form" id="controllerCidGroup" style="display:none">
                             <input type="text" name="controllerCid" class="form-control">
-                            <label>Controller CID</label>
+                            <label>Controller's CID</label>
                         </div>
                         <div class="md-form" id="subjectGroup" style="display:none">
                             <input type="text" name="subject" class="form-control">
                             <label>Subject</label>
                         </div>
                         <div id="contentGroup">
-                            <label style="font-size: 1rem;">Your feedback</label>
+                            <label style="font-size: 1rem;">Your Feedback</label>
                             <textarea class="form-control" name="content" class="w-75"></textarea>
                         </div>
                     </div>

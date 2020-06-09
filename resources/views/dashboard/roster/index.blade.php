@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 
 @section('navbarprim')
@@ -7,8 +6,8 @@
 
 @stop
 
-@section('title', 'ATC Roster - ')
-@section('description', "Gander Oceanic's Oceanic Controller Roster")
+@section('title', 'ATC Roster - Winnipeg FIR')
+@section('description', "Winnipeg FIR's Controller Roster")
 
 @section('content')
 
@@ -19,6 +18,7 @@
             <hr>
             <p>Please note that the 'full name' field on this roster is dependant on the controller's name settings on the CZWG Core. As such, it is best to rely on the CID to determine whether they are on the roster.</p>
     <hr>
+    <h4 align="center">Winnipeg Controllers</h4>
     <div class="row">
         <div class="col-md-3">
             <h4 class="font-weight-bold blue-text">Actions</h4>
@@ -38,10 +38,9 @@
         </div>
       </div>
 
-        <h4 align="center">Winnipeg Controllers</h4>
 
         <!--WINNIPEG CONTROLLERS ROSTER-->
-        <table id="rosterTable" class="table table-hover">
+        <table id="rosterTable"  class="table table-hover" style="position:relative; left:-70px; top:2px; width:116%; height=50%">
             <thead>
 
                 <tr>
@@ -56,7 +55,7 @@
                     <th style="text-align:center" scope="col">CTR</th>
                     <th style="text-align:center" scope="col">Remarks</th>
                     <th style="text-align:center" scope="col">Status</th>
-                    <th style="text-align:center" class="text-danger" scope="col"><b>Actions</b></th>
+                    <th style="text-align:center" width="18%" class="text-danger" scope="col"><b>Actions</b></th>
 
                 </tr>
             </thead>
@@ -158,9 +157,9 @@
                         <td align="center" class="bg-danger text-white">ERROR</td>
                     @endif
                     <!--Edit controller-->
-                    <td align="center">
+                    <td align="center" style="width=100px">
                       <a href="{{route('roster.editcontrollerform', [$controller->cid]) }}">
-                          <button>Edit</button>
+                          <button class="btn btn-sm btn-outline-info" style="vertical-align:top; float:left;">Edit</button>
                       </a>
 
                               </li>
@@ -169,12 +168,31 @@
 
 <!--END OF EDIT CONTROLLER-->
 <!--DELETE CONTROLLER-->
-
-                    <form method="POST" action="{{ route('roster.deletecontroller', [$controller->id]) }}">
-                        {{ csrf_field() }}
-                        {{ method_field('GET') }}
-                        <button type="submit">Delete</button>
-                    </form>
+                    <!--Confirm Delete controller button-->
+<div class="modal fade" id="deleteController{{$controller->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Deletion</h5><br>
+            </div>
+            <div class="modal-body">
+            <p style="font-weight:bold">Name: {{$controller->full_name}}</p>
+            <p style="font-weight:bold">CID: {{$controller->cid}}</p>
+            <h3 style="font-weight:bold; color:red">Are you sure you want to do this?</h3>
+            <p style="font-weight:bold">Deleting this member from the roster will delete their session logs.</p>
+            </div>
+            <div class="modal-footer">
+            <form method="GET" action="{{ route('roster.deletecontroller', [$controller->id]) }}">
+                {{ csrf_field() }}
+            <button class="btn btn-danger" type="submit" href="#">Delete</button>
+            </form>
+            <button class="btn btn-light" data-dismiss="modal" style="width:375px">Dismiss</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end delete controller-->
+                    <a role="button" data-toggle="modal" data-target="#deleteController{{$controller->id}}" class="btn btn-sm btn-outline-danger" style="vertical-align:bottom; float:right;">Delete</a>
                   </div></div>
                   </td>
                 </tr>
@@ -197,7 +215,7 @@
         </ul>
     </div>
 <!--WINNIPEG VISITING CONTROLLERS ROSTER-->
-        <table id="rosterVisitTable" class="table table-hover">
+        <table id="rosterVisitTable"  class="table table-hover" style="position:relative; left:-60px; top:2px;">
             <thead>
 
                 <tr>
@@ -213,7 +231,7 @@
                     <th style="text-align:center" scope="col">Remarks</th>
                     <th style="text-align:center" scope="col">Status</th>
                     <th style="text-align:center" scope="col">Home FIR</th>
-                    <th style="text-align:center" class="text-danger" scope="col"><b>Actions</b></th>
+                    <th style="text-align:center" width="18%" class="text-danger" scope="col"><b>Actions</b></th>
 
                 </tr>
             </thead>
@@ -318,16 +336,41 @@
                     <td align="center">
                         {{$visitcontroller->homefir}}
                     </td>
+                    <td align="center">
+                      <a href="{{route('roster.editcontrollerform', [$visitcontroller->cid]) }}">
+                      <button class="btn btn-sm btn-outline-info" style="vertical-align:top; float:left;">Edit</button>
+                      </a>
+
 
 <!--Delete controller-->
-                    <td align="center">
+                    <!--Confirm Delete visitor button-->
+                    <div class="modal fade" id="deleteVisitController{{$visitcontroller->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Deletion</h5><br>
+            </div>
+            <div class="modal-body">
+            <p style="font-weight:bold">Name: {{$visitcontroller->full_name}}</p>
+            <p style="font-weight:bold">CID: {{$visitcontroller->cid}}</p>
+            <h3 style="font-weight:bold; color:red">Are you sure you want to do this?</h3>
+            <p style="font-weight:bold">Deleting this member from the roster will delete their session logs.</p>
+            </div>
+            <div class="modal-footer">
+            <form method="GET" action="{{ route('roster.deletevisitcontroller', [$visitcontroller->id]) }}">
+                {{ csrf_field() }}
+            <button class="btn btn-danger" type="submit" href="#">Delete</button>
+            </form>
+            <button class="btn btn-light" data-dismiss="modal" style="width:375px">Dismiss</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end delete visitor-->
 
-                      <form method="POST" action="{{ route('roster.deletevisitcontroller', [$visitcontroller->id]) }}">
-                          {{ csrf_field() }}
-                          {{ method_field('GET') }}
-                          <button type="submit">Delete</button>
+<a role="button" data-toggle="modal" data-target="#deleteVisitController{{$visitcontroller->id}}" class="btn btn-sm btn-outline-danger" style="vertical-align:bottom; float:right;">Delete</a>
                       </form>
-
+</td>
                 </tr>
 
             @endforeach
@@ -377,7 +420,7 @@
                             @endif
                             <td align="center">
                                   @csrf
-                                  <button type="submit">Add User</button>
+                                  <button type="submit" class="btn btn-outline-success">Add User</button>
 
                             </td>
                              </form>
@@ -423,11 +466,15 @@
                                     <strong>{{ $errors->first('dropdown') }}</strong>
                                 </span>
                             @endif
+                            <br>
+                            <br>
+                            <p>Home FIR</p><br>
+                            <input type="text" name="homefir" id="homefir" class="form-control" style="text-align: center;"></input><br><br>
 
                             <td align="center">
                                   @csrf
 
-                                  <button type="submit">Add User</button>
+                                  <button type="submit" class="btn btn-outline-success">Add User</button>
 
                             </td>
                              </form>
@@ -544,7 +591,7 @@
                 <textarea id="remarks" rows="4" cols="30">
                 </textarea>
                         <br><br><br>
-                        <input type="submit" value="Edit Controller">
+                        <input type="submit" value="Edit Controller" style="btn btn-outline-info">
                         </form></div>
                         </div>
                       </div>
@@ -553,9 +600,63 @@
                 <button type="button" class="btn btn-light" data-dismiss="modal">Dismiss</button></form>
             </div>
         </div>
+    </div>
+</div>
 
 <!--Edit Winnipeg controller modal-->
+<!--Confirm Delete controller button-->
+<div class="modal fade" id="deleteController" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Deletion</h5><br>
+            </div>
+            <div class="modal-body">
+            <p style="font-weight:bold">Name: {{$controller->full_name}}</p>
+            <p style="font-weight:bold">CID: {{$controller->cid}}</p>
+            <h3 style="font-weight:bold; color:red">Are you sure you want to do this?</h3>
+            <p style="font-weight:bold">Deleting this member from the roster will delete their session logs.</p>
+            </div>
+            <div class="modal-footer">
+            <form method="GET" action="{{ route('roster.deletecontroller', [$controller->id]) }}">
+                {{ csrf_field() }}
+            <button class="btn btn-danger" type="submit" href="#">Delete</button>
+            </form>
+            <button class="btn btn-light" data-dismiss="modal" style="width:375px">Dismiss</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end delete controller-->
 
+<div class="modal fade" id="joinDiscordServerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirm Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Joining the Winnipeg FIR Discord server allows you to join the Winnipeg FIR controller and pilot community.</p>
+                <h5>Rules</h5>
+                <ul>
+                    <li>1. The VATSIM Code of Conduct applies.</li>
+                    <li>2. Always show respect and common decency to fellow members.</li>
+                    <li>3. Do not send server invites to servers unrelated to VATSIM without staff permission. Do not send ANY invites via DMs unless asked to.
+                    </li>
+                    <li>4. Do not send spam in the server, including images, text, or emotes.</li>
+                </ul>
+                <p>Clicking the 'Join' button will redirect you to Discord. We require the Join Server permission to add your Discord account to the server.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Dismiss</button>
+                <a role="button" type="submit" href="{{route('me.discord.join')}}" class="btn btn-primary">Join</a>
+            </div>
+        </div>
+    </div>
+</div>
 <!--SCRIPTS-->
 
 
@@ -580,5 +681,4 @@
 
 	});
 </script>
-<!--End of Scripts-->
 @stop

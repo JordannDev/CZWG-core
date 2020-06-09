@@ -56,13 +56,30 @@
                         <span class="label">Image</span>
                     </a>
                     <div class="step-content w-75 pt-0">
-                        <p>An image can be displayed for the article, similar to the thumbnail. Please ensure we have the right to use the image, and that it is of an acceptable resolution.</p>
+                        <p>This image will be the thumbnail, as well as the photo at the top of the story.</p>
                         <div class="input-group pb-3">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="image">
                                 <label class="custom-file-label">Choose image</label>
                             </div>
                         </div>
+                        {{-- <p>Alternatively, pick an already uploaded image.</p>
+                        <button class="btn" type="button" data-toggle="collapse" data-target="#collapseExample">
+                            Pick uploaded image
+                        </button>
+                        <div class="collapse" id="collapseExample">
+                            <div class="mt-3">
+                                <select name="uploadedImage" class="image-picker masonry">
+                                    <option value=""></option>
+                                    @foreach($uploadedImgs as $img)
+                                    <option data-img-src="{{$img->path}}" data-img-class="img-fluid" data-img-alt="{{$img->id}}" value="{{$img->id}}">  {{$img->id}}  </option>
+                                    @endforeach
+                                  </select>
+                                  <script>
+                                    $("select.image-picker").imagepicker()
+                                  </script>
+                            </div>
+                        </div>--}}
                     </div>
                 </li>
                 <li class="active">

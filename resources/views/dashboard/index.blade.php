@@ -82,7 +82,7 @@
                             <p class="mt-1">You don't have a linked Discord account.</p>
                             <a href="#" data-toggle="modal" data-target="#discordModal" class="mt-1">Link a Discord account</a>
                             @else
-                            <p class="mt-1"><img style="border-radius:50%; height: 30px;" class="img-fluid" src="{{Auth::user()->getDiscordAvatar()}}" alt="">&nbsp;&nbsp;{{Auth::user()->getDiscordUser()->username}}<span style="color: #d1d1d1;">#{{Auth::user()->getUser()->discriminator}}</span></p>
+                            <p class="mt-1"><img style="border-radius:50%; height: 30px;" class="img-fluid" src="{{Auth::user()->getDiscordAvatar()}}" alt="">&nbsp;&nbsp;{{Auth::user()->getDiscordUser()->username}}<span style="color: #d1d1d1;">#{{Auth::user()->getDiscordUser()->discriminator}}</span></p>
                             @if(!Auth::user()->memberOfCZWGGuild())
                             <a href="#" data-toggle="modal" data-target="#joinDiscordServerModal" class="mt-1">Join The CZWG Discord</a><br/>
                             @endif
@@ -97,9 +97,9 @@
                                 <img src="{{Auth::user()->avatar()}}" style="width: 125px; height: 125px; margin-bottom: 10px; border-radius: 50%;">
                             </div>
                             <br/>
-                            <a role="button" data-toggle="modal" data-target="#changeAvatar" class="btn btn-sm shadow-none btn-block bg-CZWG-blue-light"  href="#">Change</a>
+                            <center><a role="button" data-toggle="modal" data-target="#changeAvatar" class="btn btn-sm btn-outline-info"  href="#">Change</a></center>
                             @if (!Auth::user()->isAvatarDefault())
-                                <a role="button" class="btn btn-sm shadow-none btn-block bg-CZQO-blue-light mt-2"  href="{{route('users.resetavatar')}}">Reset</a>
+                                <center><a role="button" class="btn btn-sm btn-outline-danger"  href="{{route('users.resetavatar')}}">Reset</a></center>
                             @endif
                         </div>
                     </div>
@@ -142,20 +142,120 @@
             </div>
             <br/>
             @if (Auth::user()->permissions >= 1)
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="font-weight-bold blue-text pb-2">Events You Signed Up For</h3>
-Show events a controller has applied to here<br><br>
-<h3 class="font-weight-bold blue-text pb-2">Confirmed Events</h3>
-Show events a controller is scheduled to work here
 
-                    </div>
-                </div>
-                <br/>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="font-weight-bold blue-text pb-2">Events You Signed Up For</h3>
+                    <div class="list-group">
+                    @if (count($unconfirmedapp) < 1)
+                        You have not applied to any Events yet (or you have been confirmed)!
+                        <br>
+                    @else
+                    @foreach ($unconfirmedapp as $uapp)
+                    @if ((substr($uapp->event_date, 5, 2)) == 01)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on January {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == 02)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on February {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == 03)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on March {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == 04)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on April {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == 05)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on May {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == 06)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on June {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == 07)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on July {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == '08')
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on August {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == '09')
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on September {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == 10)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on October {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == 11)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on November {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @elseif ((substr($uapp->event_date, 5, 2)) == 12)
+                    <br>  <h5>  <b>{{$uapp->event_name}}</b> starts at {{substr($uapp->event_date, 11, 5)}}z on December {{substr($uapp->event_date, 8, 2)}}, {{substr($uapp->event_date, 0, 4)}}</h5>
+                    @endif
+                              <li>
+                              <b>Time Available:</b> {{$uapp->start_availability_timestamp}}z - {{$uapp->end_availability_timestamp}}z <b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Position Requested:</b> {{$uapp->position}}
+                            </li>
+
+
+                            @endforeach
+                            @endif
+
+
+
+
+
+
+<br><br>
+<h3 class="font-weight-bold blue-text pb-2">Confirmed Events</h3>
+
+            @if (count($confirmedapp) < 1)
+              You do not have any confirmed events!
+                <br>
+            @else
+                @foreach ($confirmedevent as $cevent)
+                    @if ((substr($cevent->start_timestamp, 5, 2)) == 01)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on January {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == 02)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on February {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == 03)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on March {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == 04)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on April {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == 05)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on May {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == 06)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on June {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == 07)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on July {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == '08')
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on August {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == '09')
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on September {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == 10)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on October {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == 11)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on November {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @elseif ((substr($cevent->start_timestamp, 5, 2)) == 12)
+                    <br>  <h5>  <b>{{$cevent->name}}</b> starts at {{substr($cevent->start_timestamp, 11, 5)}}z on December {{substr($cevent->start_timestamp, 8, 2)}}, {{substr($cevent->start_timestamp, 0, 4)}}</h5>
+                    @endif
+                @foreach ($confirmedapp as $capp)
+
+                  @if ($cevent->name == $capp->event_name)
+                  <li>
+                     <b> Position:</b> {{$capp->position}} from {{$capp->start_timestamp}}z - {{$capp->end_timestamp}}z
+                  </li>
+
+                  @endif
+                  @endforeach
+                  @if ($cevent->name != $capp->event_name)
+
+                  You are not confirmed to control in this event!
+                  <br>
+                  @endif
+
+
+
+                  @endforeach
                 @endif
+<br>
+                </div>
+            </div></div>
+
+            <br/>
+                @endif
+                @if(Auth::user()->permissions >= 3)
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="font-weight-bold blue-text pb-2">Vacant Menu Card</h3>
+                        <h3 class="font-weight-bold blue-text pb-2">Instructor Panel</h3>
+                        @if(Auth::user()->permissions >= 4)
+                        <a href="" data-toggle="modal" data-target="#newStudent">Add new student</a>
+                        @endif
                         <ul class="list-unstyled mt-2 mb-0">
 
                         </ul>
@@ -163,7 +263,7 @@ Show events a controller is scheduled to work here
                 </div>
 
         </div>
-
+          @endif
         <div class="col">
             <div class="card" data-step="7" data-intro="Here you can view your certification status within CZWG.">
                 <div class="card-body">
@@ -216,7 +316,7 @@ Show events a controller is scheduled to work here
                             </h3>
                         @else
                             <h3>
-                            <span class="badge badge-danger rounded shadow-none">
+                            <span class="badge badge-dark rounded shadow-none">
                                 <i class="fa fa-question"></i>&nbsp;
                                 Unknown
                             </span>
@@ -250,12 +350,33 @@ Show events a controller is scheduled to work here
                     </div>
 <!--All users, no hours-->
                     @if (Auth::user()->rosterProfile)
+                    @if (Auth::user()->rosterProfile->status == "not_certified")
+                    @else
                     <h5 class="card-title mt-2">Activity</h5>
                         @if (Auth::user()->rosterProfile->currency < 0.1)
                         <h3><span class="badge rounded shadow-none red">
                             No hours recorded
                         </span></h3>
                         @endif
+                    @endif
+
+<!--Winnipeg Training Hrs-->
+                    @if (Auth::user()->rosterProfile->status == "training")
+                        @if (!Auth::user()->rosterProfile->currency == 0)
+                          @if (Auth::user()->rosterProfile->currency < 2.0)
+                          <h3><span class="badge rounded shadow-none blue">
+                            {{Auth::user()->rosterProfile->currency}} hours recorded
+                          </span></h3>
+                          @elseif (Auth::user()->rosterProfile->currency >= 2.0)
+                          <h3><span class="badge rounded shadow-none green">
+                            {{Auth::user()->rosterProfile->currency}} hours recorded
+                          </span></h3>
+                          @endif
+                          @endif
+                              <p>You require <b>2 hours</b> of activity every month!</p>
+                        @endif
+
+<!--End Winnipeg Training Hours-->
 <!--Winnipeg Cntrlr Hrs-->
                         @if (Auth::user()->rosterProfile->status == "home")
                         @if (!Auth::user()->rosterProfile->currency == 0)
@@ -308,6 +429,7 @@ Show events a controller is scheduled to work here
                         @endif
 <!--End Winnipeg Instrctr Hours-->
 
+
                     @endif
                     @else
                     <ul class="list-unstyled mt-2 mb-0">
@@ -318,6 +440,12 @@ Show events a controller is scheduled to work here
                             <a href="{{route('application.list')}}" style="text-decoration:none;"><span class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span class="black-text">Training Centre</span></a>
                         </li> --}}
                         @endif
+
+
+
+
+
+
                     </ul>
                 </div>
             </div>
@@ -349,7 +477,7 @@ Show events a controller is scheduled to work here
                     @if(Auth::user()->permissions >= 4)
                         <br>
                         <h5 class="font-weight-bold blue-text pb-2">Staff Tickets</h5>
-                        <p>Doesn't work yet (cc. James)</p>
+
                         @if (count($staffTickets) < 1)
                             You have no open <b>staff</b> tickets
                             <br>
@@ -362,9 +490,9 @@ Show events a controller is scheduled to work here
                                 @endif
                             </h5>
                             <div class="list-group">
-                                @foreach ($staffTickets as $sticket)
+                                @foreach ($staffTickets as $ticket)
                                     <a href="{{url('/dashboard/tickets/'.$ticket->ticket_id)}}" class="list-group-item list-group-item-action black-text rounded-0 " style="background-color:#d9d9d9">{{$ticket->title}}<br/>
-                                        <small title="{{$ticket->updated_at}} (GMT+0, Zulu)">Last updated {{$sticket->updated_at_pretty()}}</small>
+                                        <small title="{{$ticket->updated_at}} (GMT+0, Zulu)">Last updated {{$ticket->updated_at_pretty()}}</small>
                                     </a>
                               @endforeach
                            </div>
@@ -418,6 +546,17 @@ Show events a controller is scheduled to work here
                                     &nbsp;
                                     <span class="black-text">
                                         View users
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="{{(route('dashboard.image'))}}" style="text-decoration:none;">
+                                    <span class="blue-text">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                    &nbsp;
+                                    <span class="black-text">
+                                        Upload Image to WPG Server
                                     </span>
                                 </a>
                             </li>
@@ -477,7 +616,7 @@ Show events a controller is scheduled to work here
                 </div>
                 @if(Auth::user()->hasDiscord())
                     or use your Discord avatar (refreshes every 6 hours)<br/>
-                    <a href="{{route('users.changeavatar.discord')}}" class="btn bg-CZWG-blue-light mt-3">Use Discord Avatar</a>
+                    <p class="mt-1"><img style="border-radius:50%; height: 60px;" class="img-fluid" src="{{Auth::user()->getDiscordAvatar()}}" alt=""><a href="{{route('users.changeavatar.discord')}}" class="btn btn-outline-success bg-CZQO-blue-light mt-3">Use Discord Avatar</a>
                 @endif
             </div>
             <div class="modal-footer">
@@ -618,13 +757,13 @@ Show events a controller is scheduled to work here
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Join the Gander Oceanic Discord server</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Join the Winnipeg FIR Discord server</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Joining the Gander Oceanic Discord server allows you to join the Gander Oceanic controller and pilot community.</p>
+                <p>Joining the Winnipeg FIR Discord server allows you to join the Winnipeg FIR controller and pilot community.</p>
                 <h5>Rules</h5>
                 <ul>
                     <li>1. The VATSIM Code of Conduct applies.</li>

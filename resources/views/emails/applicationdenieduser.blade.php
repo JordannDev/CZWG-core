@@ -22,5 +22,5 @@
 @section('footer-to-line', $application->user->fullName('FLC').' ('.$application->user->email.')')
 
 @section('footer-reason-line')
-as they hold an account an account on the CZQO website and submitted an application for ocenaic endorsement.
+they hold an account an account on the Winnipeg FIR website and submitted an application to become a visitor.
 @endsection

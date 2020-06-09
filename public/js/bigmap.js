@@ -22,7 +22,7 @@ function createBigMap(planes, finalPositions) {
 
     map.setZoom(4);
     console.log(ganderControllers)
-    if(finalPositions[callsign]="CZWG_CTR") {
+    if(finalPositions['callsign']="CZWG_CTR") {
         console.log('test');
         var winnipegFIR = L.polygon([
             [47.083333, -87.000000],

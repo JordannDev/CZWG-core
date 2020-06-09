@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Events\CtpSignUp;
 use App\Mail\CtpSignUpEmail;
 use App\Models\AtcTraining\RosterMember;
+use App\Models\AtcTraining\VisitRosterMember;
 use App\Models\Publications\AtcResource;
 use App\Models\Settings\RotationImage;
 use App\Models\Tickets\Ticket;
 use App\Models\Users\StaffMember;
+use App\Models\Events\ControllerApplication;
+use App\Models\Events\EventConfirm;
+use App\Models\Events\Event;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -20,26 +25,38 @@ class DashboardController extends Controller
         $user = Auth::user();
         $certification = null;
         $active = null;
+        $confirmedevent = [];
         $potentialRosterMember = RosterMember::where('user_id', $user->id)->first();
-        if ($potentialRosterMember === null) {
-            $certification = 'not_certified';
-            $active = 2;
-        } else {
-            $certification = $potentialRosterMember->status;
-            $active = $potentialRosterMember->active;
+        $potentialVisitRosterMember = VisitRosterMember::where('user_id', $user->id)->first();
+        if ($potentialRosterMember !== null) {
+          $certification = $potentialRosterMember->status;
+          $active = $potentialRosterMember->active;
+        } elseif ($potentialVisitRosterMember !== null) {
+          $certification = $potentialVisitRosterMember->status;
+          $active = $potentialVisitRosterMember->active;
         }
         $openTickets = Ticket::where('user_id', $user->id)->where('status', 0)->get();
         $staffTickets = Ticket::where('staff_member_cid', $user->id)->where('status', 0)->get();
+        $unconfirmedapp = ControllerApplication::where('user_id', $user->id)->orderBy('event_date', 'asc')->get();
+        $confirmedapp = EventConfirm::where('user_cid', $user->id)->get();
+        $event = Event::all()->sortBy('start_timestamp');
 
+        foreach($event as $e) {
+            if (Carbon::now() > $e->end_timestamp) {
+            } else {
+                array_push($confirmedevent, $e);
+            }
+        }
+        
 
         $atcResources = AtcResource::all()->sortBy('title');
 
         $bannerImg = 'RotationImage::all()->random();';
 
         if ($user->preferences->enable_beta_features) {
-            return view('dashboard.indexnew', compact('openTickets', 'staffTickets', 'certification', 'active', 'atcResources', 'bannerImg'));
+            return view('dashboard.indexnew', compact('openTickets', 'staffTickets', 'certification', 'active', 'atcResources', 'bannerImg', 'unconfirmedapp', 'confirmedapp', 'unconfirmevent','confirmevent'));
         } else {
-            return view('dashboard.index', compact('openTickets', 'staffTickets', 'certification', 'active', 'atcResources', 'bannerImg'));
+            return view('dashboard.index', compact('openTickets', 'staffTickets', 'certification', 'active', 'atcResources', 'bannerImg', 'unconfirmedapp', 'confirmedapp', 'confirmedevent'));
         }
     }
 

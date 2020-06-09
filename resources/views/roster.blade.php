@@ -258,8 +258,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#rosterTable', 'visitRosterTable').DataTable( {
-                "order": [[ 0, "asc" ]]
+            $('#visitRosterTable').DataTable( {
+                "order": [[ 1, "asc" ]]
             } );
         } );
     </script>

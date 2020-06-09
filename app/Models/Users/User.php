@@ -15,6 +15,7 @@ use App\Models\News;
 use App\Models\Publications;
 use App\Models\Settings;
 use App\Models\Tickets;
+use Auth;
 use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -90,7 +91,16 @@ class User extends Authenticatable
     public function rosterProfile()
     {
         return $this->hasOne(AtcTraining\RosterMember::class);
+        
+
     }
+
+    public function rosterVisitProfile()
+    {
+        return $this->hasOne(AtcTraining\VisitRosterMember::class);
+
+    }
+
 
     public function notifications()
     {
@@ -130,7 +140,7 @@ class User extends Authenticatable
             case 3:
                 return "Instructor";
             case 4:
-                return "Staff";
+                return "Staff Member";
             case 5:
                 return "Administrator";
             default:
@@ -226,11 +236,11 @@ class User extends Authenticatable
         });
     }
 
-    /* public function memberOfCzqoGuild()
+    public function memberOfCZWGGuild()
     {
         $discord = new DiscordClient(['token' => config('services.discord.token')]);
         try {
-            if ($discord->guild->getGuildMember(['guild.id' => 479250337048297483, 'user.id' => $this->discord_user_id])) {
+            if ($discord->guild->getGuildMember(['guild.id' => 598023748741758976, 'user.id' => $this->discord_user_id])) {
                 return true;
             }
         }
@@ -249,7 +259,6 @@ class User extends Authenticatable
             return null;
         }
     }
-    */
 
     public function discordBans()
     {

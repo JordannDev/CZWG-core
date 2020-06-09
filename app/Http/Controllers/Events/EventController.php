@@ -120,8 +120,8 @@ class EventController extends Controller
     public function confirmController(Request $request, $id)
     {
       $this->validate($request, [
-          'availability_start' => 'required',
-          'availability_end' => 'required',
+          'start_timestamp' => 'required',
+          'end_timestamp' => 'required',
           'position' => 'required'
       ]);
       $event = Event::where('id', $id)->firstorFail();
@@ -144,8 +144,8 @@ class EventController extends Controller
     public function addController(Request $request, $id)
     {
       $this->validate($request, [
-          'availability_start' => 'required',
-          'availability_end' => 'required',
+          'start_timestamp' => 'required',
+          'end_timestamp' => 'required',
           'position' => 'required'
       ]);
       $event = Event::where('id', $id)->firstorFail();
@@ -163,6 +163,14 @@ class EventController extends Controller
 
       return redirect()->route('events.admin.view', $event->slug)->with('success', 'Controller Confirmed for Event!');
     }
+
+    public function deleteController(Request $request)
+    {
+      $controller = EventConfirm::where('user_cid', $request->input('user_cid'))->firstorFail();
+      $controller->delete();
+
+      return redirect()->route('events.admin.view')->with('success', 'Controller has been removed from the event!');
+}
 
     public function adminIndex()
     {

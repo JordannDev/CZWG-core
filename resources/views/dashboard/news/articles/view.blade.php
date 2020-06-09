@@ -51,7 +51,7 @@
                         @else
                         No image.
                         @endif
-                        <p class="mt-4">An image can be displayed for the article, similar to the thumbnail. Please ensure we have the right to use the image, and that it is of an acceptable resolution.</p>
+                        <p class="mt-4">This image will be the thumbnail, as well as the photo at the top of the story.</p>
                         <div class="input-group pb-3">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="image">
