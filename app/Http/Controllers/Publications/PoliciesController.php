@@ -7,6 +7,7 @@ use App\Models\Settings\AuditLogEntry;
 use App\Mail\EmailAnnouncementEmail;
 use App\Models\News\News;
 use App\Models\Publications\Policy;
+use App\Models\Publications\PolicySection;
 use App\Models\Users\User;
 use Auth;
 use function GuzzleHttp\Promise\queue;
@@ -136,4 +137,19 @@ class PoliciesController extends Controller
 
         return redirect()->route('policies')->with('success', 'Policy deleted.');
     }
+
+
+public function addPolicySection(Request $request)
+{
+    $this->validate($request, [
+        'name' => 'required',
+    ]);
+
+    $policySection = new PolicySection([
+        'name' => $request->get('name'),
+    ]);
+
+    $policySection->save();
+
+}
 }

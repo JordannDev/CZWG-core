@@ -31,7 +31,8 @@ Route::get('/events/{slug}', 'Events\EventController@viewEvent')->name('events.v
 Route::view('/about', 'about')->name('about');
 Route::view('/branding', 'branding')->name('branding');
 Route::get('/test/{icao}', 'Events\EventController@test')->name('events.test');
-
+Route::post('/instructor/add', 'AtcTraining\TrainingController@assignStudent')->middleware('staff')->name('instructor.student.add');
+Route::get('/instructor/delete/{id}', 'AtcTraining\TrainingController@deleteStudent')->middleware('staff')->name('instructor.student.delete');
 
 
 
@@ -81,6 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/dashboard/tickets', 'Tickets\TicketsController@startNewTicket')->name('tickets.startticket');
     Route::post('/dashboard/tickets/{id}', 'Tickets\TicketsController@addReplyToTicket')->name('tickets.reply');
     Route::get('/dashboard/staff/tickets', 'Tickets\TicketsController@staffIndex')->middleware('staff')->name('tickets.staff');
+
     //Feedback
     Route::get('/feedback', 'Feedback\FeedbackController@create')->name('feedback.create');
     Route::post('/feedback', 'Feedback\FeedbackController@createPost')->name('feedback.create.post');
@@ -187,6 +189,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin/events/applications/{id}', 'Events\EventController@viewApplications')->name('event.viewapplications');
         Route::post('/admin/events/applications/confirm/{id}', 'Events\EventController@confirmController')->name('event.confirmapplication');
         Route::post('/admin/events/applications/manualconfirm/{id}', 'Events\EventController@addController')->name('event.addcontroller');
+        Route::post('/admin/events/applications/controller/{cid}/delete/', 'Events\EventController@deleteController')->name('event.deletecontroller');
         //Users
         Route::get('/admin/users/', 'Users\UserController@viewAllUsers')->middleware('mentor')->name('users.viewall');
         Route::post('/admin/users/search/ajax', 'Users\UserController@searchUsers')->name('users.search.ajax');
@@ -203,6 +206,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/admin/users/{id}/edit', 'Users\UserController@storeEditUser')->name('users.edit.store');
             Route::post('/admin/users/{id}/bookingban/create', 'Users\UserController@createBookingBan')->name('users.bookingban.create');
             Route::post('/admin/users/{id}/bookingban/remove', 'Users\UserController@removeBookingBan')->name('users.bookingban.remove');
+
         });
         Route::get('/admin/users/{id}/email', 'Users\UserController@emailCreate')->name('users.email.create');
         Route::get('/admin/users/{id}/email', 'Users\UserController@emailStore')->name('users.email.store');
@@ -243,6 +247,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::post('/rotation-images/uploadimg', 'Settings\SettingsController@uploadRotationImage')->name('settings.rotationimages.uploadimg');
                 Route::get('/staff', 'Users\StaffListController@editIndex')->name('settings.staff');
                 Route::post('/staff/{id}', 'Users\StaffListController@editStaffMember')->name('settings.staff.editmember');
+                Route::post('/staff/{id}/delete', 'Users\StaffListController@deleteStaffMember')->name('settings.staff.deletemember');
                 Route::post('/staff/a/add', 'Users\StaffListController@addStaffMember')->name('settings.staff.addmember');
             });
         });

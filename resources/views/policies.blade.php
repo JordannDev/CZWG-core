@@ -6,18 +6,18 @@
 
 @stop
 
-@section('title', 'Policies - ')
-@section('description', 'Policies and guidelines for the operation of Gander Oceanic')
+@section('title', 'Policies')
+@section('description', 'Policies and Guidelines from the Winnipeg FIR')
 
 @section('content')
     <div class="container" style="margin-top: 20px;">
         <h1 class="font-weight-bold blue-text">Policies</h1>
         <hr>
-        @if (Auth::check() && Auth::user()->permissions >= 4)
+        @if (Auth::check() && Auth::user()->permissions == 5)
             <div class="card w-50">
                 <div class="card-body">
-                    <h5 class="card-title">Policy admin</h5>
-                    <a href="#" data-toggle="modal" data-target="#addPolicyModal" class="btn btn-primary">Add policy</a>
+                    <h5 class="card-title">Policy Admin</h5>
+                    <a href="#" data-toggle="modal" data-target="#addPolicyModal" class="btn btn-primary">Add New Policy</a>
                 </div>
             </div>
         @endif
@@ -36,9 +36,9 @@
                         <div class="card-body">
                             @if (Auth::check() && Auth::user()->permissions >= 4)
                                 <div class="border" style="padding: 10px;">
-                                    <a href="{{url('/policies/'.$policy->id.'/delete')}}" class="btn btn-primary">Delete policy</a>
+                                    <a href="{{url('/policies/'.$policy->id.'/delete')}}" class="btn btn-danger">Delete Policy</a>
                                     &nbsp;
-                                    <b>Created by {{\App\Models\Users\User::find($policy->author)->fname}} {{\App\Models\Users\User::find($policy->author)->lname}} {{\App\Models\Users\User::find($policy->author)->id}} on {{$policy->releaseDate }}</b>
+                                    <b>Effective Date: {{$policy->releaseDate }}</b>
                                 </div>
                             @endif
                             <p>{{$policy->details}}</p>
@@ -47,7 +47,7 @@
                                     <b>This is a private staff-only policy.</b>
                                 </p>
                             @endif
-                            <a target="_blank" href="{{$policy->link}}">Direct Link</a>
+                            <a target="_blank" href="{{$policy->link}}">Download the .PDF file HERE.</a>
                             @if ($policy->embed == 1)
                                 <iframe width="100%" style="height: 600px; border: none;" src="{{$policy->link}}"></iframe>
                             @endif
@@ -56,50 +56,75 @@
                 </div>
             </div>
         @endforeach
+        <hr>
         <div class="modal fade" id="addPolicyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New policy</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">New Policy</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        {!! Form::open(['route' => 'policies.create']) !!}
+                      <form method="POST" action="{{route('policies.create')}}" class="form-group">
+
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Name</label>
-                            {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                            <label for="recipient-name" class="col-form-label">Name of Author</label>
+                            <input type="text" name="name" class="form-control"></input>
+
                         </div>
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Details (max 250 chars)</label>
-                            {!! Form::textarea('details', null, ['class' => 'form-control']) !!}
+                            <label for="recipient-name" class="col-form-label">Details (Max 250 Char.)</label>
+                            <textarea name="details" class="form-control"></textarea>
+
                         </div>
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">URL</label>
-                            {!! Form::text('link', null, ['class' => 'form-control']) !!}
+                            <input type="text" name="link" class="form-control"></input>
+
                         </div>
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Embed</label>
-                            {!! Form::select('embed', ['0' => 'No embed', '1' => 'Embed'], ['placeholder' => 'Please choose one..'], ['class' => 'form-control']) !!}
+                            <label for="recipient-name" class="col-form-label">Display Options</label>
+                            <select name="embed" class="form-control">
+                              <option value="0">Do Not Display</option>
+                              <option value="1">Display</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">Privacy</label>
-                            {!! Form::select('staff_only', ['0' => 'Public', '1' => 'Private to staff only'], ['placeholder' => 'Please choose one..'], ['class' => 'form-control']) !!}
+                            <select name="staff_only" class="form-control">
+                              <option value="0">Public</option>
+                              <option value="1">Private to staff only</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Create News Article</label>
-                            {!! Form::select('email', ['all' => 'Email all users and news article', 'emailcert' => 'Email certified CZQO controllers and news article', 'newsonly' => 'Only news article', 'none' => 'Nothing at all'], ['placeholder' => 'Please choose one..'], ['class' => 'form-control']) !!}
+                            <label for="recipient-name" class="col-form-label">Publishing Notification</label>
+                            <select name="email" class="form-control">
+                              <option value="all">Email ALL Users & Publish News Article</option>
+                              <option value="emailcert">Email Certified Controllers and News Article</option>
+                              <option value="newsonly">Only News Article</option>
+                              <option value="none">Do Nothing</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Release</label>
-                            {!! Form::date('date', null, ['class' => 'form-control']) !!}
+                            <label for="recipient-name" class="col-form-label">Effective Date</label>
+                            <input type="datetime" id="date" name="date" placeholder="Choose a Date" class="form-control flatpickr"></input>
                         </div>
+                        <script>
+                            flatpickr('#date', {
+                                enableTime: false,
+                                noCalendar: false,
+                                dateFormat: "Y-m-d",
+                                time_24hr: true,
+                            });
+                        </script>
+                        @csrf
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
-                        {!! Form::close() !!}
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+</form>
                     </div>
                 </div>
             </div>

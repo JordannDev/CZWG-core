@@ -5,12 +5,12 @@
     <div class="container py-4">
         <div class="d-flex flex-row justify-content-between align-items-center mb-1">
             <h1 class="blue-text font-weight-bold">Events</h1>
-            <a href="#" class="btn btn-link float-right mx-0 px-0" data-toggle="modal" data-target="#requestModal">Need ATC? Click Here!</a>
+            <a href="#" class="btn btn-link float-right mx-0 px-0" data-toggle="modal" data-target="#requestModal">Need ATC Coverage? Click Here!</a>
         </div>
         <hr>
         <ul class="list-unstyled">
             @if (count($events) == 0)
-            <li>No events.</li>
+            <li>No Events... Yet.</li>
             @endif
             @foreach($events as $e)
             <div class="card my-2" style="height:150px;">
@@ -21,7 +21,7 @@
                         </a>
                         <h5>{{$e->start_timestamp_pretty()}} to {{$e->end_timestamp_pretty()}}</h5>
                         @if ($e->departure_icao && $e->arrival_icao)
-                        <h4>{{$e->departure_icao_data()['name']}} ({{$e->departure_icao_data()['icao']}})&nbsp;&nbsp;<i class="fas fa-plane"></i>&nbsp;&nbsp;{{$e->arrival_icao_data()['name']}} ({{$e->arrival_icao_data()['icao']}})</h4>
+                        <h4>{{$e->departure_icao_data()->name}} ({{$e->departure_icao}})&nbsp;&nbsp;<i class="fas fa-plane"></i>&nbsp;&nbsp;{{$e->arrival_icao_data()->name}} ({{$e->arrival_icao}})</h4>
                         @endif
                         @if (!$e->event_in_past())
                         <p>Starts {{$e->starts_in_pretty()}}</p>
@@ -86,16 +86,14 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Request ATC Coverage</b></h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Need ATC? We've Got You.</b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Winnipeg is happy to provide ATC for many events within our airspace!<br/>
-                    <br>
-                        To request ATC for your event, we recommend contacting Winnipeg's Events Coordinator by submitting a <a href="{{route('tickets.index')}}">ticket</a> or via <a href="{{route('staff')}}">email.</a> If the position is vacant, instead contact the FIR Chief.</p>
-                    <br>
+                    <p>Winnipeg is happy to provide ATC for many events within our airspace!</p>
+                    <p>To request ATC for your event, we recommend contacting Winnipeg's Events Coordinator by submitting a <a href="{{route('tickets.index')}}">ticket</a> or via <a href="{{route('staff')}}">email.</a> If the position is vacant, instead contact the FIR Chief.</p>
                     <p>Thank you for choosing Winnipeg!</p>
                 </div>
             </div>

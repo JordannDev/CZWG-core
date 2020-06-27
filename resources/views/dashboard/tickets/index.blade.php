@@ -31,7 +31,7 @@
             <div class="tab-pane fade show active pt-2" id="home" role="tabpanel" aria-labelledby="home-tab">
                 @if (count($openTickets) < 1)
                     No open tickets.
-                @else
+                    @else
                     @foreach ($openTickets as $ticket)
                         <a href="{{url('/dashboard/tickets/' . $ticket->ticket_id)}}" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">

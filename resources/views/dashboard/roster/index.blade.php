@@ -237,7 +237,7 @@
             </thead>
 
             <tbody>
-            @foreach ($visitroster as $visitcontroller)
+            @foreach ($visitroster2 as $visitcontroller)
                 <tr>
                     <th scope="row"><b>{{$visitcontroller->cid}}</b></th>
                     <td align="center" >

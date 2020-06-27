@@ -5,12 +5,12 @@ namespace App\Models\AtcTraining;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Users\User;
 
-class Roster extends Model
+class InstructorStudents extends Model
 {
-    protected $table = 'members';
+    protected $table = 'instructor_students';
 
     protected $fillable = [
-        'cid',  'fname', 'lname', 'email', 'rating', 'visit', 'home_fir'
+        'id',  'student_id', 'student_name', 'instructor_id', 'instructor_name', 'instructor_email', 'assigned_by',
     ];
 
     public function user()

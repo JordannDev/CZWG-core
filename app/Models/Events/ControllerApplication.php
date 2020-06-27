@@ -123,4 +123,14 @@ class ControllerApplication extends Model
 
         return true;
     }
+    public function flatpickr_limits()
+    {
+        $start = Carbon::create($this->start_availability_timestamp);
+        $end = Carbon::create($this->end_availability_timestamp);
+        return array(
+            $start->format('H:i'),
+            $end->format('H:i')
+        );
+    }
+
 }

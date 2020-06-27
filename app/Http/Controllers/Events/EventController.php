@@ -69,16 +69,12 @@ class EventController extends Controller
     public function viewEvent($slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
-        $eventconfirm = EventConfirm::where('event_id', $event->id);
         $updates = $event->updates;
-        if (Auth::check() && ControllerApplication::where('user_id', Auth::id())->where('event_id', $event->id) && EventConfirm::where('user_cid', Auth::id())->where('event_id', $event->id))
+        if (Auth::check() && ControllerApplication::where('user_id', Auth::id())->where('event_id', $event->id))
         {
             $app = ControllerApplication::where('user_id', Auth::id())->where('event_id', $event->id)->first();
-            $capp = EventConfirm::where('user_cid', Auth::id())->where('event_id', $event->id)->first();
-
-        return view('events.view', compact('event', 'eventconfirm', 'updates', 'app', 'capp'));
+            return view('events.view', compact('event', 'updates', 'app'));
         }
-
         return view('events.view', compact('event', 'updates'));
     }
 
@@ -164,12 +160,15 @@ class EventController extends Controller
       return redirect()->route('events.admin.view', $event->slug)->with('success', 'Controller Confirmed for Event!');
     }
 
-    public function deleteController(Request $request)
+    public function deleteController(Request $request, $cid)
     {
-      $controller = EventConfirm::where('user_cid', $request->input('user_cid'))->firstorFail();
+      $controller = EventConfirm::where([
+        ['user_cid', $cid],
+        ['event_id', $request->input('id')]
+      ])->firstorFail();
       $controller->delete();
 
-      return redirect()->route('events.admin.view')->with('success', 'Controller has been removed from the event!');
+      return redirect()->back()->with('success', 'Controller has been removed from the event!');
 }
 
     public function adminIndex()
@@ -376,7 +375,7 @@ class EventController extends Controller
         $app->delete();
 
         //Redirect
-        return redirect()->route('events.admin.view', $event_slug)->with('info', 'Controller application from '.$app->user_id. 'deleted.');
+        return redirect()->route('events.admin.view', $event_slug)->with('info', 'Controller application from '.$app->user_id. ' has been deleted!');
     }
 
     public function adminDeleteUpdate($event_slug, $update_id)
@@ -388,6 +387,6 @@ class EventController extends Controller
         $update->delete();
 
         //Redirect
-        return redirect()->route('events.admin.view', $event_slug)->with('info', 'Update \''.$update->title. '\'deleted.');
+        return redirect()->route('events.admin.view', $event_slug)->with('info', 'Update \''.$update->title. '\' has been deleted!');
     }
 }

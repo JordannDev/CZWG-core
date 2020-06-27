@@ -6,10 +6,12 @@ use App\Models\Events\CtpSignUp;
 use App\Mail\CtpSignUpEmail;
 use App\Models\AtcTraining\RosterMember;
 use App\Models\AtcTraining\VisitRosterMember;
+use App\Models\AtcTraining\InstructorStudents;
 use App\Models\Publications\AtcResource;
 use App\Models\Settings\RotationImage;
 use App\Models\Tickets\Ticket;
 use App\Models\Users\StaffMember;
+use App\Models\Users\User;
 use App\Models\Events\ControllerApplication;
 use App\Models\Events\EventConfirm;
 use App\Models\Events\Event;
@@ -23,6 +25,11 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $allusers = User::all();
+        $allinstructors = RosterMember::all()->where('status', 'instructor');
+        $pairs = InstructorStudents::all();
+        $checkstudents = InstructorStudents::where('instructor_id', $user->id)->get();
+        $yourinstructor = InstructorStudents::where('student_id', $user->id)->first();
         $certification = null;
         $active = null;
         $confirmedevent = [];
@@ -47,16 +54,16 @@ class DashboardController extends Controller
                 array_push($confirmedevent, $e);
             }
         }
-        
+
 
         $atcResources = AtcResource::all()->sortBy('title');
 
-        $bannerImg = 'RotationImage::all()->random();';
+        $bannerImg = RotationImage::all()->random();
 
         if ($user->preferences->enable_beta_features) {
             return view('dashboard.indexnew', compact('openTickets', 'staffTickets', 'certification', 'active', 'atcResources', 'bannerImg', 'unconfirmedapp', 'confirmedapp', 'unconfirmevent','confirmevent'));
         } else {
-            return view('dashboard.index', compact('openTickets', 'staffTickets', 'certification', 'active', 'atcResources', 'bannerImg', 'unconfirmedapp', 'confirmedapp', 'confirmedevent'));
+            return view('dashboard.index', compact('checkstudents', 'yourinstructor', 'openTickets', 'pairs', 'allusers', 'allinstructors', 'staffTickets', 'certification', 'active', 'atcResources', 'bannerImg', 'unconfirmedapp', 'confirmedapp', 'confirmedevent'));
         }
     }
 

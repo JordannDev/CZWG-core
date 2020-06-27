@@ -9,6 +9,6 @@ class Policy extends Model
     protected $table = 'policies';
 
     protected $fillable = [
-        'name', 'details', 'link', 'embed', 'author', 'releaseDate', 'staff_only',
+        'name', 'section_id', 'details', 'link', 'embed', 'author', 'releaseDate', 'staff_only',
     ];
 }

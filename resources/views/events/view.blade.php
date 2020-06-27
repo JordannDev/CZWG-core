@@ -2,7 +2,7 @@
 
 @section('title', $event->name.' - Winnipeg FIR')
 @section('description')
-@if ($event->departure_icao && $event->arrival_icao) {{$event->departure_icao_data()->name}} ({{$event->departure_icao_data()->icao}}) to {{$event->arrival_icao_data()->name}} ({{$event->arrival_icao_data()->icao}}). @endif Starting {{$event->start_timestamp_pretty()}}
+@if ($event->departure_icao && $event->arrival_icao) {{$event->departure_icao_data()->name}} ({{$event->departure_icao}}) to {{$event->arrival_icao_data()->name}} ({{$event->arrival_icao}}). @endif Starting {{$event->start_timestamp_pretty()}}
 @endsection
 @if($event->image_url)
 @section('image')
@@ -11,17 +11,27 @@
 @endif
 
 @section('content')
-    <div class="card card-image rounded-0 blue" style="@if($event->image_url)background-image: url({{$event->image_url}});@endif background-size: cover; background-position: center;">
-        <div class="text-white text-left py-1 px-4 rgba-black-light">
-            <div class="container">
-                <div class="py-5">
-                    <h1 class="h1" style="font-size: 3em;">{{$event->name}}</h1>
-                    @if ($event->departure_icao && $event->arrival_icao)
-                    <h3>{{$event->departure_icao_data()->name}} ({{$event->departure_icao_data()->icao}})&nbsp;&nbsp;<i class="fas fa-plane"></i>&nbsp;&nbsp;{{$event->arrival_icao_data()->name}} ({{$event->arrival_icao_data()->icao}})</h3>
-                    @endif
-                </div>
-            </div>
-        </div>
+
+
+      <div class="text-white text-left py-1 px-4" style="background-color:#013162">
+          <div class="container">
+              <div align="center" class="py-5">
+                  <h1 align="center" class="h1" style="font-size: 3em;">{{$event->name}}</h1>
+                  @if ($event->departure_icao && $event->arrival_icao)
+                  <h3>{{$event->departure_icao_data()->name}} ({{$event->departure_icao}})&nbsp;&nbsp;<i class="fas fa-plane"></i>&nbsp;&nbsp;{{$event->arrival_icao_data()->name}} ({{$event->arrival_icao}})</h3>
+                  @endif
+              </div>
+          </div>
+      </div>
+
+      <div class="container py-4">
+        @if ($event->image_url != null)
+      <img src="{{$event->image_url}}" alt="" title="" width="100%" height="50%">
+      &nbsp
+      @else
+      &nbsp
+      @endif
+
     </div>
     <div class="container py-4">
         <div class="row">
@@ -44,7 +54,7 @@
                 @else
                 <ul class="list-unstyled">
                     <li>{{$event->departure_icao_data()->name}}</li>
-                    <li>{{$event->departure_icao_data()->icao}} ({{$event->departure_icao_data()->iata}})</li>
+                    <li>{{$event->departure_icao}}</li>
 
                 </ul>
                 @endif
@@ -54,7 +64,7 @@
                 @else
                 <ul class="list-unstyled">
                     <li>{{$event->arrival_icao_data()->name}}</li>
-                    <li>{{$event->arrival_icao_data()->icao}} ({{$event->arrival_icao_data()->iata}})</li>
+                    <li>{{$event->arrival_icao}}</li>
 
                 </ul>
                 @endif
@@ -66,7 +76,7 @@
                 <br>
                 <h3>Thanks for applying! If you need to make any adjustments to your application, please <a href="{{ route('staff') }}">contact the Events Coordinator.</a></h3>
                 </p>
-            
+
                 @endif
                 <br>
                 <h4>Apply to control</h4>
@@ -100,8 +110,6 @@
                             noCalendar: true,
                             dateFormat: "H:i",
                             time_24hr: true,
-                            minTime: "{{$event->flatpickr_limits()[0]}}",
-                            maxTime: "{{$event->flatpickr_limits()[1]}}",
                             defaultDate: "{{$event->flatpickr_limits()[0]}}"
                         });
                         flatpickr('#availability_end', {
@@ -109,8 +117,6 @@
                             noCalendar: true,
                             dateFormat: "H:i",
                             time_24hr: true,
-                            minTime: "{{$event->flatpickr_limits()[0]}}",
-                            maxTime: "{{$event->flatpickr_limits()[1]}}",
                             defaultDate: "{{$event->flatpickr_limits()[1]}}"
                         });
                     </script>

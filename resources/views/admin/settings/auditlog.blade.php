@@ -4,7 +4,7 @@
         <a href="{{route('settings.index')}}" class="blue-text" style="font-size: 1.2em;"> <i class="fas fa-arrow-left"></i> Settings</a>
         <h1 class="blue-text font-weight-bold mt-2">Audit Log</h1>
         <hr>
-        <p>This log is strictly confidential.</p>
+        <p>NOTE: This log is strictly confidential!</p>
         @if (count($entries) < 1)
             <p>No logs</p>
         @else
@@ -20,12 +20,16 @@
                 <tbody>
                 @foreach ($entries as $entry)
                     <tr>
-                        <th scope="row">{{$entry->created_at->toDayDateTimeString()}}</th>
+                        <th scope="row">{{$entry->created_at}}</th>
                         <td>
                             {{$entry->user->fullName("FLC")}}
                         </td>
                         <td>
+                            @if($entry->affectedUser === "1")
+                                NO ONE AFFECTED
+                            @else
                             {{$entry->affectedUser->fullName("FLC")}}
+                            @endif
                         <td>
                             {{$entry->action}}
                             &nbsp;

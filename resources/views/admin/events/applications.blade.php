@@ -64,9 +64,9 @@
                                     <input type="hidden" name="user_cid" value="{{$a->user_id}}">
                                     <input type="hidden" name="user_name" value="{{$a->user->fullName('FL')}}">
                                     <label for="">Start Time (zulu)</label>
-                                    <input type="datetime" name="start_timestamp" class="form-control flatpickr" value="{{$a->start_availability_timestamp}}" id="availability_start">
+                                    <input type="datetime" name="availability_start" class="form-control flatpickr" id="start_timestamp">
                                     <label class="mt-2" for="">End Time (zulu)</label>
-                                    <input type="datetime" name="end_timestamp" class="form-control flatpickr" value="{{$a->end_availability_timestamp}}" id="availability_end">
+                                    <input type="datetime" name="availability_end" class="form-control flatpickr" id="end_timestamp">
                                     <label class="mt-2" for="">Position</label>
                                     <select name="position" class="form-control" id="position">
                                       <option value="Delivery"{{ $a->position == "Delivery" ? "selected=selected" : ""}}>Delivery</option>
@@ -77,10 +77,27 @@
                                       <option value="Centre"{{ $a->position == "Centre" ? "selected=selected" : ""}}>Centre</option>
                                     </select>
                                         @csrf
-                                        <button type="submit">Confirm Controller</button>
+                                        <br></br>
+                                        <button type="submit" class="btn btn-success">Confirm Controller</button>
 
                                   </td>
                                    </form>
+                                   <script>
+                                       flatpickr('#start_timestamp', {
+                                           enableTime: true,
+                                           noCalendar: true,
+                                           dateFormat: "H:i",
+                                           time_24hr: true,
+                                           defaultDate: "{{$a->start_availability_timestamp}}"
+                                       });
+                                       flatpickr('#end_timestamp', {
+                                           enableTime: true,
+                                           noCalendar: true,
+                                           dateFormat: "H:i",
+                                           time_24hr: true,
+                                           defaultDate: "{{$a->end_availability_timestamp}}"
+                                       });
+                                   </script>
                               </div>
                           </div>
 

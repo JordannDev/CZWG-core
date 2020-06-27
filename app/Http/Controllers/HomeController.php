@@ -20,6 +20,7 @@ class HomeController extends Controller
         //VATSIM online controllers
         $vatsim = new \Vatsimphp\VatsimData();
         $allPositions=[];
+        $topControllersArray = [];
         $vatsim->setConfig('cacheOnly', false);
         $planes = null;
         $finalPositions = array();
@@ -34,12 +35,14 @@ class HomeController extends Controller
             $moosejawControllers = $vatsim->searchCallsign('CYMJ_');
             array_push($allPositions, $centreControllers->toArray(), $winnipegControllers->toArray(), $portageControllers->toArray(), $standrewsControllers->toArray(), $saskatoonControllers->toArray(), $reginaControllers->toArray(), $thunderbayControllers->toArray(), $moosejawControllers->toArray());
 
-            foreach($allPositions as $controller){
-                foreach($controller as $c)
-                    if(!Str::endsWith($c['callsign'], '_ATIS'))
+            foreach($allPositions as $controller) {
+                foreach ($controller as $c)
+                    if (!Str::endsWith($c['callsign'], '_ATIS'))
                         $finalPositions[] = $c;
             }
-            
+
+            //$topHomeControllers
+
             Log::info($finalPositions);
             Log::info('cheese');
             $planes = $vatsim->getPilots()->toArray();
@@ -66,7 +69,7 @@ class HomeController extends Controller
         });
         return view('index', compact('finalPositions', 'news', 'vatcanNews', 'certifications', 'carouselItems', 'planes', 'nextEvent'));
     }
-    
+
     public function map()
     {
         //VATSIM online controllers

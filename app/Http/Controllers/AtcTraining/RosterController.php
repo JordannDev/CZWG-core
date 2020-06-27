@@ -21,8 +21,8 @@ class RosterController extends Controller
 {
     public function showPublic()
     {
-        $roster = RosterMember::all();
-        $visitroster = VisitRosterMember::all();
+        $roster = RosterMember::where('visit', '0')->get();
+        $visitroster = RosterMember::where('visit', '1')->get();
 
 
         return view('roster', compact('roster', 'visitroster'));
@@ -31,14 +31,14 @@ class RosterController extends Controller
 
     public function index()
     {
-        $roster = RosterMember::all();
-        $visitroster = VisitRosterMember::all();
+        $roster = RosterMember::where('visit', '0')->get();
+        $visitroster2 = RosterMember::where('visit', '1')->get();
         $users = User::all();
 
 
 
 
-        return view('dashboard.roster.index', compact('roster', 'visitroster', 'users'));
+        return view('dashboard.roster.index', compact('roster', 'visitroster2', 'users'));
     }
 
     public function deleteController($id)
@@ -53,9 +53,10 @@ class RosterController extends Controller
 
     public function deletevisitController($id)
     {
-      $roster = VisitRosterMember::findorFail($id);
-
-      $roster->delete();
+      $roster = RosterMember::findorFail($id);
+      $session = SessionLog::where('roster_member_id', $id);
+        $session->delete();
+        $roster->delete();
 
       return redirect('/dashboard/roster')->withSuccess('Successfully deleted from roster!');
     }
@@ -68,6 +69,7 @@ class RosterController extends Controller
             'user_id' => $users->id,
             'full_name' => $users->fullName('FL'),
             'rating' => $users->rating_short,
+            'visit' => '0',
         ]);
 
       return redirect('/dashboard/roster')->withSuccess('Successfully added '.$users->fullName('FL').' CID: '.$users->id.' to roster!');
@@ -79,12 +81,13 @@ class RosterController extends Controller
 
             //here we are getting the data from the table
             $users = User::findOrFail($request->input('newcontroller'));
-            $visitroster = VisitRosterMember::create([
+            $visitroster = RosterMember::create([
                 'cid' => $users->id,
                 'user_id' => $users->id,
                 'full_name' => $users->fullName('FL'),
                 'rating' => $users->rating_short,
-                'homefir' => $request->input('homefir'),
+                'home_fir' => $request->input('homefir'),
+                'visit' => '1',
             ]);
 
           return redirect('/dashboard/roster')->withSuccess('Successfully added '.$users->fullName('FL').' CID: '.$users->id.' to roster!');
@@ -93,9 +96,6 @@ class RosterController extends Controller
           public function editControllerForm($cid)
             {
               $roster = RosterMember::where('cid', $cid)->first();
-              if ($roster === null) {
-              $roster = VisitRosterMember::where('cid', $cid)->first();
-            }
 
 
               return view('dashboard.roster.edituser', compact('roster'))->with('cid',$cid);
@@ -116,23 +116,9 @@ class RosterController extends Controller
                     $roster->active = $request->input('active');
                     $roster->save();
     }
-                    $visitroster = VisitRosterMember::where('cid', $cid)->first();
-                    if($visitroster != null) {
-                    $visitroster->del = $request->input('del');
-                    $visitroster->gnd = $request->input('gnd');
-                    $visitroster->twr = $request->input('twr');
-                    $visitroster->dep = $request->input('dep');
-                    $visitroster->app = $request->input('app');
-                    $visitroster->ctr = $request->input('ctr');
-                    $visitroster->remarks = $request->input('remarks');
-                    $visitroster->active = $request->input('active');
-                    $visitroster->homefir = $request->input('homefir');
-                    $visitroster->save();
-
-                  }
 
 
-              return redirect('/dashboard/roster')->withSuccess('Successfully edited user!');
+              return redirect('/dashboard/roster')->withSuccess('Successfully edited!');
             }
 
 

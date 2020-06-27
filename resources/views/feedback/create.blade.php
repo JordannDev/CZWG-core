@@ -28,7 +28,7 @@
                     <div class="step-content w-75 grey lighten-3">
                         <p>Please select the type of feedback you are submitting.</p>
                         <select name="feedbackType" id="feedbackTypeSelect" class="form-control">
-                            <option hidden>Please select one...</option>
+                            <option value="0" hidden>Please select one...</option>
                             <option value="controller">Controller Feedback</option>
                             <option value="website">Website Feedback</option>
                         </select>
@@ -44,15 +44,31 @@
                     </div>
                     <div id="typeSelected" class="step-content w-75 grey lighten-3" style="display:none">
                         <div class="md-form" id="controllerCidGroup" style="display:none">
-                            <input type="text" name="controllerCid" class="form-control">
-                            <label>Controller's CID</label>
+                            <div>
+                                <p>Controller's Name/CID</p>
+                            </div>
+                            <select name="controllerCid" class="form-control">
+                                <option id="0" value="0" hidden>Select a controller...</option>
+                            @foreach($controllers as $c)
+                            <option name="controllerName" value={{$c->cid}} id={{$c->cid}}>
+                                @if($c->user->fullName('FL') == $c->cid)
+                                    {{$c->cid}}
+                                @else
+                                {{$c->user->fullName('FL')}} - {{$c->cid}}
+                                @endif</option>
+                            @endforeach
+                            </select>
+                        </div>
+                        <div class="md-form" id="positionGroup" style="display:none">
+                            <p>Position</p>
+                            <input type="text" name="position" class="form-control">
                         </div>
                         <div class="md-form" id="subjectGroup" style="display:none">
+                            <p>Subject</p>
                             <input type="text" name="subject" class="form-control">
-                            <label>Subject</label>
                         </div>
                         <div id="contentGroup">
-                            <label style="font-size: 1rem;">Your Feedback</label>
+                            <p>Your Feedback</p>
                             <textarea class="form-control" name="content" class="w-75"></textarea>
                         </div>
                     </div>
@@ -80,10 +96,12 @@
             if (this.value == 'controller') {
                 //Enable CID disable subject
                 $("#controllerCidGroup").show();
+                $("#positionGroup").show();
                 $("#subjectGroup").hide();
             } else {
                 //Maybe not
                 $("#controllerCidGroup").hide();
+                $("#positionGroup").hide()
                 $("#subjectGroup").show();
             }
         })

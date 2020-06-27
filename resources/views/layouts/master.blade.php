@@ -16,7 +16,7 @@
          S       s       S   s S   S     S
           "sss' sSSSSSs   "sss"ss   "sss"
 
-        For Flight Simulation Use Only - Not To Be Used For Real World Navigation. All content on this web site may not be shared, copied, reproduced or used in any way without prior express written consent of Gander Oceanic. © Copyright {{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->copyright_year}} Gander Oceanic, All Rights Reserved.
+        For Flight Simulation Use Only - Not to be used for real-world navigation. All content on this web site may not be shared, copied, reproduced or used in any way without prior express written consent of Gander Oceanic. © Copyright {{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->copyright_year}} Gander Oceanic, All Rights Reserved.
 
         Taking a peek under the hood and like what you see? Want to help out? Send Liesel an email! deputy@czqo.vatcan.ca
         -->
@@ -39,6 +39,9 @@
         <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/materia/bootstrap.min.css" rel="stylesheet" integrity="sha384-5bFGNjwF8onKXzNbIcKR8ABhxicw+SC1sjTh6vhSbIbtVgUuVTm2qBZ4AaHc7Xr9" crossorigin="anonymous">        <!-- Material Design Bootstrap -->
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
+        <!--SimpleMDE Editor-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+        <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!-- Bootstrap tooltips -->
@@ -242,22 +245,18 @@
     <!-- Footer -->
     <footer class="page-footer text-dark font-small py-4 {{Request::is('/dashboard') ? 'mt-5' : ''}}" style="background-color:#013162">
         <div class="container">
-            <p style="color:white">For Flight Simulation Use Only - Not To Be Used For Real World Navigation. By using this site, you agree to hold harmless and indemnify the owners and authors of these web pages, those listed on these pages, and all pages that this site that may be pointed to (i.e. external links).</p>
-            <p style="color:white">Copyright © {{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->copyright_year}} Winnipeg FIR - All Rights Reserved.</p>
+            <p style="color:white">For Flight Simulation Use Only - Not to be used for real-world navigation. By using this site, you agree to hold harmless and indemnify the owners and authors of these web pages, those listed on these pages, and all pages that this site that may be pointed to (i.e. external links).</p>
+            <p style="color:white">Copyright © {{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->copyright_year}} Winnipeg FIR | All Rights Reserved.</p>
             <div class="flex-left mt-3">
+            <a href="{{route('about')}}" class="white-text">WPGCore</a>
+                &nbsp;
+                •
+                &nbsp;
                 <a href="{{route('feedback.create')}}" class="white-text">Feedback</a>
                 &nbsp;
                 •
                 &nbsp;
-                <a href="{{route('about')}}" class="white-text">About</a>
-                &nbsp;
-                •
-                &nbsp;
                 <a href="{{route('privacy')}}" class="white-text">Privacy Policy</a>
-                &nbsp;
-                •
-                &nbsp;
-                <a href="https://github.com/winnipegfir/CZWG-core" class="white-text">GitHub</a>
                 &nbsp;
                 •
                 &nbsp;
@@ -273,7 +272,7 @@
 
             </div>
             <div class="mt-3">
-                <a href="{{route('about')}}"><small class="text-muted">{{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->sys_name}} {{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->release}} ({{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->sys_build}})</small></a> <small>- <a target="_blank" href="https://blog.ganderoceanic.com/gander-oceanic-core-update-log/" class="text-muted">Update Log</a></small>
+                <a href="{{route('about')}}"><small class="text-muted">{{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->sys_name}} {{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->release}} ({{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->sys_build}})</small></a> <small>- <a target="_blank" href="https://blog.winnipegfir.ca" class="text-muted">The Winnipeg FIR Blog</a></small>
             </div>
         </div>
     </footer>
@@ -288,16 +287,16 @@
                     <h5 class="modal-title" id="exampleModalLongTitle">Welcome to CZWG!</b></h5>
                 </div>
                 <div class="modal-body">
-                    Welcome to the Winnipeg FIR Core system. Here you can apply to become a visiting controller (if not a home controller), organise your
-                    training, and access important pilot and controller resources. Before
+                    Welcome to the Winnipeg FIR Core system. Here you can apply to become a visiting controller (if not a home controller), organize your
+                    training, and access important pilot and controller resources! Before
                     we allow you to use the system, we require you to accept our Privacy Policy. The Policy is available
                     <a target="_blank" href="{{url('/privacy')}}">here.</a>
-                    By default, you are <b>not</b> subscribed to non-essential email notifications. Head to the Dashboard and click on Manage my Preferences to
-                    subscribe, we highly recommend it!
+                    By default, you are <b>not</b> subscribed to non-essential email notifications. Head to the Dashboard and click on "Manage my preferences" to
+                    subscribe - we highly recommend it!
                 </div>
                 <div class="modal-footer">
-                    <a role="button" href="{{ URL('/privacydeny') }}" class="btn btn-outline-danger">I disagree</a>
-                    <a href="{{url('/privacyaccept')}}" role="button" class="btn btn-success">I agree</a>
+                    <a role="button" href="{{ URL('/privacydeny') }}" class="btn btn-outline-danger">I Disagree</a>
+                    <a href="{{url('/privacyaccept')}}" role="button" class="btn btn-success">I Agree</a>
                 </div>
             </div>
         </div>
@@ -313,7 +312,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Contact CZQO</b></h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Contact CZWG</b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -392,7 +391,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Gander Oceanic uses VATSIM Connect (auth.vatsim.net) for authentication. This is similar to SSO, but allows you to select specific data to share with us. Click 'Login' below to continue.</p>
+                    <p>The Winnipeg FIR uses VATSIM Connect (auth.vatsim.net) for authentication. This is similar to SSO, but allows you to select specific data to share with us. Click 'Login' below to continue.</p>
                     <p><small>If you are having issues with Connect, please send an email to the Webmaster and use <a href="{{route('auth.sso.login')}}">SSO to login.</a></small></p>
                 </div>
                 <div class="modal-footer">

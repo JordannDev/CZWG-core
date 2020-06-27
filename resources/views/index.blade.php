@@ -27,7 +27,7 @@
             <div class="container">
                 <div class="py-5">
                     <h1 class="h1 my-4 py-2" style="font-size: 3em; color: #fff;">We Are Winnipeg.</h1>
-                    <h4><a href="#blueBannerMid" id="discoverMore" class="white-text" style="transition:fade 0.4s;">Learn More&nbsp;&nbsp;<i class="fas fa-arrow-down"></i></a></h4>
+                    <h4><a href="#blueBannerMid" id="discoverMore" class="white-text" style="transition:fade 0.4s;">This site is in Alpha - Please tell James if you break something!&nbsp;&nbsp;<i class="fas fa-arrow-down"></i></a></h4>
                 </div>
                 <div class="container">
                 <a href="https://twitter.com/CZWGFIR" class="nav-link ml-0 pl-0 waves-effect white-text waves-light">
@@ -211,7 +211,7 @@
     <script>
         jarallax(document.querySelectorAll('.jarallax'), {
             speed: 0.5,
-            videoSrc: 'mp4:https://site-dev.winnipegfir.ca/images/Kebab.mp4',
+            videoSrc: 'mp4:https://site-dev.winnipegfir.ca/images/',
             videoLoop: true
         });
     </script>

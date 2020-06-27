@@ -85,29 +85,30 @@
                 Nobody is confirmed to control yet!
             @else
                     <div class="card p-3">
-                      @foreach($eventroster as $roster)
 
+                      @foreach($eventroster as $roster)
+<form method="POST" action="{{route('event.deletecontroller', [$roster->user_cid] )}}">
                       @if($roster->position == "Delivery")
-                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z <button type="submit" class="btn btn-sm btn-danger">Delete Controller</button><br>
                       @elseif($roster->position == "Ground")
-                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z <button type="submit" class="btn btn-sm btn-danger">Delete Controller</button><br>
                       @elseif($roster->position == "Tower")
-                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z <button type="submit" class="btn btn-sm btn-danger">Delete Controller</button><br>
                       @elseif($roster->position == "Departure")
-                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z <button type="submit" class="btn btn-sm btn-danger">Delete Controller</button><br>
                       @elseif($roster->position == "Arrival")
-                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z <button type="submit" class="btn btn-sm btn-danger">Delete Controller</button><br>
                       @elseif($roster->position == "Centre")
-                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z<br><br>
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z <button type="submit" class="btn btn-sm btn-danger">Delete Controller</button><br>
                       @else
-                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z
+                      {{$roster->user_name}} ({{$roster->user_cid}}) - {{$roster->position}}: {{$roster->start_timestamp}}z - {{$roster->end_timestamp}}z <button type="submit" class="btn btn-sm btn-danger">Delete Controller</button>
                       @endif
-                      <form method="POST" action="{{route('event.deletecontroller')}}">
-                      <input type="hidden" name="user_cid" value="{{$roster->cid}}"></input>
-                      <button type="submit" value="Delete"></button>
+
+                      <input type="hidden" name="id" value="{{$roster->event_id}}"></input>
                       @csrf
+
                     </form>
-                @endforeach
+                    @endforeach
                   </div>
             @endif
         </div>
@@ -354,9 +355,9 @@
                               <input type="hidden" name="event_name" value="{{$event->name}}">
                               <input type="hidden" name="event_date" value="{{$event->start_timestamp}}">
                               <label for="">Start Time (zulu)</label>
-                              <input type="datetime" name="start_timestamp" class="form-control flatpickr" value="" id="availability_start">
+                              <input type="datetime" name="start_timestamp" class="form-control flatpickr" value="" id="start_timestamp">
                               <label class="mt-2" for="">End Time (zulu)</label>
-                              <input type="datetime" name="end_timestamp" class="form-control flatpickr" value="" id="availability_end">
+                              <input type="datetime" name="end_timestamp" class="form-control flatpickr" value="" id="end_timestamp">
                               <label class="mt-2" for="">Position</label>
                               <select name="position" class="form-control" id="position">
                                 <option value="Delivery">Delivery</option>
@@ -367,17 +368,35 @@
                                 <option value="Centre">Centre</option>
                               </select>
                                   @csrf
-                                  <button type="submit">Confirm Controller</button>
+
 
                             </td>
-                             </form>
+
+                             <script>
+                                 flatpickr('#start_timestamp', {
+                                     enableTime: true,
+                                     noCalendar: true,
+                                     dateFormat: "H:i",
+                                     time_24hr: true,
+                                     defaultDate: "{{$event->flatpickr_limits()[0]}}"
+                                 });
+                                 flatpickr('#end_timestamp', {
+                                     enableTime: true,
+                                     noCalendar: true,
+                                     dateFormat: "H:i",
+                                     time_24hr: true,
+                                     defaultDate: "{{$event->flatpickr_limits()[1]}}"
+                                 });
+                             </script>
                         </div>
                     </div>
 
             </div>
 
             <div align="center" class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Dismiss</button></form>
+              <div align="center"><button type="submit" class="btn btn-success">Confirm Controller</button></div>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button></form>
+
             </div>
         </div>
     </div>
