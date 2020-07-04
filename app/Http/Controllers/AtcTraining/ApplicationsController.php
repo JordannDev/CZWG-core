@@ -101,6 +101,8 @@ class ApplicationsController extends Controller
         $application->processed_by = Auth::id();
         $application->save();
 
+
+
         //Notify staff
         Mail::to(CoreSettings::where('id', 1)->firstOrFail()->emailfirchief)->cc(CoreSettings::where('id', 1)->first()->emaildepfirchief, CoreSettings::where('id', 1)->first()->emailcinstructor)->send(new ApplicationWithdrawnEmail($application));
 
@@ -136,5 +138,9 @@ class ApplicationsController extends Controller
       $applications = Application::all();
 
       return view('dashboard.training.applications.viewall', compact('applications'));
+    }
+
+    public function joinWinnipeg() {
+        return view('joinwinnipeg');
     }
 }

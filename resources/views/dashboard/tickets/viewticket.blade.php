@@ -12,7 +12,7 @@
             <a href="{{route('tickets.index')}}" class="blue-text" style="font-size: 1.2em;"> <i class="fas fa-arrow-left"></i> Back</a>
         <h1 class="blue-text font-weight-bold mt-2">Ticket #{{ $ticket->ticket_id }}</h1>
         <hr>
-        <h4>{{$ticket->title}}</h4>
+        <h2>{{$ticket->title}}</h4>
         <p>
             Status:
             @if ($ticket->status == 0)
@@ -28,14 +28,14 @@
             Submitted by {{$ticket->user->fullName('FLC')}} on <span title="{{$ticket->submission_time}}">{{$ticket->submission_time_pretty()}}</span><br/>
             Last updated <span title="{{$ticket->updated_at}}">{{$ticket->updated_at_pretty()}}</span>
         </p>
-        <h5>Message</h5>
+        <h3>Message</h3>
         <div class="markdown border p-3">
             {{$ticket->html()}}
         </div>
         <br/>
-        <h5>Replies</h5>
+        <h3>Replies</h3>
         @if (count($replies) < 1)
-            No replies yet!
+            No replies yet!<br>
         @else
             <div class="list-group">
                 @foreach ($replies as $reply)
@@ -53,7 +53,6 @@
         <h5>Write a reply</h5>
         {!! Form::open(['route' => ['tickets.reply', $ticket->ticket_id]]) !!}
         {!! Form::textarea('message', null, ['class' => 'form-control', 'id' => 'addReplyMessage']) !!}
-        <small>Minimum 25 characters</small>
         <script>
             var simplemde = new SimpleMDE({ element: document.getElementById("addReplyMessage") });
         </script>
@@ -62,5 +61,6 @@
         <a href="{{url('/dashboard/tickets/'.$ticket->ticket_id.'/close')}}" role="button" class="btn btn-outline-danger ml-3">Close Ticket</a>
         {!! Form::close() !!}
         @endif
+        <br>
     </div>
 @stop

@@ -10,7 +10,7 @@
 <div class="container" style="margin-top: 20px;">
     <div class="container" style="margin-top: 20px;">
         <a href="{{route('application.list')}}" class="blue-text" style="font-size: 1.2em;"> <i class="fas fa-arrow-left"></i> Applications</a>
-    <h1 class="blue-text font-weight-bold mt-2">Start a visiting applcation:</h1>
+    <h1 class="blue-text font-weight-bold mt-2">Visiting Applcation</h1>
     <hr>
     <script>
         function countChar(val) {
@@ -28,9 +28,9 @@
     @if ($allowed == 'true')
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">You are eligibile to apply!</h4>
-            <p>Please also note the following requirement which will be completed by us:</p>
+            <p>Please note the following is also required to visit Winnipeg:</p>
             <ul>
-                <li>Approval by your home FIR Chief/ATM.</li>
+                <li>Approval by your home FIR/vACC/ARTCC Chief/ATM.</li>
             </ul>
         </div>
         @if ($errors->applicationErrors->any())
@@ -65,10 +65,10 @@
                 </a>
                 <div class="step-content w-75 grey lighten-3">
                     <h5>Activity requirements</h5>
-                    <p>By applying to be a visitor in the Winnipeg FIR you acknowledge that you agree to be bound to the activity requirements set out by our SOPs.</p>
+                    <p>By applying to be a visitor in the Winnipeg FIR you acknowledge that you agree to abide by the Winnipeg FIR General Policies, Standard Operating Prodecures, and any other relevant FIR documents as a controller..</p>
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" required name="agreeActivity" id="agreeActivity">
-                        <label class="custom-control-label" for="agreeActivity">I understand</label>
+                        <label class="custom-control-label" for="agreeActivity">I Understand</label>
                     </div>
                 </div>
             </li>

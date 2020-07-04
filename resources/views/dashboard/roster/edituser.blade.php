@@ -143,22 +143,35 @@
 <div class="form-group">
   <label class="control-label" for="remarks">Remarks</label><br>
   <textarea name="remarks" rows="1" cols="5" class="form-control">{{ $roster->remarks }}
-  </textarea></div>
+  </textarea>
+</div>
+
 
 
   <!--Active Status-->
-  <div class="form-group">
+<div class="form-row">
+<div class="col-md-3">
+</div>
+    <div class="form-group col-md-2">
     <label class="control-label" for"active">Active</label><br>
-    <div class="col-md-2">
-      <select name="active" class="form-control">
+      <select name="active" class="form-control" style="width:75px">
         <option value="1"{{ $roster->active == "1" ? "selected=selected" : ""}}>Active</option>
         <option value="0"{{ $roster->active == "0" ? "selected=selected" : ""}}>Not Active</option>
       </select>
     </div>
-  </div>
-  <div class="form-group">
+    <div class="form-group col-md-2">
     <label>Home FIR - <i>Visitor Controllers ONLY!</i></label><br>
-    <input type="text" name="homefir" id="homefir" size="30" value="{{$roster->homefir}}"></input>
+    <input type="text" name="homefir" id="homefir"  size="20" value="{{$roster->homefir}}"></input>
+    </div>
+<!-- Rating Hours-->
+    <div class="form-group col-md-2">
+          <label class="control-label" for "rating_hours">Reset rating hours?</label><br>
+          <select  style="width:75px" name="rating_hours" class="form-control">
+              <option value="false">No</option>
+              <option value="true">Yes</option>
+          </select>
+          </div>
+</div>
 @csrf
 <!-- Button -->
 <div class="form-group">

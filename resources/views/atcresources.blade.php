@@ -6,14 +6,13 @@
 
 @stop
 
-@section('title', 'ATC Resources - ')
-@section('description', 'Sector files and resources for Winnipeg controllers')
+@section('title', 'ATC Resources')
+@section('description', 'Sector Files & Resources for Winnipeg Controllers')
 
 @section('content')
 <div class="container" style="margin-top: 20px;">
     <div class="container" style="margin-top: 20px;">
     <h1 class="blue-text font-weight-bold mt-2">ATC Resources</h1>
-    <hr>
     <div class="list-group list-group-flush">
         @foreach ($resources as $resource)
         @break($resource->atc_only && Auth::check() && !Auth::user()->rosterProfile)
@@ -21,8 +20,8 @@
             <div class="row">
                 <div class="col"><b>{{$resource->title}}</b></div>
                 <div class="col-sm-4">
-                    <a href="#" data-toggle="modal" data-target="#detailsModal{{$resource->id}}"><i class="fa fa-info-circle"></i>&nbsp Details</a>&nbsp;&nbsp;
-                    <a href="{{$resource->url}}" target="_blank"><i class="fa fa-eye"></i>&nbsp;View Resource</a>
+                <a href="{{$resource->url}}" target="_blank"><i class="fa fa-eye"></i>&nbsp;View Resource</a>&nbsp;&nbsp;
+                <a href="#" data-toggle="modal" data-target="#detailsModal{{$resource->id}}"><i class="fa fa-window-close"></i>&nbsp Delete Resource</a>
                 </div>
             </div>
         </div>
@@ -41,21 +40,19 @@
                     </div>
                     <div class="modal-footer">
                         @if (Auth::check() && Auth::user()->permissions >= 3)
-                        <a href="{{route('atcresources.delete', $resource->id)}}" role="button" class="btn btn-danger">Delete</a>
+                        <a href="{{route('atcresources.delete', $resource->id)}}" role="button" class="btn btn-danger">Delete Resource</a>
                         @endif
-                        <a href="{{$resource->url}}" role="button" class="btn btn-success">View</a>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Dismiss</button>
                     </div>
                 </div>
             </div>
         </div>
         @endforeach
     </div>
-    <br/>
+    <br/><br>
     @if (Auth::check() && Auth::user()->permissions >= 4)
     <form method="POST" action="{{route('atcresources.upload')}}">
         @csrf
-        <h5>Add resource</h5>
+        <h3>Add resource</h3>
         <div class="form-group">
             <label>Title</label>
             <input required class="form-control" type="text" placeholder="Sector files 1903" name="title">
@@ -68,7 +65,7 @@
             </script>
         </div>
         <div class="form-group">
-            <label>URL (Google Drive or Dropbox preferred)</label>
+            <label>Link to Resource</label>
             <input type="url" class="form-control" name="url">
         </div>
         <div class="form-group">
@@ -78,7 +75,7 @@
             </div>
         </div>
         <br/>
-        <input value="Submit" type="submit" class="btn btn-sm btn-block btn-success">
+        <input value="Submit" type="submit" class="btn btn-block btn-success"><br></br>
     </form>
     @endif
 </div>

@@ -48,15 +48,12 @@
             <div class="alert bg-czqo-blue-light">
                 You have no applications.
                 @if (Auth::user()->permissions == 0)
-                    <a href="{{route('application.start')}}" class="alert-link black-text">
-                        Start one.
-                    </a>
                 @endif
             </div>
         @endif
         <br/>
         @if (Auth::user()->permissions == 0)
-            <a href="{{route('application.start')}}" role="button" class="btn btn-primary">Start an Application</a>
+            <a href="{{route('application.start')}}" role="button" class="btn btn-primary">Start an Application</a><br></br>
         @endif
     </div>
 @stop

@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\Notification;
 //ALL Public Views
 Route::get('/', 'HomeController@view')->name('index');
 Route::get('/map', 'HomeController@map')->name('map');
+Route::get('/airports', 'HomeController@airports')->name('airports');
+Route::get('/nate', 'HomeController@nate')->name('nate');
 Route::get('/roster', 'AtcTraining\RosterController@showPublic')->name('roster.public');
+Route::get('/join', 'AtcTraining\ApplicationsController@joinWinnipeg')->name('join.public');
 Route::get('/staff', 'Users\StaffListController@index')->name('staff');
 Route::view('/pilots/tutorial', 'pilots.tutorial');
 Route::get('/policies', 'Publications\PoliciesController@index')->name('policies');

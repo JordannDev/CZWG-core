@@ -6,19 +6,9 @@
         {{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->release}} ({{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->sys_build}})
         Built on Bootstrap 4 and Laravel 6
 
-        Written by Liesel D
-
-          sSSs. sSSSSSs   sSSSs     sSSSs
-         S           s   S     S   S     S
-        S           s   S       S S       S
-        S          s    S       S S       S
-        S         s     S       S S       S
-         S       s       S   s S   S     S
-          "sss' sSSSSSs   "sss"ss   "sss"
+        Written by Liesel D... edited by a hundred Winnipegers.
 
         For Flight Simulation Use Only - Not to be used for real-world navigation. All content on this web site may not be shared, copied, reproduced or used in any way without prior express written consent of Gander Oceanic. © Copyright {{App\Models\Settings\CoreSettings::where('id', 1)->firstOrFail()->copyright_year}} Gander Oceanic, All Rights Reserved.
-
-        Taking a peek under the hood and like what you see? Want to help out? Send Liesel an email! deputy@czqo.vatcan.ca
         -->
         <!--Metadata-->
         <meta charset="utf-8">
@@ -139,12 +129,13 @@
                                 @else
                                     <a class="dropdown-item {{ Request::is('dashboard/application') ? 'active white-text' : '' }}" href="{{url ('/dashboard/application/')}}">Visit in Winnipeg!</a>
                                 @endif
-                                <a class="dropdown-item {{ Request::is('atcresources') ? 'active white-text' : '' }}" href="{{route('atcresources.index')}}">ATC Resources</a>
+
                             </div>
                         </li>
                         <li class="nav-item dropdown {{ Request::is('pilots/vatsim-resources') || Request::is('pilots/tutorial') || Request::is('pilots/tracks') ? 'active' : '' }}">
                             <a class="nav-link dropdown-toggle" style="cursor:pointer" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilots</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a class="dropdown-item" href="{{route('airports')}}">Airports</a>
                                 <a class="dropdown-item" href="https://www.vatsim.net/pilots/resources" target="_blank">VATSIM Resources</a>
                                 <a class="dropdown-item" href="{{url('/map')}}">Map</a>
                             </div>
@@ -267,6 +258,7 @@
                 <a href="https://www.vatcan.ca" class="white-text">VATCAN</a>
                 &nbsp;
                 •
+                &nbsp;
                 <a href="https://www.vatsim.net" class="white-text">VATSIM</a>
 
 

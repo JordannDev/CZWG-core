@@ -36,7 +36,7 @@
         no meeting minutes.. bruh
         @endif
         @if (Auth::check() && Auth::user()->permissions == 5)
-        <a href="#" data-toggle="modal" data-target="#upload">Upload Minutes</a>
+        <a href="#" data-toggle="modal" data-target="#upload">Upload Minutes</a><br>
         <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">

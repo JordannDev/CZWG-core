@@ -12,7 +12,7 @@
 @section('content')
     <div class="container" style="margin-top: 20px;">
         <h1 class="font-weight-bold blue-text">Policies</h1>
-        <hr>
+        
         @if (Auth::check() && Auth::user()->permissions == 5)
             <div class="card w-50">
                 <div class="card-body">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         @endif
-        <br class="my-2">
+        <hr>
         @foreach ($policies as $policy)
             <div id="accordion">
                 <div aria-expanded="true"  class="card">
@@ -56,7 +56,7 @@
                 </div>
             </div>
         @endforeach
-        <hr>
+        <br>
         <div class="modal fade" id="addPolicyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

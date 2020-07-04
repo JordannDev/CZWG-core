@@ -28,6 +28,8 @@ use Mail;
 
 class TrainingController extends Controller
 {
+
+
 public function assignStudent(Request $request)
 {
   $fullnameuser = User::findOrFail($request->input('student_id'));

@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class EventController extends Controller
+class EventControllerbckup extends Controller
 {
     /*
     View all events
@@ -181,9 +181,9 @@ class EventController extends Controller
         $event = Event::where('slug', $slug)->firstOrFail();
         $applications = $event->controllerApplications;
         $updates = $event->updates;
-        $eventroster = EventConfirm::all()->where('event_id', $event->id);
+        $eventroster = EventConfirm::where('event_id', $event->id)->get();
         $users = User::all();
-        return view('admin.events.view', compact('event', 'applications', 'updates', 'eventroster', 'users'));
+      return view('admin.events.view', compact('event', 'applications', 'updates', 'eventroster', 'users'));
     }
     public function adminCreateEvent()
     {

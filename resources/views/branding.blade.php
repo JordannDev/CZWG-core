@@ -1,11 +1,10 @@
 @extends('layouts.master')
-@section('title', 'Branding - ')
+@section('title', 'Branding')
 @section('content')
 <div class="container py-4">
     <h1 class="font-weight-bold blue-text">Branding</h1>
-    <hr>
     <p>This is the place to find all official Winnipeg FIR branding. Please feel free to use this branding for any event postings and publications.
-    <br>
+    <hr>
     Any modification of the branding must be approved by the FIR Chief: <a href="mailto:n.power@vatcan.ca">n.power@vatcan.ca.</a>
     <br/><br/>
     The hex colour codes used by the Winnipeg FIR are <span class="font-weight-bold black-text">#013162 (Blue)</span> and <span class="font-weight-bold black-text">#FFFFFF (White)</span>.

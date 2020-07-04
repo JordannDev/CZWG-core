@@ -27,7 +27,7 @@
       <div class="container py-4">
         @if ($event->image_url != null)
       <img src="{{$event->image_url}}" alt="" title="" width="100%" height="50%">
-      &nbsp
+
       @else
       &nbsp
       @endif
@@ -36,32 +36,32 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-md-3">
-                <h4>Share</h4>
+                <h4>Share This</h4>
                 <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u{{Request::url()}}"><i class="fab blue-text fa-facebook fa-3x"></i></a>
                 &nbsp;
                 <a target="_blank" href="https://twitter.com/intent/tweet?text={{$event->name}} - Winnipeg FIR VATSIM {{Request::url()}}"><i class="fab blue-text fa-twitter fa-3x"></i></a>
                 &nbsp;
                 <a target="_blank" href="http://www.reddit.com/submit?url={{Request::url()}}&title={{$event->name}} - Winnipeg FIR VATSIM"><i class="fab blue-text fa-reddit fa-3x"></i></a>
-                &nbsp;
-                <a target="_blank" href="mailto:?subject={{$event->name}}&amp;body={{Request::url()}}"><i class="fas blue-text fa-at fa-3x"></i></a>
+                <hr>
                 <h4 class="mt-2">Start Time</h4>
                 <p>{{$event->start_timestamp_pretty()}}</p>
+                <hr>
                 <h4>End Time</h4>
                 <p>{{$event->end_timestamp_pretty()}}</p>
-                <h4>Departure Airport</h4>
+                <hr>
                 @if (!$event->departure_icao)
-                No departure airport listed.
                 @else
+                <h4>Departure Airport</h4>
                 <ul class="list-unstyled">
                     <li>{{$event->departure_icao_data()->name}}</li>
                     <li>{{$event->departure_icao}}</li>
-
                 </ul>
+                
+                <hr>
                 @endif
-                <h4>Arrival Airport</h4>
-                @if (!$event->departure_icao)
-                No arrival airport listed.
+                @if (!$event->arrival_icao)  
                 @else
+                <h4>Arrival Airport</h4>
                 <ul class="list-unstyled">
                     <li>{{$event->arrival_icao_data()->name}}</li>
                     <li>{{$event->arrival_icao}}</li>
@@ -73,13 +73,10 @@
                 {{$event->html()}}
                 @if (Auth::check() && $event->controller_applications_open && Auth::user()->rosterProfile)
                 @if (Auth::check() && $event->userHasApplied())
-                <br>
-                <h3>Thanks for applying! If you need to make any adjustments to your application, please <a href="{{ route('staff') }}">contact the Events Coordinator.</a></h3>
-                </p>
-
                 @endif
+                <hr>
+                <h3>Apply to Control</h3>
                 <br>
-                <h4>Apply to control</h4>
                 <div class="card p-3">
                     <form id="app-form" method="POST" action="{{route('events.controllerapplication.ajax')}}">
                         @csrf
@@ -123,9 +120,9 @@
                 </div>
                 @endif
 
-
-                <br>
-                <h4>Updates</h4>
+<br>
+                <hr>
+                <h3>Updates</h3>
                 @if (count($updates) == 0)
                 None yet!
                 @else

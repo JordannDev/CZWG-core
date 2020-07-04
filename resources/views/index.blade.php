@@ -59,20 +59,20 @@
         <div class="container">
             <h1 class="font-weight-bold white-text pb-3">
                 @if(Auth::check())
-                    Welcome back, {{Auth::user()->fullName('F')}}!
+                    Recent FIR News
                 @else
                     Welcome!
                 @endif
             </h1>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="carousel slide" style="height: 300px;" id="news-carousel" data-ride="carousel">
+                    <div class="carousel slide" style="height: 290px;" id="news-carousel" data-ride="carousel">
                         <ol class="carousel-indicators">
                             @php
                             $carousel_iteration = 0;
                             @endphp
                             @foreach($news as $n)
-                            <li data-target="#news-carousel" data-slide-to="{{$carousel_iteration}}" @if($carousel_iteration == 0) class="active" @endif></li>
+                            <li data-target="#news-carousel" data-slide-to="{{$carousel_iteration}}" @if($carousel_iteration = 0) class="active" @endif></li>
                             @php
                             $carousel_iteration++;
                             @endphp
@@ -83,14 +83,14 @@
                             $carousel_iteration = 0;
                             @endphp
                             @foreach($news as $n)
-                                <div class="carousel-item @if($carousel_iteration == 0) active @endif" style="height: 300px;">
+                                <div class="carousel-item @if($carousel_iteration == 0) active @endif" style="height: 270px;">
                                     <div class="view">
                                         @if ($n->image)
                                         <img class="d-block w-100" src="{{$n->image}}" alt="{{$n->image}}">
                                         @else
                                         <div style="height:300px;" class="homepage-news-img blue waves-effect"></div>
                                         @endif
-                                        <div class="mask rgba-black-light"></div>
+                      
                                     </div>
                                     <div class="carousel-caption">
                                         <h2 class="h2-responsive"><a class="white-text" href="{{route('news.articlepublic', $n->slug)}}">{{$n->title}}</a></h2>
@@ -141,7 +141,7 @@
                 </div>
             </div>
         </div>
-    </div>+
+    </div>
     <div class="jumbtron" style=" background-size:1400px 600px; background-repeat: no-repeat; background-image:url(https://i.imgur.com/wBaWhk8.png); background-position: right;">
         <div class="container py-5">
             <div class="row">
@@ -152,7 +152,7 @@
                     </p>
                     <div class="d-flex flex-row">
                         @if(!Auth::check() || !Auth::user()->rosterProfile)
-                        <a href="{{route('application.start')}}" class="btn bg-czqo-blue-light" role="button">Apply Now</a>
+                        <a href="{{route('application.start')}}" class="btn bg-czqo-blue-light" role="button">Apply Now!</a>
                         @endif
                         <a href="{{route('roster.public')}}" class="btn bg-czqo-blue-light" role="button">View our Controller Roster </a>
                     </div>
@@ -167,23 +167,30 @@
                     <h2 class="font-weight-bold blue-text">Quick Links</h2>
                     <div class="d-flex flex-row mt-3">
                         <a data-toggle="modal" data-target="#discordTopModal" href="" class="blue-text mr-1" style="text-decoration:none">
-                            <div class="blue-grey lighten-5" style="height: 80px; !important; width: 80px !important;">
+                            <div class="blue-grey lighten-5" style="height: 50px; !important; width: 50px !important;">
                                 <div class="d-flex flex-row justify-content-center align-items-center h-100">
                                     <i class="fab fa-discord fa-3x" style="vertical-align:middle;"></i>
                                 </div>
                             </div>
                         </a>
                         <a href="https://twitter.com/CZWGFIR" class="blue-text mr-1" style="text-decoration:none">
-                            <div class="blue-grey lighten-5" style="height: 80px; !important; width: 80px !important;">
+                            <div class="blue-grey lighten-5" style="height: 50px; !important; width: 50px !important;">
                                 <div class="d-flex flex-row justify-content-center align-items-center h-100">
                                     <i class="fab fa-twitter fa-3x" style="vertical-align:middle;"></i>
                                 </div>
                             </div>
                         </a>
                         <a href="https://www.facebook.com/CZWGFIR" class="blue-text mr-1" style="text-decoration:none">
-                            <div class="blue-grey lighten-5" style="height: 80px; !important; width: 80px !important;">
+                            <div class="blue-grey lighten-5" style="height: 50px; !important; width: 50px !important;">
                                 <div class="d-flex flex-row justify-content-center align-items-center h-100">
                                     <i class="fab fa-facebook fa-3x" style="vertical-align:middle;"></i>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://www.twitch.tv/CZWGFIR" class="blue-text mr-1" style="text-decoration:none">
+                            <div class="blue-grey lighten-5" style="height: 50px; !important; width: 50px !important;">
+                                <div class="d-flex flex-row justify-content-center align-items-center h-100">
+                                    <i class="fab fa-twitch fa-3x" style="vertical-align:middle;"></i>
                                 </div>
                             </div>
                         </a>
@@ -211,7 +218,7 @@
     <script>
         jarallax(document.querySelectorAll('.jarallax'), {
             speed: 0.5,
-            videoSrc: 'mp4:https://site-dev.winnipegfir.ca/images/',
+            videoSrc: 'mp4:https://site-dev.winnipegfir.ca/images/whonk1.mp4',
             videoLoop: true
         });
     </script>

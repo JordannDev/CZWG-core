@@ -81,7 +81,7 @@
                 @endforeach
             @endif
             <h4 class="font-weight-bold blue-text mt-3">Event Roster</h4>
-            @if (count($eventroster) == 0)
+            @if (count($eventroster) < 1)
                 Nobody is confirmed to control yet!
             @else
                     <div class="card p-3">

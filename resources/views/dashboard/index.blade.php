@@ -12,6 +12,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="font-weight-bold blue-text pb-2">ATC Resources</h3>
+                        @if(Auth::user()->permissions >= 4)
+                                    <a href="{{route('atcresources.index')}}">Manage Resources</a><br></br>
+                                @endif
                         <div class="list-group" style="border-radius: 0.5em !important">
                             @foreach($atcResources as $resource)
                                 @if($resource->atc_only && Auth::user()->permissions < 1)
@@ -51,11 +54,11 @@
                                 @endif <br/>
                                 @if($yourinstructor != null)
                                     <br>
-                                    <h6>Your instructor is: {{$yourinstructor->instructor_name}}
+                                    <h6>Your Instructor is: {{$yourinstructor->instructor_name}}
                                     Email: <a href="mailto:{{$yourinstructor->instructor_email}}">{{$yourinstructor->instructor_email}}</a></h6>
                                 @else
                                 @if ($certification == "training")
-                                    You do not have an instructor Yet!
+                                    You do not have an Instructor Yet!
                                 @endif
                                 @endif
                                 <br/>
@@ -92,7 +95,7 @@
                                 </div>
 
                                 <center><a role="button" data-toggle="modal" data-target="#changeAvatar"
-                                           class="btn btn-sm btn-info" href="#">Change</a></center>
+                                           class="btn btn-sm btn-primary" href="#">Change</a></center>
                                 @if (!Auth::user()->isAvatarDefault())
                                     <center><a role="button" class="btn btn-sm btn-danger"
                                                href="{{route('users.resetavatar')}}">Reset</a></center>
@@ -322,11 +325,8 @@
                         <div class="card-body">
                             <h3 class="font-weight-bold blue-text pb-2">Instructor Panel</h3>
                             @if(Auth::user()->permissions >= 4)
-                                <div style="margin-left:350px">
-                                    <a href="" data-toggle="modal" data-target="#newStudent">Assign Instructor</a>
-                                </div>
+
                                 <!--All Students Admin View-->
-                                <h5>List of Students</h5>
                                 @foreach($allinstructors as $instructor)
                                     <b><u>{{$instructor->full_name}}</u></b><br>
 
@@ -343,6 +343,7 @@
 
                                 @endforeach
                             @endif
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newStudent" style="float: left;">Add New Student</button>
                         <!--Instructor Specific Student List-->
                             @if(Auth::user()->permissions == 3)
                                 <h5>List of your Students</h5><br>
@@ -662,22 +663,22 @@
                                 <li class="mb-2">
                                     <a href="{{route('training.index')}}" style="text-decoration:none;"><span
                                             class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span
-                                            class="black-text">Controller Training</span></a>
+                                            class="black-text">Controller Training (WIP)</span></a>
                                 </li>
                                 <li class="mb-2">
                                     <a href="{{route('roster.index')}}" style="text-decoration:none;"><span
                                             class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span
-                                            class="black-text">Controller Roster</span></a>
+                                            class="black-text">Manage Controller Roster</span></a>
                                 </li>
                                 <li class="mb-2">
                                     <a href="{{route('events.admin.index')}}" style="text-decoration:none;"><span
                                             class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span
-                                            class="black-text">Events</span></a>
+                                            class="black-text">Manage Events</span></a>
                                 </li>
                                 <li class="mb-2">
                                     <a href="{{route('news.index')}}" style="text-decoration:none;"><span
                                             class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span
-                                            class="black-text">News</span></a>
+                                            class="black-text">Manage News</span></a>
                                 </li>
                                 <li class="mb-2">
                                     <a href="{{(route('users.viewall'))}}" style="text-decoration:none;">
@@ -686,14 +687,14 @@
                                     </span>
                                         &nbsp;
                                         <span class="black-text">
-                                        View users
+                                        View & Edit Users
                                     </span>
                                     </a>
                                 </li>
                                 <li class="mb-2">
                                     <a href="{{route('staff.feedback.index')}}" style="text-decoration:none;"><span
                                             class="blue-text"><i class="fas fa-chevron-right"></i></span> &nbsp; <span
-                                            class="black-text">View users</span></a>
+                                            class="black-text">View Feedback</span></a>
                                 </li>
                                 <li class="mb-2">
                                     <a href="{{(route('dashboard.image'))}}" style="text-decoration:none;">

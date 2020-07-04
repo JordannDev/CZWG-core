@@ -27,6 +27,7 @@
                         "dollars"=>"I have twenty, and ten, and three five dollars",
                         "itworks"=>"OMG this is sooo awesome!",
                         "bill"=>"w h o n k",
+                        "denver"=>"When I handoff to Denver, is it automatic?",
                         "drunk"=>"Centre, we've had too many alcohols to stay on frequency, we're gonna go ahead and go to UNICOM 122.8 now, will be terminating our radar services, and we WILL have a good flight.",
                         "blue"=>"'What's your cruise speed?' 'Dunno, probably blue.'");
 

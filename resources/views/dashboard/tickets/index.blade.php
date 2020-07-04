@@ -30,7 +30,7 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active pt-2" id="home" role="tabpanel" aria-labelledby="home-tab">
                 @if (count($openTickets) < 1)
-                    No open tickets.
+                <br>No open tickets.<br></br>
                     @else
                     @foreach ($openTickets as $ticket)
                         <a href="{{url('/dashboard/tickets/' . $ticket->ticket_id)}}" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -43,12 +43,13 @@
                             </p>
                             <small>Submitted at {{ $ticket->submission_time }} Zulu</small>
                         </a>
+                        <br>
                     @endforeach
                 @endif
             </div>
             <div class="tab-pane fade pt-2" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 @if (count($closedTickets) < 1)
-                    No closed tickets.
+                <br>No closed tickets.<br></br>
                 @else
                     @foreach ($closedTickets as $ticket)
                         <a href="{{url('/dashboard/tickets/' . $ticket->ticket_id)}}" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -61,12 +62,13 @@
                             </p>
                             <small>Submitted at {{ $ticket->submission_time }} Zulu</small>
                         </a>
+                        <br>
                     @endforeach
                 @endif
             </div>
             <div class="tab-pane fade pt-2" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 @if (count($onHoldTickets) < 1)
-                    No on hold tickets.
+                <br>No on hold tickets.<br></br>
                 @else
                     @foreach ($onHoldTickets as $ticket)
                         <a href="{{url('/dashboard/tickets/' . $ticket->ticket_id)}}" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -79,6 +81,7 @@
                             </p>
                             <small>Submitted at {{ $ticket->submission_time }} Zulu</small>
                         </a>
+                        <br>
                     @endforeach
                 @endif
             </div>
