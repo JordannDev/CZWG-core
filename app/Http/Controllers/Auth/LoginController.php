@@ -168,6 +168,7 @@ class LoginController extends Controller
         }
         User::updateOrCreate(['id' => $response->data->cid], [
             'email' => isset($response->data->personal->email) ? $response->data->personal->email : 'no-reply@czqo.vatcan.ca',
+            'fname' => isset($response->data->personal->name_first) ? utf8_decode($response->data->personal->name_first) : $response->data->cid,
             'lname' => isset($response->data->personal->name_last) ? $response->data->personal->name_last : $response->data->cid,
             'rating_id' => $response->data->vatsim->rating->id,
             'rating_short' => $response->data->vatsim->rating->short,
