@@ -21,7 +21,7 @@
                     <td>Added by {{\App\Models\Users\User::find($m->user_id)->fullName('FLC')}}</td>
                     @endif
                     <td>
-                    <a target="_blank" href="{{$m->link}}">View</a>
+                    <a target="_blank" href="{{$m->link}}"><i class="fa fa-eye"></i>&nbsp;View</a>
                     </td>
                     @if(Auth::check() && Auth::user()->permissions == 5)
                     <td>
@@ -33,10 +33,11 @@
             </tbody>
         </table>
         @else
-        no meeting minutes.. bruh
+        No Meeting Minutes Available.
         @endif
         @if (Auth::check() && Auth::user()->permissions == 5)
-        <a href="#" data-toggle="modal" data-target="#upload">Upload Minutes</a><br>
+        <hr>
+        <a href="#" data-toggle="modal" class="btn btn-sm btn-primary" data-target="#upload">Upload Minutes</a><br></br>
         <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">

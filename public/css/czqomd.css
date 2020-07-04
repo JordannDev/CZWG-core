@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Muli:500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arimo');
 * {
-    font-family: 'Muli', 'Lato', 'Segoe UI', 'Arial', sans-serif;
+    font-family: 'Arimo', sans-serif;
 }
 
 body, html {

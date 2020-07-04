@@ -248,6 +248,10 @@ class EventController extends Controller
     {
         $event = Event::where('slug', $slug)->firstOrFail();
         $updates = EventUpdate::where('event_id', $event->id);
+        $unconfirmed_controllers = ControllerApplication::where('event_id', $event->id);
+        $confirmed_controllers = EventConfirm::where('event_id', $event->id);
+        $unconfirmed_controllers->delete();
+        $confirmed_controllers->delete();
         $updates->delete();
         $event->delete();
         return redirect()->route('events.admin.index')->with('info', 'Event deleted.');

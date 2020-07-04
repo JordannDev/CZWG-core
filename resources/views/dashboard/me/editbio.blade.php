@@ -10,9 +10,9 @@
         <p>Please ensure this complies with the VATSIM Code of Conduct.</p>
         <form method="post" action="{{route('me.editbio')}}">
             @csrf
-            <textarea name="bio" style="height: 200px;" class="form-control">{{Auth::user()->bio}}</textarea>
+            <textarea name="bio" style="height: 100px;" class="form-control">{{Auth::user()->bio}}</textarea>
             <br/>
             <input type="submit" class="btn btn-primary" value="Save">
-        </form>
+        </form><br>
     </div>
 @stop

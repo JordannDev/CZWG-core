@@ -2,7 +2,7 @@
 
 
 @section('error')
-You have already applied for CZQO.
+You have already applied for Winnipeg.
 @stop
 
 @section('message')

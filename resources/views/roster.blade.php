@@ -6,18 +6,19 @@
 
 @stop
 
-@section('title', 'ATC Roster - Winnipeg FIR')
+@section('title', 'Roster - Winnipeg FIR')
 @section('description', "Winnipeg FIR's Controller Roster")
 
 @section('content')
 <div class="container" style="margin-top: 20px;">
         <h1 class="blue-text font-weight-bold">Controller Roster</h1>
-        <hr>
         <p>Please note that the 'full name' field on this roster is dependant on the controller's name settings on the CZWG Core. As such, it is best to rely on the CID to determine whether they are on the roster.</p>
-<h4 align="center">Winnipeg Controllers</h2>
+        <hr>
+        
+<h2>Winnipeg Controllers</h2>
 
 <!--WINNIPEG CONTROLLERS ROSTER-->
-        <table id="rosterTable" class="table table-hover" style="position:relative; left:-70px; top:2px; width:116%">
+        <table id="rosterTable" class="table table-hover">
             <thead>
 
                 <tr>
@@ -136,10 +137,10 @@
         } );
     </script>
 <br></br>
-<h4 align="center">Visiting Controllers</h4>
+<h2>Visiting Controllers</h2>
 
 <!--WINNIPEG VISITING CONTROLLERS ROSTER-->
-        <table id="visitRosterTable" class="table table-hover"  style="position:relative; left:-70px; top:2px; width:116%">
+        <table id="visitRosterTable" class="table table-hover">
             <thead>
 
                 <tr>

@@ -168,7 +168,6 @@ class LoginController extends Controller
         }
         User::updateOrCreate(['id' => $response->data->cid], [
             'email' => isset($response->data->personal->email) ? $response->data->personal->email : 'no-reply@czqo.vatcan.ca',
-            'fname' => isset($response->data->personal->name_first) ? utf8_decode($response->data->personal->name_first) : $response->data->cid,
             'lname' => isset($response->data->personal->name_last) ? $response->data->personal->name_last : $response->data->cid,
             'rating_id' => $response->data->vatsim->rating->id,
             'rating_short' => $response->data->vatsim->rating->short,
@@ -179,10 +178,17 @@ class LoginController extends Controller
             'region_name' => $response->data->vatsim->region->name,
             'division_code' => $response->data->vatsim->division->id,
             'division_name' => $response->data->vatsim->division->name,
-            'display_fname' => isset($response->data->personal->name_first) ? utf8_decode($response->data->personal->name_first) : $response->data->cid,
             'used_connect' => true
         ]);
+
         $user = User::find($response->data->cid);
+
+        if(User::where('id', $user->id)->exists() == 0) {
+            User::updateOrCreate(['id' => $response->data->cid], [
+                'display_fname' => isset($response->data->personal->name_first) ? utf8_decode($response->data->personal->name_first) : $response->data->cid,
+            ]);
+        }
+
         if (!isset($response->data->personal->name_first)) {
             $user->display_cid_only = true;
             $user->save();

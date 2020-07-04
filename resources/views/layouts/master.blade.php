@@ -156,10 +156,10 @@
                         @unless (Auth::check())
                         <li class="nav-item d-flex align-items-center">
                             {{-- <a href="{{route('auth.connect.login')}}" class="nav-link waves-effect waves-light">
-                                <i class="fas fa-key"></i>&nbsp;Login
+                                <i class="fas fa-sign-in-alt"></i>&nbsp;Login
                             </a> --}}
                             <a href="{{route('auth.connect.login')}}" class="nav-link waves-effect waves-light">
-                                <i class="fas fa-key"></i>&nbsp;Login with VATSIM
+                                <i class="fas fa-sign-in-alt"></i>&nbsp;Login with VATSIM
                             </a>
                         </li>
                         @endunless
@@ -173,7 +173,7 @@
                                     <i class="fa fa-tachometer-alt mr-2"></i>&nbsp;Dashboard
                                 </a>
                                 <a class="dropdown-item red-text" href="{{route('auth.logout')}}">
-                                    <i class="fa fa-key mr-2"></i>&nbsp;Logout
+                                    <i class="fa fa-sign-out-alt mr-2"></i>&nbsp;Logout
                                 </a>
                             </div>
                         </li>

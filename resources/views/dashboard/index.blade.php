@@ -40,10 +40,7 @@
                             <div class="col" data-step="3"
                                  data-intro="Here is an overview of your profile, including your CZWG roles. You can change the way your name is displayed by clicking on your name, at the top of the panel. (CoC A4(b))">
                                 <h5 class="card-title">
-                                    <a href="" data-toggle="modal" data-target="#changeDisplayNameModal"
-                                       class="text-dark text-decoration-underline">
-                                        {{ Auth::user()->fullName('FLC') }}
-                                    </a>
+                                   {{ Auth::user()->fullName('FLC') }}
                                 </h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
                                     {{Auth::user()->rating_GRP}} ({{Auth::user()->rating_short}})
@@ -103,6 +100,17 @@
                             </div>
                         </div>
                         <ul class="list-unstyled mt-2 mb-0">
+                            <li class="mb-2">
+                                <a href="" data-target="#changeDisplayNameModal" data-toggle="modal" style="text-decoration:none;">
+                                <span class="blue-text">
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                                    &nbsp;
+                                    <span class="black-text">
+                                    Change display name
+                                </span>
+                                </a>
+                            </li>
                             <li class="mb-2">
                                 <a href="" data-target="#viewBio" data-toggle="modal" style="text-decoration:none;">
                                 <span class="blue-text">
@@ -819,7 +827,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Change your display name</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Display Name</h5><br>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -828,13 +836,13 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label>Display first name</label>
+                            <label>First Name</label>
                             <input type="text" class="form-control" value="{{Auth::user()->display_fname}}"
                                    name="display_fname" id="input_display_fname">
-                            <br/>
-                            <a class="btn bg-CZWG-blue-light btn-sm" role="button"
-                               onclick="resetToCertFirstName()"><span
-                                    style="color: #000">Reset to CERT first name</span></a>
+                            <br>
+                            <a class="btn btn-sm btn-primary" role="button"
+                               onclick="resetToCertFirstName()"><span>
+                                    Reset to CERT first name</span></a>
                             <script>
                                 function resetToCertFirstName() {
                                     $("#input_display_fname").val("{{Auth::user()->fname}}")
@@ -855,7 +863,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Dismiss</button>
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
                         <input type="submit" class="btn btn-success" value="Save Changes">
                     </div>
                 </form>

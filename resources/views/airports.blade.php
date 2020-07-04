@@ -43,12 +43,12 @@
                     @if($cywgLetter == true)
                         <div class="col">
                             <div class="card"
-                                 style="background-color:#013162; color:#ffffff; width: 30%; float:left; min-height: 100%;">
+                                 style="background-color:#013162; color:#ffffff; width: 25%; float:left; min-height: 100%;">
                                 <div class="card-body">
                                     <div class="CYWG" style="text-align: center;">
                                         <div class="ATIS">
-                                            <h3>ATIS</h3>
-                                            <h1><b>{{$cywgLetter}}</b></h1>
+                                            <h5>ATIS</h5>
+                                            <h1 style="font-size:45px;"><b>{{$cywgLetter}}</b></h1>
                                         </div>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="col">
                             <div class="card"
-                                 style="background-color:#9f9f9f; color:#ffffff; width: 170%; float: right;">
+                                 style="background-color:#9f9f9f; color:#ffffff; width: 175%; float: right;">
                                 <div class="card-body">
                                     <h3>Current ATIS/METAR</h3>
                                     {{$cywg}}

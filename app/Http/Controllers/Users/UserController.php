@@ -79,7 +79,7 @@ class UserController extends Controller
           $certification = $potentialVisitRosterMember->status;
           $active = $potentialVisitRosterMember->active;
         }
-        
+
 
         $xml = [];
         $userNotes = UserNote::where('user_id', $user->id)->orderBy('timestamp', 'desc')->get();

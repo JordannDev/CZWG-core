@@ -5,21 +5,22 @@
         <a href="{{route('events.admin.view', $event->slug)}}" class="blue-text" style="font-size: 1.2em;"> <i
                 class="fas fa-arrow-left"></i> {{$event->name}}</a>
         <br>
-        <h4 class="font-weight-bold blue-text mt-3">Event Applications for "{{$event->name}}":</h4>
+        <h4 class="font-weight-bold blue-text mt-3">Event Applications for "{{$event->name}}"</h4>
         <hr>
         @if (count($applications) == 0)
             None yet!
             <br></br>
         @else
-            <div class="row">
-                @foreach($applications as $a)
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
+
+        <div class="row mb-1 container py-1">
+        @foreach($applications as $a)
+                <div class="mb-3" style="padding-right: 1%">
+                    <div class="card">
+                        <div style="position: sticky;">
                             <div class="card-header">
-                                {{$a->user->fullName('FLC')}} ({{$a->user->rating_short}})
-                                from {{$a->start_availability_timestamp}} to {{$a->end_availability_timestamp}}
+                            {{$a->user->fullName('FLC')}} ({{$a->user->rating_short}})
                             </div>
-                            <div class="card-body">
+                                <div class="card-body">
                                 <b>Position Requested: </b>
                                 @if ($a->position == "Delivery")
                                     Delivery
@@ -39,19 +40,22 @@
                                 @else
                                     <b>Comments: </b>None<br>
                                 @endif
+                                <b>Available: </b>
+                                {{$a->start_availability_timestamp}} to {{$a->end_availability_timestamp}}<br>
                                 <b>Email: </b>
-                                {{$a->user->email}} </p>
-                            </div>
-                            <div class="card-footer">
+                                {{$a->user->email}}
+                                </div>
+                                <div class="card-footer">
                                 <a href="" data-toggle="modal" class="btn btn-sm btn-success"
                                    data-target="#confirmApp{{$a->id}}">Confirm Controller</a>
                                 <a href="{{route('events.admin.controllerapps.delete', [$event->slug, $a->user_id])}}"
                                    class="btn btn-sm btn-danger">Delete</a>
-                            </div>
+                                </div>
                         </div>
                     </div>
-            </div>
-    </div>
+                </div>
+            
+  
     <!--Confirm Appliation modal-->
     <div class="modal fade" id="confirmApp{{$a->id}}" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -145,5 +149,6 @@
     <!--End confirm application modal-->
 
     @endforeach
+    </div>
     @endif
 @endsection

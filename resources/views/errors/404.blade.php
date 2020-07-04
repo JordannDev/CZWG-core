@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="container py-5">
-        <h4 class="font-weight-bold">ERROR 404!</h4>
+        <h2 class="font-weight-bold"><i class="fa fa-cogs"></i>  ERROR 404</h2>
         <div class="mt-4">
             <p style="font-size: 1.2em;">
                 Looks like this page doesn't exist! Here's a funny Winnipeg FIR quote to pass the time...
@@ -36,6 +36,6 @@
                     ?>"</i></h3>
                     <br>
         </div>
-        <a href="{{route('index')}}" class="btn bg-czqo-blue-light">Back to Homepage</a>
+        <a href="{{route('index')}}" class="btn btn-primary">Back to Homepage</a>
     </div>
 @endsection
